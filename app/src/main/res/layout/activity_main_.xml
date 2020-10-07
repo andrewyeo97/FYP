@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mainpage"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="cursive"
+        android:paddingVertical="60dp"
+        android:text="Healthy Food Receipe"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnLoginAsUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="80dp"
+        android:layout_marginTop="180dp"
+        android:background="@drawable/buttoncurve"
+        android:padding="10dp"
+        android:text="Log in as User"
+        android:textAllCaps="false"
+        android:textColor="#696969"
+        android:drawableLeft="@drawable/baseline_perm_identity_black_18dp"
+        android:textSize="40px"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:layout_editor_absoluteX="44dp" />
+
+    <Button
+        android:id="@+id/btnLoginAsStaff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="80dp"
+        android:layout_marginVertical="20dp"
+        android:background="@drawable/buttoncurve"
+        android:padding="10dp"
+        android:drawableLeft="@drawable/baseline_work_black_18dp"
+        android:text="Log in as Staff"
+        android:textAllCaps="false"
+        android:textColor="#696969"
+        android:textSize="40px"
+        app:layout_constraintTop_toBottomOf="@+id/btnLoginAsUser" />
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="0dp"
+        android:layout_marginVertical="20dp"
+        android:layout_marginBottom="32dp"
+        android:background="#00FFFFFF"
+        android:padding="10dp"
+        android:text="Not registered? Sign up now"
+        android:textAllCaps="false"
+        android:textColor="#000"
+        android:textSize="50px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLoginAsStaff"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="44dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
