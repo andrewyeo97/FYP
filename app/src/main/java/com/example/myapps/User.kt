@@ -1,7 +1,9 @@
 package com.example.myapps
 
-    class User(val id: String, val username: String, val email: String){
-        constructor():this("","",""){
+    class User{
+        var id : String = ""
+        var username : String =""
+        var email : String = ""
+        var profileImageUrl: String = ""
 
-        }
 }

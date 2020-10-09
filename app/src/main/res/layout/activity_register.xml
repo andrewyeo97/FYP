@@ -9,7 +9,7 @@
     tools:context=".RegisterActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/titleReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="cursive"
@@ -18,12 +18,50 @@
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/emailText"
+        app:layout_constraintBottom_toTopOf="@+id/usernameText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/photo_reg"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/usernameText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleReg"
+        android:src="@drawable/profile"
+        app:civ_border_color="@android:color/transparent"
+        app:civ_border_width="1dp"/>
+
+    <TextView
+        android:id="@+id/usernameText"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginHorizontal="30dp"
+        android:text="Username"
+        android:textColor="@color/colorAccent"
+        android:textSize="50px"
+        app:layout_constraintBottom_toTopOf="@+id/regUsernameEdit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/regUsernameEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="16dp"
+        android:hint="Username"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/emailText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/emailText"
@@ -31,12 +69,11 @@
         android:layout_height="30dp"
         android:layout_marginHorizontal="30dp"
         android:text="Email"
-        android:layout_marginTop="500dp"
         android:textColor="@color/colorAccent"
         android:textSize="50px"
         app:layout_constraintBottom_toTopOf="@+id/regEmailEdit"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="30dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/regEmailEdit"
@@ -45,9 +82,11 @@
         android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="16dp"
         android:hint="Email"
+        android:inputType="textEmailAddress"
         android:paddingHorizontal="12dp"
         app:layout_constraintBottom_toTopOf="@+id/passText"
-        tools:layout_editor_absoluteX="84dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/passText"
@@ -58,7 +97,8 @@
         android:textColor="@color/colorAccent"
         android:textSize="50px"
         app:layout_constraintBottom_toTopOf="@+id/regPasswordEdit"
-        tools:layout_editor_absoluteX="30dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/regPasswordEdit"
@@ -70,14 +110,15 @@
         android:inputType="textPassword"
         android:paddingHorizontal="12dp"
         app:layout_constraintBottom_toTopOf="@+id/regButton"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/regButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginBottom="160dp"
+        android:layout_marginBottom="100dp"
         android:background="@drawable/buttoncurve"
         android:padding="10dp"
         android:text="Register"
@@ -85,7 +126,9 @@
         android:textColor="#696969"
         android:textSize="40px"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="30dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

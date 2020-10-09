@@ -35,28 +35,6 @@ class UserLoginPage : AppCompatActivity() {
         exit(this)
     }
 
-    public override fun onStart() {
-        super.onStart()
-        val currentUser: FirebaseUser? = auth.currentUser
-        updateUI(currentUser)
-
-    }
-
-    private fun updateUI(currentUser: FirebaseUser?) {
-        if (currentUser != null) {
-            if (currentUser.isEmailVerified) {
-                startActivity(Intent(this, DashboardActivity::class.java))
-                finish()
-            } else {
-                FirebaseAuth.getInstance().signOut()
-                Toast.makeText(
-                    baseContext, "Please verify your email.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-
-    }
     private fun doLogin(){
         if(emailEdit.text.toString().isEmpty()){
             emailEdit.error = "Please enter email address"
@@ -76,29 +54,16 @@ class UserLoginPage : AppCompatActivity() {
             return
         }
 
-        auth.signInWithEmailAndPassword(emailEdit.text.toString(), passwordEdit.text.toString())
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    if (FirebaseAuth.getInstance().currentUser !== null) {
-                        val user = auth.currentUser
-                        updateUI(user)
 
-                    } else {
-                        Toast.makeText(
-                            baseContext, "Login failed.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        updateUI(null)
-                    }
-                }
-                else {
-                    Toast.makeText(
-                        baseContext, "Incorrect email or password",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    updateUI(null)
-                }
+        auth.signInWithEmailAndPassword(emailEdit.text.toString(), passwordEdit.text.toString()).addOnCompleteListener {
+            if(!it.isSuccessful){
+                Toast.makeText(this,"Invalid Email or Password",Toast.LENGTH_SHORT).show()
+            }else{
+                startActivity(Intent(this, DashboardActivity::class.java))
+                finish()
             }
+        }
+
     }
 
 

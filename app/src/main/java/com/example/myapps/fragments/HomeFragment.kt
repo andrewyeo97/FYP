@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapps.MainAdapter
+//import com.example.myapps.MainAdapter
 
 import com.example.myapps.R
 import com.example.myapps.Recipe

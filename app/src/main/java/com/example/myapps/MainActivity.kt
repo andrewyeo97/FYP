@@ -14,10 +14,21 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private var doubleBackToExitPressedOnce = false
 
+
+    public override fun onStart() {
+        super.onStart()
+
+        auth = FirebaseAuth.getInstance()
+        if (auth.currentUser != null ) {
+            startActivity(Intent(this, DashboardActivity::class.java))
+            finish()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_)
-        auth = FirebaseAuth.getInstance()
+
         btnLoginAsUser.setOnClickListener {
             login()
         }
@@ -26,20 +37,7 @@ class MainActivity : AppCompatActivity() {
             reg()
         }
     }
-    public override fun onStart() {
-        super.onStart()
-        val currentUser: FirebaseUser? = auth.currentUser
-        if (currentUser != null) {
-            if (currentUser.isEmailVerified) {
-                updateUI(currentUser)
-            } else {
-                FirebaseAuth.getInstance().signOut()
-            }
-        }
 
-
-
-    }
     override fun onBackPressed() {
         finishAffinity()
     }
