@@ -5,5 +5,4 @@ package com.example.myapps
         var username : String =""
         var email : String = ""
         var profileImageUrl: String = ""
-
 }

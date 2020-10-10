@@ -5,8 +5,8 @@ import java.util.*
  class Recipe {
 var recipeID: String = ""
 var recipeTitle: String = ""
-var recipeImage: Int = 0
-var energy: Double = 0.00
+var recipeImage: String = ""
+var calories: Double = 0.00
 var totalFat: Double = 0.00
 var saturatedFat: Double = 0.00
 var fibre: Double = 0.00

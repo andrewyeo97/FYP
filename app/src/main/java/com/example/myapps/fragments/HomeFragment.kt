@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 //import com.example.myapps.MainAdapter
@@ -36,27 +37,48 @@ class HomeFragment : Fragment() {
     fun init(){
 
         val adapter = GroupAdapter<GroupieViewHolder>()
+//        val ref = FirebaseDatabase.getInstance().getReference("MT") //selfd set
+//        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onCancelled(error: DatabaseError) {}
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                snapshot.children.forEach {
+//                    val rep = it.getValue(Recipe::class.java)
+//                    if(rep != null){
+//                        adapter.add(bindata(rep))
+//                    }
+//                }
+//
+//            }
+//        })
 
-        val ref = FirebaseDatabase.getInstance().getReference("MT") //selfd set
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {}
-            override fun onDataChange(snapshot: DataSnapshot) {
-                snapshot.children.forEach {
-                    val rep = it.getValue(Recipe::class.java)
-                    if(rep != null){
-                        adapter.add(bindata(rep))
+        adapter.add(bindatatest())
+        adapter.add(bindatatest())
+        adapter.add(bindatatest())
+        adapter.add(bindatatest())
 
-
-                    }
-                }
-
-            }
-        })
+        ryr_view.adapter = adapter
 
 
 
 
     }
+
+    class bindatatest(): Item<GroupieViewHolder>() {
+        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+            viewHolder.itemView.ryr_title.text = "HEL:LO"
+            viewHolder.itemView.ryr_image.setImageResource(R.drawable.recipe1)
+
+
+
+        }
+
+        override fun getLayout(): Int {
+            return R.layout.recycle_row_item
+        }
+
+
+    }
+
 
 
     class bindata(val rep : Recipe): Item<GroupieViewHolder>() {
