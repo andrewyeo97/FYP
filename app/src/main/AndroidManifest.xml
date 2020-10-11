@@ -10,13 +10,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".RecipeDetailActivity"
+                  android:label="">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DashboardActivity"/>
+        </activity>
         <activity android:name=".InsertRecipe">
 
         </activity>
         <activity
             android:name=".DashboardActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/WithActionBar"
+            android:theme="@style/WithoutActionBar"
             tools:ignore="LockedOrientationActivity">
 
         </activity>

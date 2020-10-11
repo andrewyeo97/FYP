@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecipeDetailActivity">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RecipeDetailActivity">
+
+    <TextView
+        android:id="@+id/recipeDetailTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingTop="10sp"
+        android:paddingBottom="10sp"
+        android:text="Baby Kale Breakfast Salad with Quinoa And Strawberries"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed-light"
+        android:textColor="@color/black"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/recipeDetailImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ratingText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
+        android:paddingTop="2sp"
+        android:paddingBottom="2sp"
+        android:textSize="15dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="4.8 ratings | 100 reviews" />
+
+    <ImageView
+        android:id="@+id/recipeDetailImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/apple"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="330dp" />
+
+    <TextView
+        android:id="@+id/ingredientText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
+        android:paddingTop="2sp"
+        android:paddingBottom="2sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="22dp"
+        android:text="Ingredients" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ingListView"
+        android:scrollbars="vertical" />
+
+</LinearLayout>
+</ScrollView>

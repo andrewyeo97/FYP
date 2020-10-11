@@ -110,7 +110,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun uploadImageToFirebaseStorage(){
 
             val filename = UUID.randomUUID().toString()
-            val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+            val ref = FirebaseStorage.getInstance().getReference("/ProfileImages/$filename")
 
             ref.putFile(selectedPhotoUri!!).addOnSuccessListener {
                 saveUserToDatabase(it.toString())

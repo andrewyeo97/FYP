@@ -1,21 +1,25 @@
 package com.example.myapps.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapps.*
 //import com.example.myapps.MainAdapter
 
-import com.example.myapps.R
-import com.example.myapps.Recipe
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
@@ -28,6 +32,7 @@ import kotlinx.android.synthetic.main.recycle_row_item.view.*
 
 
 class HomeFragment : Fragment() {
+
     var rec = Recipe()
     override fun onStart() {
         super.onStart()
@@ -38,47 +43,34 @@ class HomeFragment : Fragment() {
 
     fun init(){
 
-        val adapter = GroupAdapter<GroupieViewHolder>()
-        val ref = FirebaseDatabase.getInstance().getReference("/Recipe/${rec.recipeID}")
+
+        val ref = FirebaseDatabase.getInstance().getReference("/Recipe")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
+                val adapter = GroupAdapter<GroupieViewHolder>()
                 snapshot.children.forEach {
                     val rep = it.getValue(Recipe::class.java)
                     if(rep != null){
                         adapter.add(bindata(rep))
-
                     }
                 }
-
+                adapter.setOnItemClickListener { item, view ->
+                    val intent = Intent(view.context,RecipeDetailActivity::class.java)
+                    startActivity(intent)
+                }
+                ryr_view.adapter = adapter
             }
         })
 
-
-
-        ryr_view.adapter = adapter
-
-
-
-
     }
 
-
-
-
-
-    class bindata(val rep : Recipe): Item<GroupieViewHolder>() {
+    class bindata(val recipe : Recipe): Item<GroupieViewHolder>() {
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-            viewHolder.itemView.ryr_title.text = rep.recipeTitle
+            viewHolder.itemView.ryr_title.text = recipe.recipeTitle
 
-            viewHolder.itemView.ryr_root.setOnClickListener {
-
-            }
-
-            //picture
-
-
-
+            Log.d("Check",recipe.recipeImage.toString())
+            Picasso.get().load(recipe.recipeImage).into(viewHolder.itemView.ryr_image)
         }
 
         override fun getLayout(): Int {

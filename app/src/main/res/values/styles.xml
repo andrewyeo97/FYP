@@ -1,17 +1,17 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#ffffff</item>
+        <item name="colorPrimary">@color/orange</item>
         <!-- Light Indigo -->
         <item name="colorPrimaryDark">#000000</item>
-
         <!-- Dark Indigo -->
         <item name="colorAccent">#000000</item>
+
     </style>
 
-    <style name="WithActionBar" parent="Theme.AppCompat.Light">
+    <style name="WithoutActionBar" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#ffffff</item>
         <!-- Light Indigo -->
@@ -21,11 +21,8 @@
         <item name="android:textColorPrimary">#ff8124</item>
         <!-- Dark Indigo -->
         <item name="colorAccent">#000000</item>
-
-
+        <item name="displayOptions">showHome|useLogo</item>
     </style>
-
-
 
 
 </resources>
