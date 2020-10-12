@@ -113,7 +113,10 @@ class RegisterActivity : AppCompatActivity() {
             val ref = FirebaseStorage.getInstance().getReference("/ProfileImages/$filename")
 
             ref.putFile(selectedPhotoUri!!).addOnSuccessListener {
-                saveUserToDatabase(it.toString())
+                ref.downloadUrl.addOnSuccessListener {
+                    saveUserToDatabase(it.toString())
+                }
+
             }
         }
 

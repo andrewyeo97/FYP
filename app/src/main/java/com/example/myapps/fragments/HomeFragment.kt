@@ -37,13 +37,10 @@ class HomeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         init()
-
     }
 
 
     fun init(){
-
-
         val ref = FirebaseDatabase.getInstance().getReference("/Recipe")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
@@ -68,8 +65,6 @@ class HomeFragment : Fragment() {
     class bindata(val recipe : Recipe): Item<GroupieViewHolder>() {
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
             viewHolder.itemView.ryr_title.text = recipe.recipeTitle
-
-            Log.d("Check",recipe.recipeImage.toString())
             Picasso.get().load(recipe.recipeImage).into(viewHolder.itemView.ryr_image)
         }
 
@@ -79,8 +74,6 @@ class HomeFragment : Fragment() {
 
 
     }
-
-
 
 
     override fun onCreateView(

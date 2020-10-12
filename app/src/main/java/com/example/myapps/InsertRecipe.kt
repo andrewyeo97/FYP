@@ -49,7 +49,10 @@ class InsertRecipe : AppCompatActivity() {
         val recipeImgID = UUID.randomUUID().toString()
         val ref = FirebaseStorage.getInstance().getReference("/RecipeImages/$recipeImgID")
         ref.putFile(selectedPhotoUri!!).addOnSuccessListener {
-            saveUserToDatabase(it.toString())
+            ref.downloadUrl.addOnSuccessListener {
+                saveUserToDatabase(it.toString())
+            }
+
         }
     }
 
