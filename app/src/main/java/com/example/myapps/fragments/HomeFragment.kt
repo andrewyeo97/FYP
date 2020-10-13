@@ -2,6 +2,7 @@ package com.example.myapps.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Contacts.SettingsColumns.KEY
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -39,6 +40,9 @@ class HomeFragment : Fragment() {
         init()
     }
 
+    companion object{
+        val RECIPE_KEY = "RECIPE_KEY"
+    }
 
     fun init(){
         val ref = FirebaseDatabase.getInstance().getReference("/Recipe")
@@ -53,7 +57,9 @@ class HomeFragment : Fragment() {
                     }
                 }
                 adapter.setOnItemClickListener { item, view ->
+                    val recDetail = item as bindata
                     val intent = Intent(view.context,RecipeDetailActivity::class.java)
+                    intent.putExtra(RECIPE_KEY,recDetail.recipe.recipeID)
                     startActivity(intent)
                 }
                 ryr_view.adapter = adapter

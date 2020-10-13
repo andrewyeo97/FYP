@@ -17,11 +17,11 @@
 
         <ImageView
             android:id="@+id/back_button"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="18dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:src="@drawable/back_button_orange"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/chat_button"
@@ -32,8 +32,8 @@
 
         <ImageView
             android:id="@+id/chat_button"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="18dp"
@@ -45,12 +45,12 @@
 
         <ImageView
             android:id="@+id/favourite_button"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="16dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="18dp"
+            android:layout_marginBottom="16dp"
             android:src="@drawable/favourite_button_orange"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -58,11 +58,11 @@
 
         <ImageView
             android:id="@+id/rate_button"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="18dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginBottom="18dp"
+            android:layout_marginBottom="16dp"
             android:src="@drawable/rate_button_orange"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/favourite_button"
@@ -75,6 +75,7 @@
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -82,12 +83,14 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
-        app:layout_constraintVertical_bias="0.4">
+        app:layout_constraintVertical_bias="0.183">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="200dp">
+            android:paddingBottom="100dp">
+
+            //recipe title
 
             <TextView
                 android:id="@+id/recipeDetailTitle"
@@ -98,7 +101,7 @@
                 android:paddingTop="10sp"
                 android:paddingRight="10sp"
                 android:paddingBottom="10sp"
-                android:text="Baby Kale Breakfast Salad with Quinoa And Strawberries"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="25dp"
                 android:textStyle="bold"
@@ -106,6 +109,8 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            //rating label
 
             <TextView
                 android:id="@+id/ratingText"
@@ -123,25 +128,65 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recipeDetailTitle" />
 
+            //recipe images
+
             <ImageView
                 android:id="@+id/recipeDetailImage"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@drawable/apple"
+                android:layout_height="250dp"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ratingText" />
 
+            //ingredients label
+
+            //ingredient recycler view
+
             <TextView
                 android:id="@+id/ingredientText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:paddingLeft="10sp"
-                android:paddingTop="2sp"
+                android:paddingTop="10sp"
                 android:paddingRight="10sp"
-                android:paddingBottom="2sp"
-                android:text="Ingredients"
+                android:paddingBottom="10sp"
+                android:text="Ingredients (1 serving)"
+                android:textColor="@color/black"
+                android:textSize="22dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cholesteroltxt" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ryr_ingredient"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingredientText"
+                tools:listitem="@layout/recycle_row_ingredients"></androidx.recyclerview.widget.RecyclerView>
+
+
+            //nutrition fact label
+
+            <TextView
+                android:id="@+id/nutritionFactsText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="10sp"
+                android:paddingTop="10sp"
+                android:paddingRight="10sp"
+                android:paddingBottom="10sp"
+                android:text="Nutrition Facts"
                 android:textColor="@color/black"
                 android:textSize="22dp"
                 android:textStyle="bold"
@@ -150,54 +195,323 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recipeDetailImage" />
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/ryr_ings"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredientText"
-                tools:listitem="@layout/recycle_row_ingredients"></androidx.recyclerview.widget.RecyclerView>
+            //calories 1
 
             <TextView
-                android:id="@+id/nutritionFactsText"
-                android:layout_width="match_parent"
+                android:id="@+id/caloriestxt"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:paddingLeft="10sp"
-                android:paddingTop="2sp"
-                android:paddingRight="10sp"
-                android:paddingBottom="2sp"
-                android:text="Nutrition Facts"
+                android:text="Calories"
                 android:textColor="@color/black"
-                android:textSize="22dp"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nutritionFactsText" />
+
+            //calories 2
+
+            <TextView
+                android:id="@+id/caloriesNumberText"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="148dp"
+                android:layout_marginTop="8dp"
+                android:gravity="right"
+                android:paddingLeft="10sp"
+                android:paddingRight="7sp"
+                android:text=""
+                android:textAlignment="gravity"
+                android:textColor="@color/orange"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/caloriestxt"
+                app:layout_constraintTop_toBottomOf="@+id/nutritionFactsText" />
+
+            //calories 3
+
+            <TextView
+                android:id="@+id/caloriesUnitText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingRight="10sp"
+                android:text="cal"
+                android:textColor="@color/orange"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ryr_ings" />
+                app:layout_constraintStart_toEndOf="@+id/caloriesNumberText"
+                app:layout_constraintTop_toBottomOf="@+id/nutritionFactsText" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/ryr_nutri"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+            //total fat 1
+
+            <TextView
+                android:id="@+id/totalFattxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="10sp"
+                android:text="Total Fat"
+                android:textColor="@color/black"
+                android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nutritionFactsText"
-                tools:listitem="@layout/recycle_row_nutrition"></androidx.recyclerview.widget.RecyclerView>
+                app:layout_constraintTop_toBottomOf="@+id/caloriestxt" />
+
+            //total fat 2
+
+            <TextView
+                android:id="@+id/totalFatNumberText"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="142dp"
+                android:layout_marginTop="8dp"
+                android:gravity="right"
+                android:paddingLeft="10sp"
+                android:paddingRight="7sp"
+                android:text=""
+                android:textAlignment="gravity"
+                android:textColor="@color/orange"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/totalFattxt"
+                app:layout_constraintTop_toBottomOf="@+id/caloriesNumberText" />
+
+            //total fat 3
+
+            <TextView
+                android:id="@+id/totalFatUnitText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingRight="10sp"
+                android:text="g"
+                android:textColor="@color/orange"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.013"
+                app:layout_constraintStart_toEndOf="@+id/totalFatNumberText"
+                app:layout_constraintTop_toBottomOf="@+id/caloriesUnitText" />
+
+            //saturated fat 1
+
+            <TextView
+                android:id="@+id/saturatedFattxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="10sp"
+                android:text="Saturated Fat"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/totalFattxt" />
+
+            //saturated fat 2
+
+            <TextView
+                android:id="@+id/saturatedFatNumberText"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="105dp"
+                android:layout_marginTop="8dp"
+                android:gravity="right"
+                android:paddingLeft="10sp"
+                android:paddingRight="7sp"
+                android:text=""
+                android:textAlignment="gravity"
+                android:textColor="@color/orange"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/saturatedFattxt"
+                app:layout_constraintTop_toBottomOf="@+id/totalFatNumberText" />
+
+            //saturated fat 3
+
+            <TextView
+                android:id="@+id/saturatedFatUnitText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingRight="10sp"
+                android:text="g"
+                android:textColor="@color/orange"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/saturatedFatNumberText"
+                app:layout_constraintTop_toBottomOf="@+id/totalFatUnitText" />
+
+            //fibre 1
+
+            <TextView
+                android:id="@+id/fibretxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="10sp"
+                android:text="Fibre"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/saturatedFattxt" />
+
+            //fibre 2
+
+            <TextView
+                android:id="@+id/fibreNumberText"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="173dp"
+                android:layout_marginTop="8dp"
+                android:gravity="right"
+                android:paddingLeft="10sp"
+                android:paddingRight="7sp"
+                android:text=""
+                android:textAlignment="gravity"
+                android:textColor="@color/orange"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/fibretxt"
+                app:layout_constraintTop_toBottomOf="@+id/saturatedFatNumberText" />
+
+            //fibre 3
+
+            <TextView
+                android:id="@+id/fibreUnitText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingRight="10sp"
+                android:text="g"
+                android:textColor="@color/orange"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/fibreNumberText"
+                app:layout_constraintTop_toBottomOf="@+id/saturatedFatUnitText" />
+
+            //protein 1
+
+            <TextView
+                android:id="@+id/proteintxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="10sp"
+                android:text="Protein"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fibretxt" />
+
+            //protein 2
+
+            <TextView
+                android:id="@+id/proteinNumberText"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="155dp"
+                android:layout_marginTop="8dp"
+                android:gravity="right"
+                android:paddingLeft="10sp"
+                android:paddingRight="7sp"
+                android:text=""
+                android:textAlignment="gravity"
+                android:textColor="@color/orange"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/proteintxt"
+                app:layout_constraintTop_toBottomOf="@+id/fibreNumberText" />
+
+            //protein 3
+
+            <TextView
+                android:id="@+id/proteinUnitText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingRight="10sp"
+                android:text="g"
+                android:textColor="@color/orange"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/proteinNumberText"
+                app:layout_constraintTop_toBottomOf="@+id/fibreUnitText" />
+
+            //cholesterol 1
+
+            <TextView
+                android:id="@+id/cholesteroltxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:paddingLeft="10sp"
+                android:text="Cholesterol"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/proteintxt" />
+
+            //cholesterol 2
+
+            <TextView
+                android:id="@+id/cholesterolNumberText"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="122dp"
+                android:layout_marginTop="8dp"
+                android:gravity="right"
+                android:paddingLeft="10sp"
+                android:paddingRight="7sp"
+                android:text=""
+                android:textAlignment="gravity"
+                android:textColor="@color/orange"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/cholesteroltxt"
+                app:layout_constraintTop_toBottomOf="@+id/proteinNumberText" />
+
+            //cholesterol 3
+
+            <TextView
+                android:id="@+id/cholesterolUnitText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingRight="10sp"
+                android:text="mg"
+                android:textColor="@color/orange"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/cholesterolNumberText"
+                app:layout_constraintTop_toBottomOf="@+id/proteinUnitText" />
+
+            //preparation label
 
             <TextView
                 android:id="@+id/preparationText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:paddingLeft="10sp"
-                android:paddingTop="2sp"
+                android:paddingTop="10sp"
                 android:paddingRight="10sp"
-                android:paddingBottom="2sp"
+                android:paddingBottom="10sp"
                 android:text="Preparation"
                 android:textColor="@color/black"
                 android:textSize="22dp"
@@ -205,22 +519,25 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ryr_nutri" />
+                app:layout_constraintTop_toBottomOf="@+id/ryr_ingredient" />
+
+            //preparation recycler view
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/ryr_prepare"
+                android:id="@+id/ryr_steps"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/preparationText"
                 tools:listitem="@layout/recycle_row_preparation"></androidx.recyclerview.widget.RecyclerView>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-
 
 
     />
