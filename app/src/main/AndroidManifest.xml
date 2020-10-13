@@ -13,7 +13,9 @@
         <activity android:name=".InsertSteps">
 
         </activity>
-        <activity android:name=".InsertIngredient"></activity>
+        <activity android:name=".InsertIngredient">
+
+        </activity>
         <activity
             android:name=".RecipeDetailActivity"
             android:label="">
