@@ -1,19 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.SettingsFragment">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
 
         <TextView
+            android:id="@+id/settingtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Settings"/>
-    </RelativeLayout>
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Settings"
+            android:textColor="@color/black"
+            android:textSize="22dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.533" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraint1"
+        android:layout_marginTop="60dp"
+        app:layout_constraintVertical_bias="0.0" >
+
+        <ImageView
+            android:id="@+id/imgViewManageAccount"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/account_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/manageAccBtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:background="#fff"
+            android:gravity="left"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp"
+            android:shadowColor="@color/white"
+            android:text="Manage Account"
+            android:textAlignment="gravity"
+            android:textAllCaps="false"
+            android:textColor="@color/orange"
+            android:textSize="15dp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imgViewManageAccount"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgViewSignOut"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_baseline_exit_to_app_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgViewManageAccount" />
+
+        <Button
+            android:id="@+id/signOutBtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:background="#fff"
+            android:gravity="left"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp"
+            android:shadowColor="@color/white"
+            android:text="Sign Out"
+            android:textAlignment="gravity"
+            android:textAllCaps="false"
+            android:textColor="@color/orange"
+            android:textSize="15dp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imgViewSignOut"
+            app:layout_constraintTop_toBottomOf="@+id/manageAccBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

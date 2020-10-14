@@ -43,6 +43,7 @@ class HomeFragment : Fragment() {
     companion object{
         val RECIPE_KEY = "RECIPE_KEY"
     }
+    
 
     fun init(){
         val ref = FirebaseDatabase.getInstance().getReference("/Recipe")

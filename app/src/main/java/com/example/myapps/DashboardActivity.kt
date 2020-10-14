@@ -1,16 +1,13 @@
 package com.example.myapps
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapps.fragments.FavouriteFragment
 import com.example.myapps.fragments.HomeFragment
 import com.example.myapps.fragments.SettingsFragment
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_dashboard.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -54,10 +51,8 @@ class DashboardActivity : AppCompatActivity() {
             finishAffinity()
     }
 
-     private fun signOutUser(){
-         FirebaseAuth.getInstance().signOut()
-         MainActivity.launchIntentClearTask(this)
-}
+
+
 
 
 

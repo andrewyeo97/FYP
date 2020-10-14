@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,127 +9,141 @@
     android:orientation="vertical"
     tools:context=".RegisterActivity">
 
-    <TextView
-        android:id="@+id/titleReg"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="cursive"
-        android:paddingVertical="60dp"
-        android:text="Registration"
-        android:textAlignment="center"
-        android:textColor="#000"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/usernameText"
+        android:orientation="vertical"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="50dp">
+
+            <TextView
+                android:id="@+id/titleReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="cursive"
+                android:paddingVertical="60dp"
+                android:text="Registration"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="40sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/photo_reg"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/usernameText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleReg"
-        android:src="@drawable/profile"
-        app:civ_border_color="@android:color/transparent"
-        app:civ_border_width="1dp"/>
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/photo_reg"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/profile"
+                app:civ_border_color="@android:color/transparent"
+                app:civ_border_width="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleReg" />
 
-    <TextView
-        android:id="@+id/usernameText"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginHorizontal="30dp"
-        android:text="Username"
-        android:textColor="@color/colorAccent"
-        android:textSize="50px"
-        app:layout_constraintBottom_toTopOf="@+id/regUsernameEdit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/usernameText"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="24dp"
+                android:text="Username"
+                android:textColor="@color/colorAccent"
+                android:textSize="50px"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/photo_reg" />
 
-    <EditText
-        android:id="@+id/regUsernameEdit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginBottom="16dp"
-        android:hint="Username"
-        android:paddingHorizontal="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/emailText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <EditText
+                android:id="@+id/regUsernameEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:hint="Username"
+                android:paddingHorizontal="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/usernameText" />
 
-    <TextView
-        android:id="@+id/emailText"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginHorizontal="30dp"
-        android:text="Email"
-        android:textColor="@color/colorAccent"
-        android:textSize="50px"
-        app:layout_constraintBottom_toTopOf="@+id/regEmailEdit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/emailText"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="16dp"
+                android:text="Email"
+                android:textColor="@color/colorAccent"
+                android:textSize="50px"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/regUsernameEdit" />
 
-    <EditText
-        android:id="@+id/regEmailEdit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginBottom="16dp"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:paddingHorizontal="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/passText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <EditText
+                android:id="@+id/regEmailEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:paddingHorizontal="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailText" />
 
-    <TextView
-        android:id="@+id/passText"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginHorizontal="30dp"
-        android:text="Password"
-        android:textColor="@color/colorAccent"
-        android:textSize="50px"
-        app:layout_constraintBottom_toTopOf="@+id/regPasswordEdit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/passText"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="16dp"
+                android:text="Password"
+                android:textColor="@color/colorAccent"
+                android:textSize="50px"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/regEmailEdit" />
 
-    <EditText
-        android:id="@+id/regPasswordEdit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginBottom="20dp"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:paddingHorizontal="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/regButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <EditText
+                android:id="@+id/regPasswordEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingHorizontal="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passText" />
 
-    <Button
-        android:id="@+id/regButton"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginBottom="100dp"
-        android:background="@drawable/buttoncurve"
-        android:padding="10dp"
-        android:text="Register"
-        android:textAllCaps="false"
-        android:textColor="#696969"
-        android:textSize="40px"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <Button
+                android:id="@+id/regButton"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/buttoncurve"
+                android:padding="10dp"
+                android:text="Register"
+                android:textAllCaps="false"
+                android:textColor="#696969"
+                android:textSize="40px"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/regPasswordEdit" />
 
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

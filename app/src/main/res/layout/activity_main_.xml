@@ -62,7 +62,7 @@
         android:layout_marginBottom="32dp"
         android:background="#00FFFFFF"
         android:padding="10dp"
-        android:text="Not registered? Sign up now"
+        android:text="Create new account"
         android:textAllCaps="false"
         android:textColor="#000"
         android:textSize="50px"
