@@ -1,8 +1,10 @@
 package com.example.myapps
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapps.fragments.FavouriteFragment
@@ -28,7 +30,6 @@ class RecipeDetailActivity : AppCompatActivity() {
 
     val currentuser = FirebaseAuth.getInstance().currentUser!!.uid
     var favourite = Favourite()
-    var rec = Recipe()
     var rc_id : String = ""
     var exist  : Boolean = false
     var favDD : String = ""
@@ -47,7 +48,16 @@ class RecipeDetailActivity : AppCompatActivity() {
             }
         }
 
+        ratingText.setOnClickListener {
+            val intent = Intent(this,RatingReviewActivity::class.java)
+            intent.putExtra(RCID,rc_id)
+            startActivity(intent)
+        }
+
+
     }
+
+
 
 
 
@@ -62,6 +72,12 @@ class RecipeDetailActivity : AppCompatActivity() {
         displayFavourite()
         back_button.setOnClickListener {
             onBackPressed()
+        }
+
+        rate_button.setOnClickListener {
+            val intent = Intent(this,AddRatingActivity::class.java)
+            intent.putExtra(RCID,rc_id)
+            startActivity(intent)
         }
 
 
@@ -79,6 +95,7 @@ class RecipeDetailActivity : AppCompatActivity() {
         ref.setValue(favourite)
         favourite_button.setImageResource(R.drawable.favourite_button_red)
         exist = true
+        Toast.makeText(baseContext, "Added to favourite", Toast.LENGTH_SHORT).show()
     }
 
     private fun removeFavourite(){
@@ -88,7 +105,7 @@ class RecipeDetailActivity : AppCompatActivity() {
             ref.removeValue()
             favourite_button.setImageResource(R.drawable.favourite_button_orange)
             exist = false
-
+        Toast.makeText(baseContext, "Removed from favourite", Toast.LENGTH_SHORT).show()
 
     }
 
@@ -217,3 +234,5 @@ class RecipeDetailActivity : AppCompatActivity() {
 
 
 }
+
+
