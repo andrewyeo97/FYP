@@ -172,7 +172,7 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredientText"
-                tools:listitem="@layout/recycle_row_ingredients"></androidx.recyclerview.widget.RecyclerView>
+                tools:listitem="@layout/recycle_row_ingredients" />
 
 
             //nutrition fact label
@@ -533,7 +533,7 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/preparationText"
-                tools:listitem="@layout/recycle_row_preparation"></androidx.recyclerview.widget.RecyclerView>
+                tools:listitem="@layout/recycle_row_preparation" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

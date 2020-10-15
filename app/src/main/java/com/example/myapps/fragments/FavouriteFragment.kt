@@ -42,8 +42,8 @@ class FavouriteFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         init()
-
     }
+
 
     companion object{
         val RECIPE_KEY = "RECIPE_KEY"

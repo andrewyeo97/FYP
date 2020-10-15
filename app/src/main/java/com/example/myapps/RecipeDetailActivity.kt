@@ -50,7 +50,7 @@ class RecipeDetailActivity : AppCompatActivity() {
 
         ratingText.setOnClickListener {
             val intent = Intent(this,RatingReviewActivity::class.java)
-            intent.putExtra(RCID,rc_id)
+            intent.putExtra(RCID2,rc_id)
             startActivity(intent)
         }
 
@@ -141,7 +141,7 @@ class RecipeDetailActivity : AppCompatActivity() {
                     val rc = it.getValue(Recipe::class.java)
                     if (rc != null) {
                         Picasso.get().load(rc.recipeImage).into(recipeDetailImage)
-                        recipeDetailTitle.text = rc.recipeTitle
+                        recipeDetailTitle .text = rc.recipeTitle
 
 
                         //recipe nutrition fact
