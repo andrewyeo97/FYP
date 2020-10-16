@@ -6,4 +6,197 @@
     android:layout_height="match_parent"
     tools:context=".ManageAccountActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/const11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/back_btn_profile"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/back_button_orange"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/editProfileTitles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Manage Profile"
+            android:textColor="@color/orange"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/back_btn_profile"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.47" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/const11">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/profile_pic"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:civ_border_color="@android:color/transparent"
+            app:civ_border_width="1dp"
+            app:layout_constraintEnd_toStartOf="@+id/arrowProfilePic"
+            tools:layout_editor_absoluteY="-1dp" />
+
+        <ImageView
+            android:id="@+id/arrowProfilePic"
+            android:layout_width="30dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/gray_arrow_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ownerUsername"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:paddingTop="5dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:paddingRight="10dp"
+            android:text="Username"
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelProfilePhoto" />
+
+        <TextView
+            android:id="@+id/usernameProfiletxt"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:paddingTop="5dp"
+            android:layout_marginTop="8dp"
+            android:paddingRight="10dp"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            android:textAlignment="gravity"
+            android:gravity="right"
+            app:layout_constraintEnd_toStartOf="@+id/arrowUsername"
+            app:layout_constraintStart_toEndOf="@+id/ownerUsername"
+            app:layout_constraintTop_toBottomOf="@+id/labelProfilePhoto" />
+
+        <ImageView
+            android:id="@+id/arrowUsername"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/gray_arrow_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/arrowProfilePic" />
+
+        <TextView
+            android:id="@+id/passwordLabel"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:paddingTop="5dp"
+            android:text="Password"
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            app:layout_constraintEnd_toStartOf="@+id/arrowPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ownerUsername" />
+
+        <ImageView
+            android:id="@+id/arrowPassword"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/gray_arrow_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/arrowUsername" />
+
+        <TextView
+            android:id="@+id/labelProfilePhoto"
+            android:layout_width="0dp"
+            android:paddingTop="5dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Profile Photo"
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            app:layout_constraintEnd_toStartOf="@+id/profile_pic"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/emailProfileUnedit"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:text="Email"
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordLabel" />
+
+        <TextView
+            android:id="@+id/emailAns"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:paddingRight="40dp"
+            android:text=""
+            android:paddingTop="5dp"
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            android:textAlignment="gravity"
+            android:gravity="right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/emailProfileUnedit"
+            app:layout_constraintTop_toBottomOf="@+id/passwordLabel" />
+
+
+        <TextView
+            android:id="@+id/grayline5"
+            android:layout_width="match_parent"
+            android:layout_height="1.2dp"
+            android:background="@drawable/back"
+            app:layout_constraintBottom_toTopOf="@+id/profile_pic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

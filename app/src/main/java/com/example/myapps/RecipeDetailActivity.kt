@@ -55,13 +55,7 @@ class RecipeDetailActivity : AppCompatActivity() {
             intent.putExtra(RCID2,rc_id)
             startActivity(intent)
         }
-
-
     }
-
-
-
-
 
 
     override fun onStart() {
@@ -82,6 +76,7 @@ class RecipeDetailActivity : AppCompatActivity() {
             intent.putExtra(RCID,rc_id)
             startActivity(intent)
         }
+
     }
 
 
@@ -222,8 +217,6 @@ class RecipeDetailActivity : AppCompatActivity() {
     }
 
     private fun bindSteps() {
-
-
         val list = arrayListOf<Steps>()
 
         val ref = FirebaseDatabase.getInstance().getReference("/Steps").orderByChild("recipeID").equalTo(rc_id)

@@ -29,7 +29,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
 
         regButton.setOnClickListener {
-          signUpUser()
+            signUpUser()
         }
 
         photo_reg.setOnClickListener {
@@ -109,24 +109,23 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun uploadImageToFirebaseStorage(){
 
-            val filename = UUID.randomUUID().toString()
-            val ref = FirebaseStorage.getInstance().getReference("/ProfileImages/$filename")
+        val filename = UUID.randomUUID().toString()
+        val ref = FirebaseStorage.getInstance().getReference("/ProfileImages/$filename")
 
-            ref.putFile(selectedPhotoUri!!).addOnSuccessListener {
-                ref.downloadUrl.addOnSuccessListener {
-                    saveUserToDatabase(it.toString())
-                }
-
+        ref.putFile(selectedPhotoUri!!).addOnSuccessListener {
+            ref.downloadUrl.addOnSuccessListener {
+                saveUserToDatabase(it.toString())
             }
+
         }
+    }
 
     private fun saveUserToDatabase(profileImageUrl: String){
-                val ref = FirebaseDatabase.getInstance().getReference("/Users/${user.id}")
-                user.email = regEmailEdit.text.toString()
-                user.username = regUsernameEdit.text.toString()
-                user.profileImageUrl = profileImageUrl
-                ref.setValue(user)
+        val ref = FirebaseDatabase.getInstance().getReference("/Users/${user.id}")
+        user.email = regEmailEdit.text.toString()
+        user.username = regUsernameEdit.text.toString()
+        user.profileImageUrl = profileImageUrl
+        ref.setValue(user)
     }
 
-    }
-
+}
