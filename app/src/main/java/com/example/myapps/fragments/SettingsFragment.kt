@@ -1,5 +1,6 @@
 package com.example.myapps.fragments
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -35,11 +36,38 @@ class SettingsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
         signOutBtn.setOnClickListener {
-            logout()
+            val builder = AlertDialog.Builder(context, R.style.AlertTheme)
+            builder.setTitle("Sign Out")
+            builder.setIcon(R.drawable.ic_action_warning)
+            builder.setMessage("Do you want to sign out?")
+            builder.setPositiveButton("Yes"){ dialog, which ->
+                logout()
+            }
+            builder.setNegativeButton("No"){ dialog, which ->
+                Log.d("Exit","Exit")
+            }
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
+
         }
+
         imgViewSignOut.setOnClickListener {
-            logout()
+            val builder = AlertDialog.Builder(context, R.style.AlertTheme)
+            builder.setTitle("Sign Out")
+            builder.setIcon(R.drawable.ic_action_warning)
+            builder.setMessage("Do you want to sign out?")
+            builder.setPositiveButton("Yes"){ dialog, which ->
+                logout()
+            }
+            builder.setNegativeButton("No"){ dialog, which ->
+                Log.d("Exit","Exit")
+            }
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
         }
     }
 

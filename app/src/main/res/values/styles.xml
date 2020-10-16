@@ -24,5 +24,9 @@
         <item name="displayOptions">showHome|useLogo</item>
     </style>
 
+    <style name="AlertTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/orange</item>
+    </style>
+
 
 </resources>
