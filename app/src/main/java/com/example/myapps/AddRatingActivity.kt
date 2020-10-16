@@ -25,6 +25,7 @@ const val RCID = ""
 
 class AddRatingActivity : AppCompatActivity() {
 
+
     var isExist : Boolean = false
     var currentRatingID : String = ""
     var username: String = ""
@@ -118,8 +119,6 @@ class AddRatingActivity : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("Rating/$ratingID")
         ref.child("ratingNumber").setValue(ratingvalue)
         ref.child("review").setValue(txt_review)
-
-
         Toast.makeText(baseContext, "Rating edited successfully", Toast.LENGTH_SHORT).show()
         onBackPressed()
     }
@@ -129,7 +128,9 @@ class AddRatingActivity : AppCompatActivity() {
         ref.removeValue()
         Toast.makeText(baseContext, "Rating removed", Toast.LENGTH_SHORT).show()
         onBackPressed()
+
     }
+
 
 
     private fun loadRecipe(){

@@ -31,8 +31,10 @@ class RecipeDetailActivity : AppCompatActivity() {
     val currentuser = FirebaseAuth.getInstance().currentUser!!.uid
     var favourite = Favourite()
     var rc_id : String = ""
+    var isFound : Boolean = false
     var exist  : Boolean = false
     var favDD : String = ""
+    var avgRating: Float = 0.0F
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +63,7 @@ class RecipeDetailActivity : AppCompatActivity() {
 
 
 
+
     override fun onStart() {
         super.onStart()
         rc_id = intent.getStringExtra(HomeFragment.RECIPE_KEY)
@@ -68,7 +71,7 @@ class RecipeDetailActivity : AppCompatActivity() {
         init()
         bindIngredient()
         bindSteps()
-
+        showRatingText()
         displayFavourite()
         back_button.setOnClickListener {
             onBackPressed()
@@ -79,10 +82,8 @@ class RecipeDetailActivity : AppCompatActivity() {
             intent.putExtra(RCID,rc_id)
             startActivity(intent)
         }
-
-
-
     }
+
 
 
     private fun addFavourite(){
@@ -127,6 +128,36 @@ class RecipeDetailActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun showRatingText(){
+        val ref = FirebaseDatabase.getInstance().getReference("/Rating").orderByChild("recipeID").equalTo(rc_id)
+        ref.addListenerForSingleValueEvent(object : ValueEventListener{
+
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                isFound = false
+                snapshot.children.forEach {
+                    val rate = it.getValue(Rating::class.java)
+                    var counter: Int = 0
+                    var ttlRating: Float = 0.0F
+
+
+                    if (rate != null){
+                        isFound = true
+                        ttlRating += rate.ratingNumber
+                        counter++
+                    }
+                    avgRating = ttlRating/counter
+                    ratingText.text = (avgRating.toString() + " ratings | " + counter + " review(s)")
+
+                }
+                if(isFound == false){
+                    isFound = false
+                ratingText.text = ("No review yet")}
+            }
+        })
+
     }
     
 
