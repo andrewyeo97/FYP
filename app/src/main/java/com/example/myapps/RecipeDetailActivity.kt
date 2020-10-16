@@ -141,7 +141,7 @@ class RecipeDetailActivity : AppCompatActivity() {
                     val rc = it.getValue(Recipe::class.java)
                     if (rc != null) {
                         Picasso.get().load(rc.recipeImage).into(recipeDetailImage)
-                        recipeDetailTitle .text = rc.recipeTitle
+                        recipeDetailTitle.text = rc.recipeTitle
 
 
                         //recipe nutrition fact

@@ -67,27 +67,9 @@ class RatingReviewActivity : AppCompatActivity() {
                 snapshot.children.forEach {
                     val rate = it.getValue(Rating::class.java)
                     if (rate != null) {
-                        userid = rate.userID
                         found = true
-                        val ref2 = FirebaseDatabase.getInstance().getReference("/Users").orderByChild("id").equalTo(userid)
-                        ref2.addListenerForSingleValueEvent(object : ValueEventListener {
-                            override fun onCancelled(error: DatabaseError) {}
-                            override fun onDataChange(snapshot: DataSnapshot) {
-
-                                snapshot.children.forEach {
-                                    val user = it.getValue(User::class.java)
-                                    if (user != null) {
-                                        found = true
-                                        adapter.add(bindata(user))
-                                    }
-                                }
-
-
-                            }
-
-                        })
+                        adapter.add(bindRating(rate))
                     }
-
                 }
                 if(found == false){
                 adapter.add(bindNoReview("No review yet"))
@@ -97,10 +79,16 @@ class RatingReviewActivity : AppCompatActivity() {
         })
     }
 
-    class bindata(val user : User): Item<GroupieViewHolder>() {
+    class bindRating(val rates : Rating): Item<GroupieViewHolder>() {
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-            viewHolder.itemView.ratingOwnerName.text = user.username.capitalize()
-            Picasso.get().load(user.profileImageUrl).into(viewHolder.itemView.ratingImage)
+            var formate = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+            var str = formate.format(rates.ratingDate)
+
+            viewHolder.itemView.ratingOwnerName.text = rates.username.capitalize()
+            viewHolder.itemView.ratingBarRow.rating = rates.ratingNumber
+            viewHolder.itemView.commentText.text = rates.review
+            viewHolder.itemView.dateText.text = str.toString()
+            Picasso.get().load(rates.profileImageUrl).into(viewHolder.itemView.ratingImage)
         }
 
         override fun getLayout(): Int {
@@ -110,21 +98,6 @@ class RatingReviewActivity : AppCompatActivity() {
 
     }
 
-//    class bindRate(val rating:Rating): Item<GroupieViewHolder>() {
-//
-//        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-//            var formate = SimpleDateFormat("dd/MM/yyyy", Locale.US)
-//            var str = formate.format(rating.ratingDate)
-//
-//            viewHolder.itemView.ratingBarRow.rating = rating.ratingNumber
-//            viewHolder.itemView.dateText.text = str.toString()
-//            viewHolder.itemView.commentText.text = rating.review
-//        }
-//
-//        override fun getLayout(): Int {
-//            return R.layout.recycle_row_ratings
-//        }
-//    }
 
     class bindNoReview(val str: String): Item<GroupieViewHolder>() {
 

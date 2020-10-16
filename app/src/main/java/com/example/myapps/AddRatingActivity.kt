@@ -27,9 +27,10 @@ class AddRatingActivity : AppCompatActivity() {
 
     var isExist : Boolean = false
     var currentRatingID : String = ""
-    var id: String = ""
+    var username: String = ""
+    var url: String = ""
     var rid : String = ""
-    val currentuser = FirebaseAuth.getInstance().currentUser!!.uid
+    val currentuserID = FirebaseAuth.getInstance().currentUser!!.uid
     var rating = Rating()
     var currentDate = Calendar.getInstance().time
 
@@ -39,7 +40,7 @@ class AddRatingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_rating)
         deleteBtn.visibility = View.GONE
         deleteBtn.isClickable = false
-
+        findUser()
 
         postButton.setOnClickListener {
             if (isExist == false) {
@@ -73,6 +74,22 @@ class AddRatingActivity : AppCompatActivity() {
         loadRating()
     }
 
+    private fun findUser(){
+        val ref = FirebaseDatabase.getInstance().getReference("/Users").orderByChild("id").equalTo(currentuserID)
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach {
+                    val user = it.getValue(User::class.java)
+                    if (user != null) {
+                        username = user.username
+                        url = user.profileImageUrl
+                    }
+                }
+            }
+        })
+    }
+
 
     private fun addNewRating(){
         val ratingID = UUID.randomUUID().toString()
@@ -81,8 +98,10 @@ class AddRatingActivity : AppCompatActivity() {
         rating.ratingDate = currentDate
         rating.ratingNumber = ratingBar.rating.toFloat()
         rating.recipeID = rid
-        rating.userID = currentuser
+        rating.userID = currentuserID
         rating.review = comment.text.toString()
+        rating.username = username
+        rating.profileImageUrl = url
         ref.setValue(rating)
 
         Toast.makeText(baseContext, "Rating completed", Toast.LENGTH_SHORT).show()
@@ -92,13 +111,13 @@ class AddRatingActivity : AppCompatActivity() {
     private fun modifyRating(){
         val ratingID = currentRatingID
 
-            val txt_review = comment.text.toString()
-            val ratingvalue = ratingBar.rating
+        val txt_review = comment.text.toString()
+        val ratingvalue = ratingBar.rating
 
 
-            val ref = FirebaseDatabase.getInstance().getReference("Rating/$ratingID")
-            ref.child("ratingNumber").setValue(ratingvalue)
-            ref.child("review").setValue(txt_review)
+        val ref = FirebaseDatabase.getInstance().getReference("Rating/$ratingID")
+        ref.child("ratingNumber").setValue(ratingvalue)
+        ref.child("review").setValue(txt_review)
 
 
         Toast.makeText(baseContext, "Rating edited successfully", Toast.LENGTH_SHORT).show()
@@ -129,14 +148,14 @@ class AddRatingActivity : AppCompatActivity() {
     }
 
     private fun loadRating(){
-        val ref2 = FirebaseDatabase.getInstance().getReference("/Rating").orderByChild("userID").equalTo(currentuser)
+        val ref2 = FirebaseDatabase.getInstance().getReference("/Rating").orderByChild("userID").equalTo(currentuserID)
         ref2.addListenerForSingleValueEvent(object :ValueEventListener{
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEach {
                     val rate = it.getValue(Rating::class.java)
                     if (rate != null) {
-                        id = rate.recipeID
+
 
                         val ref3 = FirebaseDatabase.getInstance().getReference("/Rating")
                             .orderByChild("recipeID").equalTo(rid)
@@ -160,13 +179,12 @@ class AddRatingActivity : AppCompatActivity() {
                         })
                     }
 
-                    }
                 }
+            }
 
         })
     }
 
 
 }
-
 
