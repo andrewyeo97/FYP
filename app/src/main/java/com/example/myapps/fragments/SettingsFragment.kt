@@ -109,7 +109,7 @@ class SettingsFragment : Fragment() {
                 snapshot.children.forEach {
                     val user = it.getValue(User::class.java)
                     if (user != null){
-                        manageAccBtn.text = user.username.capitalize()
+                        manageAccBtn.text = user.username
                         Picasso.get().load(user.profileImageUrl).into(imgViewManageAccount)
                     }
 

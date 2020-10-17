@@ -127,6 +127,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/passText" />
 
+            <TextView
+                android:id="@+id/passwordLabel"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="Password must have at least 8 characters and contain both numbers and letters without spacing."
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/regPasswordEdit" />
+
             <Button
                 android:id="@+id/regButton"
                 android:layout_width="match_parent"
@@ -141,7 +156,7 @@
                 android:textSize="40px"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/regPasswordEdit" />
+                app:layout_constraintTop_toBottomOf="@+id/passwordLabel" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

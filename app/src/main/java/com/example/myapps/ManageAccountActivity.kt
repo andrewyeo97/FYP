@@ -23,7 +23,7 @@ import java.util.*
 
 class ManageAccountActivity : AppCompatActivity() {
 
-    val currentuserID = FirebaseAuth.getInstance().currentUser!!.uid
+    val currentuserID = FirebaseAuth.getInstance().uid.toString()
     var selectedPhotoUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +51,12 @@ class ManageAccountActivity : AppCompatActivity() {
         arrowUsername.setOnClickListener {
             changeUsername()
         }
+        passwordLabels.setOnClickListener {
+            changePassword()
+        }
+        arrowPassword.setOnClickListener {
+            changePassword()
+        }
 
     }
 
@@ -65,6 +71,11 @@ class ManageAccountActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun changePassword(){
+        val intent = Intent(this,EditPasswordActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun loadProfile(){
         val ref = FirebaseDatabase.getInstance().getReference("/Users").orderByChild("id").equalTo(currentuserID)
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -73,7 +84,7 @@ class ManageAccountActivity : AppCompatActivity() {
                 snapshot.children.forEach {
                     val user = it.getValue(User::class.java)
                     if (user != null){
-                        usernameProfiletxt.text = user.username.capitalize()
+                        usernameProfiletxt.text = user.username
                         emailAns.text = user.email
                         Picasso.get().load(user.profileImageUrl).into(profile_pic)
                     }

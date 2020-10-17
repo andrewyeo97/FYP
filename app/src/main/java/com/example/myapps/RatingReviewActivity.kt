@@ -84,7 +84,7 @@ class RatingReviewActivity : AppCompatActivity() {
             var formate = SimpleDateFormat("dd/MM/yyyy", Locale.US)
             var str = formate.format(rates.ratingDate)
 
-            viewHolder.itemView.ratingOwnerName.text = rates.username.capitalize()
+            viewHolder.itemView.ratingOwnerName.text = rates.username
             viewHolder.itemView.ratingBarRow.rating = rates.ratingNumber
             viewHolder.itemView.commentText.text = rates.review
             viewHolder.itemView.dateText.text = str.toString()
@@ -94,10 +94,7 @@ class RatingReviewActivity : AppCompatActivity() {
         override fun getLayout(): Int {
             return R.layout.recycle_row_ratings
         }
-
-
     }
-
 
     class bindNoReview(val str: String): Item<GroupieViewHolder>() {
 

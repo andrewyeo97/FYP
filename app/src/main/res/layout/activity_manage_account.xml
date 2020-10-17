@@ -115,7 +115,7 @@
             app:layout_constraintTop_toBottomOf="@+id/arrowProfilePic" />
 
         <TextView
-            android:id="@+id/passwordLabel"
+            android:id="@+id/passwordLabels"
             android:layout_width="0dp"
             android:layout_height="42dp"
             android:layout_marginStart="16dp"
@@ -164,7 +164,7 @@
             android:textColor="@color/black"
             android:textSize="17dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/passwordLabels" />
 
         <TextView
             android:id="@+id/emailAns"
@@ -182,7 +182,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/emailProfileUnedit"
-            app:layout_constraintTop_toBottomOf="@+id/passwordLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/passwordLabels" />
 
 
         <TextView
@@ -193,9 +193,6 @@
             app:layout_constraintBottom_toTopOf="@+id/profile_pic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

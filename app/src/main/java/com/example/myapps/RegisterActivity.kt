@@ -16,8 +16,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_edit_password.*
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -95,15 +98,23 @@ class RegisterActivity : AppCompatActivity() {
         val email = regEmailEdit.text.toString()
         val pass = regPasswordEdit.text.toString()
 
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,pass).addOnCompleteListener {
-            if(!it.isSuccessful){
-                Toast.makeText(baseContext, "Register failed.", Toast.LENGTH_SHORT).show()
-            }else{
-                user.id = FirebaseAuth.getInstance().uid.toString()
-                uploadImageToFirebaseStorage()
-                startActivity(Intent(this, UserLoginPage::class.java))
-                finish()
-            }
+        if(isValidPassword(pass)) {
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pass)
+                .addOnCompleteListener {
+                    if (!it.isSuccessful) {
+                        Toast.makeText(baseContext, "Register failed.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        user.id = FirebaseAuth.getInstance().uid.toString()
+                        uploadImageToFirebaseStorage()
+                        startActivity(Intent(this, UserLoginPage::class.java))
+                        finish()
+                    }
+                }
+        }
+        else{
+            regPasswordEdit.error = "Password does not fulfill the criteria"
+            regPasswordEdit.requestFocus()
+            return
         }
     }
 
@@ -126,6 +137,16 @@ class RegisterActivity : AppCompatActivity() {
         user.username = regUsernameEdit.text.toString()
         user.profileImageUrl = profileImageUrl
         ref.setValue(user)
+    }
+
+    private fun isValidPassword(password: String?): Boolean {
+        val pattern: Pattern
+        val matcher: Matcher
+        val PASSWORD_PATTERN =
+            "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{8,}$"
+        pattern = Pattern.compile(PASSWORD_PATTERN)
+        matcher = pattern.matcher(password)
+        return matcher.matches()
     }
 
 }

@@ -31,10 +31,9 @@ class AddRatingActivity : AppCompatActivity() {
     var username: String = ""
     var url: String = ""
     var rid : String = ""
-    val currentuserID = FirebaseAuth.getInstance().currentUser!!.uid
+    val currentuserID = FirebaseAuth.getInstance().uid.toString()
     var rating = Rating()
     var currentDate = Calendar.getInstance().time
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +63,8 @@ class AddRatingActivity : AppCompatActivity() {
         deleteBtn.setOnClickListener {
             deleteRating()
         }
+
+
 
 
     }
@@ -149,40 +150,28 @@ class AddRatingActivity : AppCompatActivity() {
     }
 
     private fun loadRating(){
-        val ref2 = FirebaseDatabase.getInstance().getReference("/Rating").orderByChild("userID").equalTo(currentuserID)
-        ref2.addListenerForSingleValueEvent(object :ValueEventListener{
+
+        val reff = FirebaseDatabase.getInstance().getReference("/Rating").orderByChild("recipeID").equalTo(rid)
+        reff.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEach {
-                    val rate = it.getValue(Rating::class.java)
-                    if (rate != null) {
+                    val rating = it.getValue(Rating::class.java)
+                    if(rating != null){
 
+                        if(rating.userID.equals(currentuserID)){
+                            ratingBar.rating = rating.ratingNumber.toString().toFloat()
+                            comment.setText(rating.review)
+                            currentRatingID = rating.ratingID
+                            isExist = true
+                            deleteBtn.visibility = View.VISIBLE
+                            deleteBtn.isClickable = true
 
-                        val ref3 = FirebaseDatabase.getInstance().getReference("/Rating")
-                            .orderByChild("recipeID").equalTo(rid)
-                        ref3.addListenerForSingleValueEvent(object : ValueEventListener {
-                            override fun onCancelled(error: DatabaseError) {}
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                snapshot.children.forEach {
-                                    val rate2 = it.getValue(Rating::class.java)
-                                    if (rate2 != null) {
-                                        ratingBar.rating = rate2.ratingNumber.toString().toFloat()
-                                        comment.setText(rate2.review)
-                                        currentRatingID = rate2.ratingID
-                                        isExist = true
-                                        deleteBtn.visibility = View.VISIBLE
-                                        deleteBtn.isClickable = true
-                                    }
-                                }
-                            }
-
-
-                        })
+                        }
                     }
 
                 }
             }
-
         })
     }
 

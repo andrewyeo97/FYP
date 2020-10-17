@@ -28,13 +28,13 @@ import java.util.*
 
 class RecipeDetailActivity : AppCompatActivity() {
 
-    val currentuser = FirebaseAuth.getInstance().currentUser!!.uid
+    val currentuser = FirebaseAuth.getInstance().uid.toString()
     var favourite = Favourite()
     var rc_id : String = ""
     var isFound : Boolean = false
     var exist  : Boolean = false
     var favDD : String = ""
-    var avgRating: Float = 0.0F
+
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,8 +95,6 @@ class RecipeDetailActivity : AppCompatActivity() {
     }
 
     private fun removeFavourite(){
-
-
             val ref = FirebaseDatabase.getInstance().getReference("/Favourite/$favDD")
             ref.removeValue()
             favourite_button.setImageResource(R.drawable.favourite_button_orange)
@@ -126,29 +124,27 @@ class RecipeDetailActivity : AppCompatActivity() {
     }
 
     private fun showRatingText(){
+        isFound = false
+        var avgRating: Float = 0.0F
+        var counter: Int = 0
+        var ttlRating: Float = 0.0F
         val ref = FirebaseDatabase.getInstance().getReference("/Rating").orderByChild("recipeID").equalTo(rc_id)
         ref.addListenerForSingleValueEvent(object : ValueEventListener{
 
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
-                isFound = false
                 snapshot.children.forEach {
                     val rate = it.getValue(Rating::class.java)
-                    var counter: Int = 0
-                    var ttlRating: Float = 0.0F
-
-
                     if (rate != null){
                         isFound = true
-                        ttlRating += rate.ratingNumber
-                        counter++
+                        ttlRating = ttlRating + rate.ratingNumber
+                        counter = counter + 1
                     }
-                    avgRating = ttlRating/counter
-                    ratingText.text = (avgRating.toString() + " ratings | " + counter + " review(s)")
 
                 }
+                avgRating = ttlRating/counter
+                ratingText.text = (avgRating.toString() + " ratings | " + counter + " review(s)")
                 if(isFound == false){
-                    isFound = false
                 ratingText.text = ("No review yet")}
             }
         })
