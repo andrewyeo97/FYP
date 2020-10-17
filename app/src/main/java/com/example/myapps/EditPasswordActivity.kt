@@ -43,7 +43,24 @@ class EditPasswordActivity : AppCompatActivity() {
 
     private fun changePassword(){
 
-        if(oldPasswordEdit.text.isNotEmpty() && newPasswordEdit.text.toString().isNotEmpty() && confirmPasswordEdit.text.toString().isNotEmpty()) {
+        if(oldPasswordEdit.text.toString().isEmpty()){
+            oldPasswordEdit.error = "Please enter the field"
+            oldPasswordEdit.requestFocus()
+            return
+        }
+
+        if(newPasswordEdit.text.toString().isEmpty()){
+            newPasswordEdit.error = "Please enter the field"
+            newPasswordEdit.requestFocus()
+            return
+        }
+
+        if(confirmPasswordEdit.text.toString().isEmpty()){
+            confirmPasswordEdit.error = "Please enter the field"
+            confirmPasswordEdit.requestFocus()
+            return
+        }
+
             if (newPasswordEdit.text.toString().equals(confirmPasswordEdit.text.toString())) {
                 if(isValidPassword(newPasswordEdit.text.toString().trim())) {
                     val user = auth.currentUser
@@ -71,11 +88,9 @@ class EditPasswordActivity : AppCompatActivity() {
                                         }
                                     }
                             } else {
-                                Toast.makeText(
-                                    baseContext,
-                                    "Reauthentication failed",
-                                    Toast.LENGTH_SHORT
-                                ).show()}
+                                oldPasswordEdit.error = "Current password is incorrect"
+                                oldPasswordEdit.requestFocus()
+                                }
                         }
                     } else {
                         startActivity(Intent(this, UserLoginPage::class.java))
@@ -86,13 +101,10 @@ class EditPasswordActivity : AppCompatActivity() {
                     newPasswordEdit.requestFocus()
                     return}
             } else {
-                newPasswordEdit.error = "Password mismatch"
-                newPasswordEdit.requestFocus()
+                confirmPasswordEdit.error = "Password mismatch"
+                confirmPasswordEdit.requestFocus()
                 return}
-        }else{
-            oldPasswordEdit.error = "Please enter all the fields"
-            oldPasswordEdit.requestFocus()
-            return}
+
     }
 
 }
