@@ -3,6 +3,7 @@ package com.example.myapps
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -34,7 +35,7 @@ class RecipeDetailActivity : AppCompatActivity() {
     var isFound : Boolean = false
     var exist  : Boolean = false
     var favDD : String = ""
-
+    private val handlers: Handler = Handler()
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +56,13 @@ class RecipeDetailActivity : AppCompatActivity() {
             intent.putExtra(RCID2,rc_id)
             startActivity(intent)
         }
+
+        chat_button.setOnClickListener {
+            val intent = Intent(this,ChatActivity::class.java)
+            intent.putExtra(RCID3,rc_id)
+            startActivity(intent)
+        }
+
     }
 
 
@@ -62,10 +70,11 @@ class RecipeDetailActivity : AppCompatActivity() {
         super.onStart()
         rc_id = intent.getStringExtra(HomeFragment.RECIPE_KEY)
         rc_id = intent.getStringExtra(FavouriteFragment.RECIPE_KEY)
+        ToastRunnabler.run()
         init()
         bindIngredient()
         bindSteps()
-        showRatingText()
+        //showRatingText()
         displayFavourite()
         back_button.setOnClickListener {
             onBackPressed()
@@ -77,6 +86,16 @@ class RecipeDetailActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handlers.removeCallbacks(ToastRunnabler)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        ToastRunnabler.run()
     }
 
 
@@ -123,7 +142,9 @@ class RecipeDetailActivity : AppCompatActivity() {
         })
     }
 
-    private fun showRatingText(){
+    private val ToastRunnabler: Runnable = object : Runnable {
+        override fun run() {
+   // private fun showRatingText(){
         isFound = false
         var avgRating: Float = 0.0F
         var counter: Int = 0
@@ -148,8 +169,9 @@ class RecipeDetailActivity : AppCompatActivity() {
                 ratingText.text = ("No review yet")}
             }
         })
-
-    }
+            handlers.postDelayed(this, 100)
+        }
+ }
     
 
     private fun init() {
@@ -182,8 +204,6 @@ class RecipeDetailActivity : AppCompatActivity() {
 
 
     private fun bindIngredient() {
-
-
         val ref = FirebaseDatabase.getInstance().getReference("/Ingredient").orderByChild("recipeID").equalTo(rc_id)
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
@@ -223,7 +243,6 @@ class RecipeDetailActivity : AppCompatActivity() {
                 snapshot.children.forEach {
                     val stp = it.getValue(Steps::class.java)
                     if (stp != null) {
-
                         list.add(stp)
                         if(list.count() == snapshot.children.count()){
                             list.sortBy { it.stepNo }
@@ -231,11 +250,9 @@ class RecipeDetailActivity : AppCompatActivity() {
                                 adapter.add(bindataStep(it))
                             }
                         }
-
                     }
                 }
                 ryr_steps.adapter = adapter
-
             }
         })
     }
