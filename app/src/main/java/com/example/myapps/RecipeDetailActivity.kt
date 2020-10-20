@@ -85,7 +85,6 @@ class RecipeDetailActivity : AppCompatActivity() {
             intent.putExtra(RCID,rc_id)
             startActivity(intent)
         }
-
     }
 
     override fun onPause() {
@@ -97,8 +96,6 @@ class RecipeDetailActivity : AppCompatActivity() {
         super.onResume()
         ToastRunnabler.run()
     }
-
-
 
     private fun addFavourite(){
         val favID = UUID.randomUUID().toString()
@@ -144,7 +141,6 @@ class RecipeDetailActivity : AppCompatActivity() {
 
     private val ToastRunnabler: Runnable = object : Runnable {
         override fun run() {
-   // private fun showRatingText(){
         isFound = false
         var avgRating: Float = 0.0F
         var counter: Int = 0

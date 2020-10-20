@@ -4,28 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".fragments.FavouriteFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:id="@+id/constraint1"
+        android:background="@color/white"
         android:layout_height="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <EditText
-            android:id="@+id/searchFavouriteText"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
+            android:id="@+id/searchFavouriteView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/round_shape_gray"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:hint="Search Favourite"
-            android:inputType="textPersonName"
+            android:iconifiedByDefault="false"
+            android:imeOptions="actionSearch"
+            android:queryBackground="@android:color/transparent"
             android:textAlignment="center"
+            android:theme="@style/SearchViewStyle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+        </EditText>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,8 +54,10 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="115dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/recycle_row_item2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

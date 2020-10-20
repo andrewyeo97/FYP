@@ -1,12 +1,17 @@
 package com.example.myapps.fragments
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import com.example.myapps.*
 
 import com.google.firebase.auth.FirebaseAuth
@@ -30,6 +35,7 @@ import kotlinx.android.synthetic.main.recycle_row_item2.view.*
 class FavouriteFragment : Fragment() {
     var rc_idd = ""
     val currentuser = FirebaseAuth.getInstance().currentUser!!.uid
+    val listz = arrayListOf<Recipe>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +48,33 @@ class FavouriteFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         init()
+
+        searchFavouriteView.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if(searchFavouriteView.text.isEmpty()){
+                    searchFavouriteView.clearFocus()
+                    hideKeyboard()
+                }
+                search(searchFavouriteView.text.toString())
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                search(searchFavouriteView.text.toString())
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                search(searchFavouriteView.text.toString())
+            }
+        })
+    }
+
+    private fun search(title : String){
+        val adapter = GroupAdapter<GroupieViewHolder>()
+
+        listz.forEach {
+            if(it.recipeTitle.toLowerCase().contains(title.toLowerCase())){
+                adapter.add(bindata(it))
+            }
+        }
+        ryr_favourite.adapter = adapter
     }
 
 
@@ -49,7 +82,20 @@ class FavouriteFragment : Fragment() {
         val RECIPE_KEY = "RECIPE_KEY"
     }
 
-    fun init() {
+    private fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+
+    private fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
+
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun init() {
         val ref = FirebaseDatabase.getInstance().getReference("/Favourite").orderByChild("userID")
             .equalTo(currentuser)
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -71,6 +117,7 @@ class FavouriteFragment : Fragment() {
                                     val res = it.getValue(Recipe::class.java)
                                     if (res != null) {
                                         adapter.add(bindata(res))
+                                        listz.add(res)
                                     }
                                 }
                             }
@@ -93,7 +140,7 @@ class FavouriteFragment : Fragment() {
 
     }
 
-    class bindata(val recipe : Recipe): Item<GroupieViewHolder>() {
+    private class bindata(val recipe : Recipe): Item<GroupieViewHolder>() {
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
             viewHolder.itemView.ryr_title2.text = recipe.recipeTitle
             Picasso.get().load(recipe.recipeImage).into(viewHolder.itemView.ryr_image2)

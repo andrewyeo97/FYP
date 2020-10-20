@@ -86,7 +86,6 @@ class ChatActivity : AppCompatActivity() {
         ref.addValueEventListener(object :ValueEventListener{
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
-                val myadapter = GroupAdapter<GroupieViewHolder>()
                 snapshot.children.forEach {
                     found = false
                     val m = it.getValue(Comment::class.java)

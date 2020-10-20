@@ -28,5 +28,11 @@
         <item name="colorAccent">@color/orange</item>
     </style>
 
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:editTextColor">@color/black</item>
+        <item name="android:textColorHint">@color/gray</item>
+    </style>
+
 
 </resources>
