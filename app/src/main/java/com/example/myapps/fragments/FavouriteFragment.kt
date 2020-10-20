@@ -36,6 +36,7 @@ class FavouriteFragment : Fragment() {
     var rc_idd = ""
     val currentuser = FirebaseAuth.getInstance().currentUser!!.uid
     val listz = arrayListOf<Recipe>()
+    val adapter = GroupAdapter<GroupieViewHolder>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,12 +68,20 @@ class FavouriteFragment : Fragment() {
     }
 
     private fun search(title : String){
-        val adapter = GroupAdapter<GroupieViewHolder>()
-
+        adapter.clear()
         listz.forEach {
             if(it.recipeTitle.toLowerCase().contains(title.toLowerCase())){
                 adapter.add(bindata(it))
             }
+        }
+        adapter.setOnItemClickListener { item, view ->
+            val recDetail = item as bindata
+            val intent = Intent(view.context, RecipeDetailActivity::class.java)
+            intent.putExtra(RECIPE_KEY, recDetail.recipe.recipeID)
+            adapter.clear()
+            listz.clear()
+            searchFavouriteView.setText("")
+            startActivity(intent)
         }
         ryr_favourite.adapter = adapter
     }
@@ -80,6 +89,12 @@ class FavouriteFragment : Fragment() {
 
     companion object{
         val RECIPE_KEY = "RECIPE_KEY"
+    }
+
+    override fun onResume() {
+        super.onResume()
+        searchFavouriteView.setText("")
+        listz.clear()
     }
 
     private fun Fragment.hideKeyboard() {
@@ -96,6 +111,8 @@ class FavouriteFragment : Fragment() {
     }
 
     private fun init() {
+        listz.clear()
+        adapter.clear()
         val ref = FirebaseDatabase.getInstance().getReference("/Favourite").orderByChild("userID")
             .equalTo(currentuser)
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -120,19 +137,22 @@ class FavouriteFragment : Fragment() {
                                         listz.add(res)
                                     }
                                 }
+                                adapter.setOnItemClickListener { item, view ->
+                                    val recDetail = item as bindata
+                                    val intent = Intent(view.context, RecipeDetailActivity::class.java)
+                                    intent.putExtra(RECIPE_KEY, recDetail.recipe.recipeID)
+                                    adapter.clear()
+                                    listz.clear()
+                                    searchFavouriteView.setText("")
+                                    startActivity(intent)
+                                }
+                                ryr_favourite.adapter = adapter
                             }
 
                         })
 
                     }
 
-                }
-                ryr_favourite.adapter = adapter
-                adapter.setOnItemClickListener { item, view ->
-                    val recDetail = item as bindata
-                    val intent = Intent(view.context, RecipeDetailActivity::class.java)
-                    intent.putExtra(RECIPE_KEY, recDetail.recipe.recipeID)
-                    startActivity(intent)
                 }
 
             }

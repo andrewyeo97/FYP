@@ -36,7 +36,7 @@ import kotlinx.android.synthetic.main.recycle_row_item.view.*
 
 class HomeFragment : Fragment() {
     val list = arrayListOf<Recipe>()
-
+    val adapter = GroupAdapter<GroupieViewHolder>()
     override fun onStart() {
         super.onStart()
         init()
@@ -79,8 +79,7 @@ class HomeFragment : Fragment() {
 
 
     private fun search(title : String){
-        val adapter = GroupAdapter<GroupieViewHolder>()
-
+        adapter.clear()
         list.forEach {
             if(it.recipeTitle.toLowerCase().contains(title.toLowerCase())){
                 adapter.add(bindata(it))
@@ -89,14 +88,21 @@ class HomeFragment : Fragment() {
         ryr_view.adapter = adapter
     }
 
+    override fun onResume() {
+        super.onResume()
+        searchRecipeView.setText("")
+        list.clear()
+    }
 
 
     private fun init(){
+        list.clear()
+        adapter.clear()
         val ref = FirebaseDatabase.getInstance().getReference("/Recipe")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
-                val adapter = GroupAdapter<GroupieViewHolder>()
+
                 snapshot.children.forEach {
                     val rep = it.getValue(Recipe::class.java)
                     if(rep != null){
@@ -108,6 +114,9 @@ class HomeFragment : Fragment() {
                     val recDetail = item as bindata
                     val intent = Intent(view.context,RecipeDetailActivity::class.java)
                     intent.putExtra(RECIPE_KEY,recDetail.recipe.recipeID)
+                    adapter.clear()
+                    list.clear()
+                    searchRecipeView.setText("")
                     startActivity(intent)
                 }
                 ryr_view.adapter = adapter
