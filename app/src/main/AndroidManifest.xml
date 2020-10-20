@@ -5,14 +5,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/orange_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/round_shape_gray"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ChatActivity"></activity>
         <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".ForgetPasswordActivity" />
         <activity android:name=".EditPasswordActivity" />
         <activity android:name=".EditUsernameActivity" />
         <activity android:name=".ManageAccountActivity">
