@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.user_login_page.*
 class UserLoginPage : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    val existUser = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

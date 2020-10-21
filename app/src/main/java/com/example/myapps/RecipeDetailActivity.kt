@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -15,13 +14,12 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
-import kotlinx.android.synthetic.main.activity_insert_recipe.*
 import kotlinx.android.synthetic.main.activity_recipe_detail.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.recycle_row_ingredients.view.*
 import kotlinx.android.synthetic.main.recycle_row_preparation.view.*
 import java.util.*
@@ -87,6 +85,7 @@ class RecipeDetailActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onPause() {
         super.onPause()
         handlers.removeCallbacks(ToastRunnabler)
@@ -118,7 +117,6 @@ class RecipeDetailActivity : AppCompatActivity() {
         Toast.makeText(baseContext, "Removed from favourite", Toast.LENGTH_SHORT).show()
 
     }
-
 
     private fun displayFavourite(){
         val ref = FirebaseDatabase.getInstance().getReference("/Favourite").orderByChild("userID").equalTo(currentuser)
@@ -200,6 +198,7 @@ class RecipeDetailActivity : AppCompatActivity() {
 
 
     private fun bindIngredient() {
+
         val ref = FirebaseDatabase.getInstance().getReference("/Ingredient").orderByChild("recipeID").equalTo(rc_id)
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}

@@ -25,8 +25,12 @@
                 android:value=".RecipeDetailActivity" />
         </activity>
         <activity android:name=".RatingReviewActivity" />
-        <activity android:name=".InsertSteps" />
-        <activity android:name=".InsertIngredient" />
+        <activity android:name=".InsertSteps">
+
+        </activity>
+        <activity android:name=".InsertIngredient">
+
+        </activity>
         <activity
             android:name=".RecipeDetailActivity"
             android:label="">
@@ -34,7 +38,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".DashboardActivity" />
         </activity>
-        <activity android:name=".InsertRecipe" />
+        <activity android:name=".InsertRecipe">
+
+        </activity>
         <activity
             android:name=".DashboardActivity"
             android:screenOrientation="portrait"

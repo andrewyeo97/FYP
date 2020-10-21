@@ -12,6 +12,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.example.myapps.*
 
 import com.google.firebase.auth.FirebaseAuth
@@ -36,6 +38,7 @@ class FavouriteFragment : Fragment() {
     var rc_idd = ""
     val currentuser = FirebaseAuth.getInstance().currentUser!!.uid
     val listz = arrayListOf<Recipe>()
+    val filterz = arrayListOf<Recipe>()
     val adapter = GroupAdapter<GroupieViewHolder>()
 
     override fun onCreateView(
@@ -49,6 +52,21 @@ class FavouriteFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         init()
+        spinnerInit()
+
+        spinnerCategory2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                filterRecipe()
+            }
+        }
 
         searchFavouriteView.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -113,6 +131,7 @@ class FavouriteFragment : Fragment() {
     private fun init() {
         listz.clear()
         adapter.clear()
+        filterz.clear()
         val ref = FirebaseDatabase.getInstance().getReference("/Favourite").orderByChild("userID")
             .equalTo(currentuser)
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -135,6 +154,7 @@ class FavouriteFragment : Fragment() {
                                     if (res != null) {
                                         adapter.add(bindata(res))
                                         listz.add(res)
+                                        filterz.add(res)
                                     }
                                 }
                                 adapter.setOnItemClickListener { item, view ->
@@ -143,6 +163,7 @@ class FavouriteFragment : Fragment() {
                                     intent.putExtra(RECIPE_KEY, recDetail.recipe.recipeID)
                                     adapter.clear()
                                     listz.clear()
+                                    filterz.clear()
                                     searchFavouriteView.setText("")
                                     startActivity(intent)
                                 }
@@ -173,6 +194,38 @@ class FavouriteFragment : Fragment() {
 
     }
 
+    private fun spinnerInit(){
+        val array = resources.getStringArray(R.array.categoryList)
+        val adapter = ArrayAdapter(context!!.applicationContext,R.layout.support_simple_spinner_dropdown_item,array)
+        spinnerCategory2.adapter = adapter
+    }
+
+    private fun filterRecipe(){
+        val search = spinnerCategory2.selectedItem.toString()
+        val adapterf = GroupAdapter<GroupieViewHolder>()
+
+        filterz.forEach {
+            if(!(search.equals("All"))){
+                if(it.category.toUpperCase().contains(search.toUpperCase())){
+                    adapterf.add(bindata(it))
+                }
+            }else{
+                adapterf.add(bindata(it))
+            }
+
+        }
+        adapterf.setOnItemClickListener { item, view ->
+            val recDetail = item as bindata
+            val intent = Intent(view.context,RecipeDetailActivity::class.java)
+            intent.putExtra(RECIPE_KEY,recDetail.recipe.recipeID)
+            adapter.clear()
+            listz.clear()
+            filterz.clear()
+            searchFavouriteView.setText("")
+            startActivity(intent)
+        }
+        ryr_favourite.adapter = adapterf
+    }
 
 
 }

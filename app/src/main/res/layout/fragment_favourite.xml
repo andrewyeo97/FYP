@@ -8,21 +8,23 @@
     tools:context=".fragments.FavouriteFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
         android:id="@+id/constraint1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
         android:background="@color/white"
-        android:layout_height="60dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
         <EditText
             android:id="@+id/searchFavouriteView"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
             android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/round_shape_gray"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -33,11 +35,24 @@
             android:textAlignment="center"
             android:theme="@style/SearchViewStyle"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/spinnerCategory2"
+            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
         </EditText>
+
+        <Spinner
+            android:id="@+id/spinnerCategory2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,7 +60,7 @@
         android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@id/constraint1"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="70dp">
 
 
         <androidx.recyclerview.widget.RecyclerView

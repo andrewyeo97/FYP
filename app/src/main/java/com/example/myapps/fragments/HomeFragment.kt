@@ -5,15 +5,18 @@ package com.example.myapps.fragments
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import com.example.myapps.Favourite
 import com.example.myapps.R
 import com.example.myapps.Recipe
 import com.example.myapps.RecipeDetailActivity
@@ -25,9 +28,10 @@ import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
-import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.activity_recipe_detail.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.recycle_row_item.view.*
+
 
 /**
  * A simple [Fragment] subclass.
@@ -35,11 +39,28 @@ import kotlinx.android.synthetic.main.recycle_row_item.view.*
 
 
 class HomeFragment : Fragment() {
+    val filter = arrayListOf<Recipe>()
     val list = arrayListOf<Recipe>()
     val adapter = GroupAdapter<GroupieViewHolder>()
+
     override fun onStart() {
         super.onStart()
         init()
+        spinnerInit()
+
+        spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                filterRecipe()
+            }
+        }
 
         searchRecipeView.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -92,12 +113,14 @@ class HomeFragment : Fragment() {
         super.onResume()
         searchRecipeView.setText("")
         list.clear()
+        filter.clear()
     }
 
 
     private fun init(){
         list.clear()
         adapter.clear()
+        filter.clear()
         val ref = FirebaseDatabase.getInstance().getReference("/Recipe")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
@@ -108,6 +131,7 @@ class HomeFragment : Fragment() {
                     if(rep != null){
                         adapter.add(bindata(rep))
                         list.add(rep)
+                        filter.add(rep)
                     }
                 }
                 adapter.setOnItemClickListener { item, view ->
@@ -116,6 +140,7 @@ class HomeFragment : Fragment() {
                     intent.putExtra(RECIPE_KEY,recDetail.recipe.recipeID)
                     adapter.clear()
                     list.clear()
+                    filter.clear()
                     searchRecipeView.setText("")
                     startActivity(intent)
                 }
@@ -145,6 +170,38 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun spinnerInit(){
+        val array = resources.getStringArray(R.array.categoryList)
+        val adapter = ArrayAdapter(context!!.applicationContext,R.layout.support_simple_spinner_dropdown_item,array)
+        spinnerCategory.adapter = adapter
+    }
+
+    private fun filterRecipe(){
+        val search = spinnerCategory.selectedItem.toString()
+        val adapterf = GroupAdapter<GroupieViewHolder>()
+
+        filter.forEach {
+            if(!(search.equals("All"))){
+                if(it.category.toUpperCase().contains(search.toUpperCase())){
+                    adapterf.add(bindata(it))
+                }
+            }else{
+                adapterf.add(bindata(it))
+            }
+
+        }
+        adapterf.setOnItemClickListener { item, view ->
+            val recDetail = item as bindata
+            val intent = Intent(view.context,RecipeDetailActivity::class.java)
+            intent.putExtra(RECIPE_KEY,recDetail.recipe.recipeID)
+            adapter.clear()
+            list.clear()
+            filter.clear()
+            searchRecipeView.setText("")
+            startActivity(intent)
+        }
+        ryr_view.adapter = adapterf
+    }
 }
 
 

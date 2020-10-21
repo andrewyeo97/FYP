@@ -10,24 +10,27 @@
     tools:context=".fragments.HomeFragment">
 
     <EditText
+        android:id="@+id/searchRecipeView"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/round_shape_gray"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:id="@+id/searchRecipeView"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:iconifiedByDefault="false"
-        android:textAlignment="center"
-        android:imeOptions="actionSearch"
-        android:background="@drawable/round_shape_gray"
         android:hint="Search Recipe"
+        android:iconifiedByDefault="false"
+        android:imeOptions="actionSearch"
         android:queryBackground="@android:color/transparent"
+        android:textAlignment="center"
         android:theme="@style/SearchViewStyle"
         app:layout_constraintBottom_toTopOf="@+id/ryr_view"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerCategory"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
     </EditText>
 
@@ -35,7 +38,7 @@
         android:id="@+id/ryr_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="70dp"
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,5 +49,16 @@
         tools:listitem="@layout/recycle_row_item">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <Spinner
+        android:id="@+id/spinnerCategory"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/ryr_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
