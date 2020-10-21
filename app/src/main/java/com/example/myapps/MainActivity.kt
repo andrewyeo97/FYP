@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.example.myapps.fragments.SettingsFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -16,11 +17,12 @@ class MainActivity : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
-
         auth = FirebaseAuth.getInstance()
         if (auth.currentUser != null ) {
-            startActivity(Intent(this, DashboardActivity::class.java))
-            finish()
+            if (auth.currentUser!!.isEmailVerified) {
+                startActivity(Intent(this, DashboardActivity::class.java))
+                finish()
+            }
         }
     }
 

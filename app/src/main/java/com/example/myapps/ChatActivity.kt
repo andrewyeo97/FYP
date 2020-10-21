@@ -58,10 +58,6 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
-
-
-
-
     private fun findUser(){
         val ref = FirebaseDatabase.getInstance().getReference("/Users").orderByChild("id").equalTo(currentuserID)
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -77,7 +73,6 @@ class ChatActivity : AppCompatActivity() {
             }
         })
     }
-
 
 
     private fun loadmsg(){
@@ -175,7 +170,7 @@ class ChatActivity : AppCompatActivity() {
                 snapshot.children.forEach {
                     val rc = it.getValue(Recipe::class.java)
                     if (rc != null) {
-                        recipeTitleChat.text = rc.recipeTitle
+                        recipeTitleChat.text = rc.recipeTitle 
                     }
                 }
             }

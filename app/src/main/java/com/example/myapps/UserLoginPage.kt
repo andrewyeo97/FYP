@@ -66,8 +66,21 @@ class UserLoginPage : AppCompatActivity() {
             if(!it.isSuccessful){
                 Toast.makeText(this,"Invalid Email or Password",Toast.LENGTH_SHORT).show()
             }else{
-                startActivity(Intent(this, DashboardActivity::class.java))
-                finish()
+                if(FirebaseAuth.getInstance().currentUser != null){
+                    if (FirebaseAuth.getInstance().currentUser?.isEmailVerified!!){
+                        startActivity(Intent(this, DashboardActivity::class.java))
+                        finish()
+                    }
+                    else{
+                        Toast.makeText(baseContext, "Please verify your email address.",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                }
+                else{
+                    Toast.makeText(baseContext, "Login failed.",
+                        Toast.LENGTH_SHORT).show()
+                }
+
             }
         }
 

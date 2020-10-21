@@ -106,8 +106,19 @@ class RegisterActivity : AppCompatActivity() {
                     } else {
                         user.id = FirebaseAuth.getInstance().uid.toString()
                         uploadImageToFirebaseStorage()
-                        startActivity(Intent(this, UserLoginPage::class.java))
-                        finish()
+
+                        FirebaseAuth.getInstance().currentUser?.sendEmailVerification()?.addOnCompleteListener {
+                            if(it.isSuccessful){
+                                Toast.makeText(baseContext, "Email verification sent.",
+                                    Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(this, UserLoginPage::class.java))
+                                finish()
+                            }
+                            else{
+                                Toast.makeText(baseContext, "Register failed.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
                     }
                 }
         }
