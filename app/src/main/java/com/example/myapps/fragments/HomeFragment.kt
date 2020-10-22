@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,6 +63,14 @@ class HomeFragment : Fragment() {
             }
         }
 
+        searchRecipeView.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                hideKeyboard()
+                return@OnKeyListener true
+            }
+            false
+        })
+
         searchRecipeView.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if(searchRecipeView.text.isEmpty()){
@@ -78,6 +87,8 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
+
 
 
     private fun Fragment.hideKeyboard() {
@@ -183,9 +194,13 @@ class HomeFragment : Fragment() {
         filter.forEach {
             if(!(search.equals("All"))){
                 if(it.category.toUpperCase().contains(search.toUpperCase())){
+                    searchRecipeView.clearFocus()
+                    hideKeyboard()
                     adapterf.add(bindata(it))
                 }
             }else{
+                searchRecipeView.clearFocus()
+                hideKeyboard()
                 adapterf.add(bindata(it))
             }
 

@@ -24,7 +24,7 @@ class InsertSteps : AppCompatActivity() {
         steps.stepID = stepID
         steps.stepNo = stepNoAns.text.toString().toInt()
         steps.desc = desc.text.toString()
-        steps.recipeID = "fdddefdd-0f19-4924-a3b2-f43b0f4399f8"
+        steps.recipeID = "0a3197b4-8fe0-4ce8-9590-37e63ec35d51"
         ref3.setValue(steps)
     }
 }

@@ -10,21 +10,38 @@
         android:roundIcon="@drawable/round_shape_gray"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChatActivity"></activity>
-        <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".EditPasswordActivity" />
-        <activity android:name=".EditUsernameActivity" />
-        <activity android:name=".ManageAccountActivity">
+        <activity
+            android:name=".ChatActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
+
+        </activity>
+        <activity android:name=".ForgotPasswordActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity android:name=".EditPasswordActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity android:name=".EditUsernameActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+        <activity android:name=".ManageAccountActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".DashboardActivity" />
         </activity>
-        <activity android:name=".AddRatingActivity">
+        <activity android:name=".AddRatingActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".RecipeDetailActivity" />
         </activity>
-        <activity android:name=".RatingReviewActivity" />
+        <activity android:name=".RatingReviewActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
         <activity android:name=".InsertSteps">
 
         </activity>
@@ -33,6 +50,8 @@
         </activity>
         <activity
             android:name=".RecipeDetailActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:label="">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -67,6 +68,14 @@ class FavouriteFragment : Fragment() {
                 filterRecipe()
             }
         }
+
+        searchFavouriteView.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                hideKeyboard()
+                return@OnKeyListener true
+            }
+            false
+        })
 
         searchFavouriteView.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -207,9 +216,13 @@ class FavouriteFragment : Fragment() {
         filterz.forEach {
             if(!(search.equals("All"))){
                 if(it.category.toUpperCase().contains(search.toUpperCase())){
+                    searchFavouriteView.clearFocus()
+                    hideKeyboard()
                     adapterf.add(bindata(it))
                 }
             }else{
+                searchFavouriteView.clearFocus()
+                hideKeyboard()
                 adapterf.add(bindata(it))
             }
 

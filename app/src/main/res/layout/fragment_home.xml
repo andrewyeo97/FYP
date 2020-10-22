@@ -18,6 +18,7 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/round_shape_gray"
         android:focusable="true"
+        android:singleLine="true"
         android:focusableInTouchMode="true"
         android:hint="Search Recipe"
         android:iconifiedByDefault="false"
