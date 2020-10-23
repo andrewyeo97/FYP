@@ -6,7 +6,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
@@ -17,10 +16,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import com.example.myapps.Favourite
-import com.example.myapps.R
-import com.example.myapps.Recipe
-import com.example.myapps.RecipeDetailActivity
+import com.example.myapps.*
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -29,7 +26,6 @@ import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
-import kotlinx.android.synthetic.main.activity_recipe_detail.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.recycle_row_item.view.*
 
@@ -43,9 +39,10 @@ class HomeFragment : Fragment() {
     val filter = arrayListOf<Recipe>()
     val list = arrayListOf<Recipe>()
     val adapter = GroupAdapter<GroupieViewHolder>()
-
+    val currentUser = FirebaseAuth.getInstance()
     override fun onStart() {
         super.onStart()
+        checkUserAccountSignIn()
         init()
         spinnerInit()
 
@@ -88,7 +85,13 @@ class HomeFragment : Fragment() {
         })
     }
 
-
+    private fun checkUserAccountSignIn(){
+        if (FirebaseAuth.getInstance().uid.isNullOrEmpty()){
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(view?.context,MainActivity::class.java)
+            startActivity(intent)
+        }
+    }
 
 
     private fun Fragment.hideKeyboard() {

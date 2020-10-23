@@ -1,6 +1,7 @@
 package com.example.myapps
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,6 +25,7 @@ class RatingReviewActivity : AppCompatActivity() {
     var rid : String = ""
     var userid : String = ""
     var found: Boolean = false
+    private val handlers: Handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +40,18 @@ class RatingReviewActivity : AppCompatActivity() {
             onBackPressed()
         }
         loadRecipe()
-        loadReview()
+        ToastRunnabler.run()
+       // loadReview()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handlers.removeCallbacks(ToastRunnabler)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        ToastRunnabler.run()
     }
 
     private fun loadRecipe(){
@@ -58,25 +71,33 @@ class RatingReviewActivity : AppCompatActivity() {
         })
     }
 
-    private fun loadReview(){
-        val ref = FirebaseDatabase.getInstance().getReference("/Rating").orderByChild("recipeID").equalTo(rid)
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {}
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val adapter = GroupAdapter<GroupieViewHolder>()
-                snapshot.children.forEach {
-                    val rate = it.getValue(Rating::class.java)
-                    if (rate != null) {
-                        found = true
-                        adapter.add(bindRating(rate))
+    private val ToastRunnabler: Runnable = object : Runnable {
+        override fun run() {
+            //private fun loadReview(){
+            found = false
+            val ref =
+                FirebaseDatabase.getInstance().getReference("/Rating").orderByChild("recipeID")
+                    .equalTo(rid)
+            ref.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {}
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val adapter = GroupAdapter<GroupieViewHolder>()
+                    snapshot.children.forEach {
+                        val rate = it.getValue(Rating::class.java)
+                        if (rate != null) {
+                            found = true
+                            adapter.add(bindRating(rate))
+                        }
                     }
+                    if (found == false) {
+                        adapter.add(bindNoReview("No review yet"))
+                    }
+                    ryr_rating.adapter = adapter
                 }
-                if(found == false){
-                adapter.add(bindNoReview("No review yet"))
-                }
-                ryr_rating.adapter = adapter
-            }
-        })
+            })
+            // }
+            handlers.postDelayed(this, 100)
+        }
     }
 
     class bindRating(val rates : Rating): Item<GroupieViewHolder>() {
