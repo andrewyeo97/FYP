@@ -34,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         btnSignUp.setOnClickListener {
             reg()
         }
+
+        btnLoginAsStaff.setOnClickListener {
+            startActivity(Intent(this, StaffLoginActivity::class.java))
+        }
     }
 
     override fun onBackPressed() {

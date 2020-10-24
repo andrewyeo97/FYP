@@ -10,56 +10,63 @@
         android:roundIcon="@drawable/round_shape_gray"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".wm_update_step_Activity"></activity>
+        <activity android:name=".wm_update_ing_Activity" />
+        <activity android:name=".swm_Add_Step_Activity" />
+        <activity android:name=".swm_Add_Ing_Activity" />
+        <activity android:name=".Recipe_update_Activity" />
+        <activity android:name=".wmStaff_RecipeDetail_Activity" />
+        <activity android:name=".swm_Staff_Register" />
+        <activity android:name=".swmDashboardActivity" />
+        <activity android:name=".StaffLoginActivity" />
         <activity
             android:name=".ChatActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity">
-
-        </activity>
-        <activity android:name=".ForgotPasswordActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".ForgotPasswordActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".EditPasswordActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".EditPasswordActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".EditUsernameActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".EditUsernameActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".ManageAccountActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".ManageAccountActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".DashboardActivity" />
         </activity>
-        <activity android:name=".AddRatingActivity"
+        <activity
+            android:name=".AddRatingActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".RecipeDetailActivity" />
         </activity>
-        <activity android:name=".RatingReviewActivity"
+        <activity
+            android:name=".RatingReviewActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".InsertSteps">
-
-        </activity>
-        <activity android:name=".InsertIngredient">
-
-        </activity>
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".InsertSteps" />
+        <activity android:name=".InsertIngredient" />
         <activity
             android:name=".RecipeDetailActivity"
+            android:label=""
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"
-            android:label="">
+            tools:ignore="LockedOrientationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".DashboardActivity" />
         </activity>
-        <activity android:name=".InsertRecipe">
-
-        </activity>
+        <activity android:name=".InsertRecipe" />
         <activity
             android:name=".DashboardActivity"
             android:screenOrientation="portrait"

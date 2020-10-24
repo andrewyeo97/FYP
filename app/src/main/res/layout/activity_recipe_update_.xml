@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Recipe_update_Activity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout7"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView99"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Recipe"
+            android:textColor="#000000"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout7">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout7"
+            tools:layout_editor_absoluteX="-16dp">
+
+            <TextView
+                android:id="@+id/textView98"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Image: "
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.069"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.035"></TextView>
+
+            <ImageView
+                android:id="@+id/update_food_image"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_baseline_add_photo_alternate_24"
+                app:layout_constraintStart_toEndOf="@+id/textView98"
+                app:layout_constraintTop_toTopOf="@+id/textView98"></ImageView>
+
+            <TextView
+                android:id="@+id/textView97"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Food Name: "
+                android:textColor="#070707"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView98"
+                app:layout_constraintTop_toBottomOf="@+id/update_food_image"></TextView>
+
+            <EditText
+                android:id="@+id/update_food_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/textView97"
+                app:layout_constraintTop_toBottomOf="@+id/update_food_image"></EditText>
+
+            <TextView
+                android:id="@+id/textView96"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Category:"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/textView97"
+                app:layout_constraintTop_toBottomOf="@+id/textView97"></TextView>
+
+            <EditText
+                android:id="@+id/update_food_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="@+id/food_name"
+                app:layout_constraintHorizontal_bias="0.298"
+                app:layout_constraintStart_toEndOf="@+id/textView96"
+                app:layout_constraintTop_toBottomOf="@+id/update_food_name"></EditText>
+
+            <TextView
+                android:id="@+id/textView95"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Nutrition:"
+                android:textColor="#050505"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView97"
+                app:layout_constraintTop_toBottomOf="@+id/update_food_category"></TextView>
+
+            <TextView
+                android:id="@+id/textView94"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Calories: "
+                app:layout_constraintEnd_toEndOf="@+id/textView95"
+                app:layout_constraintTop_toBottomOf="@+id/textView95"></TextView>
+
+            <TextView
+                android:id="@+id/textView93"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Total Fat: "
+                app:layout_constraintEnd_toEndOf="@+id/textView94"
+                app:layout_constraintTop_toBottomOf="@+id/textView94"></TextView>
+
+            <TextView
+                android:id="@+id/textView92"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Saturated Fat:"
+                app:layout_constraintEnd_toEndOf="@+id/textView93"
+                app:layout_constraintTop_toBottomOf="@+id/textView93"></TextView>
+
+            <TextView
+                android:id="@+id/textView91"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Fibre: "
+                app:layout_constraintEnd_toEndOf="@+id/textView92"
+                app:layout_constraintTop_toBottomOf="@+id/textView92"></TextView>
+
+            <TextView
+                android:id="@+id/textView90"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Protein:"
+                app:layout_constraintEnd_toEndOf="@+id/textView91"
+                app:layout_constraintTop_toBottomOf="@+id/textView91"></TextView>
+
+            <TextView
+                android:id="@+id/textView89"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Cholesterol:"
+                app:layout_constraintEnd_toEndOf="@+id/textView90"
+                app:layout_constraintTop_toBottomOf="@+id/textView90"></TextView>
+
+            <EditText
+                android:id="@+id/update_food_calories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="45dp"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/textView94"
+                app:layout_constraintTop_toBottomOf="@+id/update_food_category"></EditText>
+
+            <EditText
+                android:id="@+id/update_total_fat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/update_food_calories"
+                app:layout_constraintTop_toBottomOf="@+id/update_food_calories"></EditText>
+
+            <EditText
+                android:id="@+id/update_saturated_fat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/update_total_fat"
+                app:layout_constraintTop_toBottomOf="@+id/update_total_fat"></EditText>
+
+            <EditText
+                android:id="@+id/update_fibre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/update_saturated_fat"
+                app:layout_constraintTop_toBottomOf="@+id/update_saturated_fat" />
+
+            <EditText
+                android:id="@+id/update_protein"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/update_fibre"
+                app:layout_constraintTop_toBottomOf="@+id/update_fibre" />
+
+            <EditText
+                android:id="@+id/update_cholesterol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/update_protein"
+                app:layout_constraintTop_toBottomOf="@+id/update_protein" />
+
+            <Button
+                android:id="@+id/button_update_page_recipe"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Update Recipe"
+                android:textColor="#040404"
+                app:layout_constraintEnd_toStartOf="@+id/button_update_cancel"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/update_cholesterol" />
+
+            <Button
+                android:id="@+id/button_update_cancel"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Cancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/button_update_page_recipe" />
+
+            <TextView
+                android:id="@+id/skip_to_updateIng"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:text="Skip to update ingredients"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_update_page_recipe">
+
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

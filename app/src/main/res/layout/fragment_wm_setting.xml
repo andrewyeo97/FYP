@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.wmSettingFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/settingtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Settings"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="22dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.533" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraint1"
+        android:layout_marginTop="60dp"
+        app:layout_constraintVertical_bias="0.0" >
+
+        <ImageView
+            android:id="@+id/imgViewStaffAccount"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/wm_ic_baseline_account_box_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/StaffAccBtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:background="#fff"
+            android:gravity="left"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp"
+            android:shadowColor="@color/white"
+            android:text="Manage Account"
+            android:textAlignment="gravity"
+            android:textAllCaps="false"
+            android:textColor="@color/red"
+            android:textSize="15dp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imgViewStaffAccount"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgViewStaffSignOut"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/wm_ic_baseline_settings_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/StaffAccBtn" />
+
+        <Button
+            android:id="@+id/StaffSignOutBtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:background="#fff"
+            android:gravity="left"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp"
+            android:shadowColor="@color/white"
+            android:text="Sign Out"
+            android:textAlignment="gravity"
+            android:textAllCaps="false"
+            android:textColor="@color/red"
+            android:textSize="15dp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imgViewStaffSignOut"
+            app:layout_constraintTop_toBottomOf="@+id/StaffAccBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
