@@ -55,7 +55,7 @@ class wmHomeFragment : Fragment() {
                     intent.putExtra(RECIPE_KEY,recDetail.recipe.recipeID)
                     startActivity(intent)
                 }
-                ryr_view.adapter = adapter
+        //        ryr_view.adapter = adapter
             }
         })
     }

@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
+import kotlinx.android.synthetic.main.fragment_favourite.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.recycle_row_item.view.*
 
@@ -36,53 +37,25 @@ import kotlinx.android.synthetic.main.recycle_row_item.view.*
 
 
 class HomeFragment : Fragment() {
-    val filter = arrayListOf<Recipe>()
-    val list = arrayListOf<Recipe>()
+
     val adapter = GroupAdapter<GroupieViewHolder>()
-    val currentUser = FirebaseAuth.getInstance()
+
     override fun onStart() {
         super.onStart()
         checkUserAccountSignIn()
-        init()
-        spinnerInit()
 
-        spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                filterRecipe()
-            }
+        breakfastCL.setOnClickListener {
+            goBreakfast()
         }
 
-        searchRecipeView.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                hideKeyboard()
-                return@OnKeyListener true
-            }
-            false
-        })
+        lunchCL.setOnClickListener {
+            goLunch()
+        }
 
-        searchRecipeView.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if(searchRecipeView.text.isEmpty()){
-                    searchRecipeView.clearFocus()
-                    hideKeyboard()
-                }
-                search(searchRecipeView.text.toString())
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                search(searchRecipeView.text.toString())
-            }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                search(searchRecipeView.text.toString())
-            }
-        })
+        dinnerCL.setOnClickListener {
+            goDinner()
+        }
+
     }
 
     private fun checkUserAccountSignIn(){
@@ -93,86 +66,21 @@ class HomeFragment : Fragment() {
         }
     }
 
-
-    private fun Fragment.hideKeyboard() {
-        view?.let { activity?.hideKeyboard(it) }
+    private fun goBreakfast(){
+        val intent = Intent(view?.context, BreakfastActivity::class.java)
+        startActivity(intent)
     }
 
-    private fun Activity.hideKeyboard() {
-        hideKeyboard(currentFocus ?: View(this))
+    private fun goLunch(){
+        val intent = Intent(view?.context, LunchActivity::class.java)
+        startActivity(intent)
     }
 
-    private fun Context.hideKeyboard(view: View) {
-        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    private fun goDinner(){
+        val intent = Intent(view?.context, DinnerActivity::class.java)
+        startActivity(intent)
     }
 
-    companion object{
-        val RECIPE_KEY = "RECIPE_KEY"
-    }
-
-
-
-    private fun search(title : String){
-        adapter.clear()
-        list.forEach {
-            if(it.recipeTitle.toLowerCase().contains(title.toLowerCase())){
-                adapter.add(bindata(it))
-            }
-        }
-        ryr_view.adapter = adapter
-    }
-
-    override fun onResume() {
-        super.onResume()
-        searchRecipeView.setText("")
-        list.clear()
-        filter.clear()
-    }
-
-
-    private fun init(){
-        list.clear()
-        adapter.clear()
-        filter.clear()
-        val ref = FirebaseDatabase.getInstance().getReference("/Recipe")
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {}
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                snapshot.children.forEach {
-                    val rep = it.getValue(Recipe::class.java)
-                    if(rep != null){
-                        adapter.add(bindata(rep))
-                        list.add(rep)
-                        filter.add(rep)
-                    }
-                }
-                adapter.setOnItemClickListener { item, view ->
-                    val recDetail = item as bindata
-                    val intent = Intent(view.context,RecipeDetailActivity::class.java)
-                    intent.putExtra(RECIPE_KEY,recDetail.recipe.recipeID)
-                    adapter.clear()
-                    list.clear()
-                    filter.clear()
-                    searchRecipeView.setText("")
-                    startActivity(intent)
-                }
-                ryr_view.adapter = adapter
-            }
-        })
-    }
-
-    private class bindata(val recipe : Recipe): Item<GroupieViewHolder>() {
-        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-            viewHolder.itemView.ryr_title.text = recipe.recipeTitle
-            Picasso.get().load(recipe.recipeImage).into(viewHolder.itemView.ryr_image)
-        }
-
-        override fun getLayout(): Int {
-            return R.layout.recycle_row_item
-        }
-    }
 
 
     override fun onCreateView(
@@ -181,45 +89,8 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
-
     }
 
-    private fun spinnerInit(){
-        val array = resources.getStringArray(R.array.categoryList)
-        val adapter = ArrayAdapter(context!!.applicationContext,R.layout.support_simple_spinner_dropdown_item,array)
-        spinnerCategory.adapter = adapter
-    }
-
-    private fun filterRecipe(){
-        val search = spinnerCategory.selectedItem.toString()
-        val adapterf = GroupAdapter<GroupieViewHolder>()
-
-        filter.forEach {
-            if(!(search.equals("All"))){
-                if(it.category.toUpperCase().contains(search.toUpperCase())){
-                    searchRecipeView.clearFocus()
-                    hideKeyboard()
-                    adapterf.add(bindata(it))
-                }
-            }else{
-                searchRecipeView.clearFocus()
-                hideKeyboard()
-                adapterf.add(bindata(it))
-            }
-
-        }
-        adapterf.setOnItemClickListener { item, view ->
-            val recDetail = item as bindata
-            val intent = Intent(view.context,RecipeDetailActivity::class.java)
-            intent.putExtra(RECIPE_KEY,recDetail.recipe.recipeID)
-            adapter.clear()
-            list.clear()
-            filter.clear()
-            searchRecipeView.setText("")
-            startActivity(intent)
-        }
-        ryr_view.adapter = adapterf
-    }
 }
 
 

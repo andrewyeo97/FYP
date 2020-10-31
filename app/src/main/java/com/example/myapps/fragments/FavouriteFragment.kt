@@ -29,8 +29,11 @@ import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_recipe_detail.*
 import kotlinx.android.synthetic.main.fragment_favourite.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.recycle_no_favourite_yet.view.*
+import kotlinx.android.synthetic.main.recycle_no_recipe_yet.view.*
 import kotlinx.android.synthetic.main.recycle_row_item.view.*
 import kotlinx.android.synthetic.main.recycle_row_item2.view.*
+import kotlinx.android.synthetic.main.recycle_row_no_review.view.*
 
 /**
  * A simple [Fragment] subclass.
@@ -52,6 +55,8 @@ class FavouriteFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        searchFavouriteView.isEnabled = false
+        spinnerCategory2.isEnabled = false
         init()
         spinnerInit()
 
@@ -146,10 +151,12 @@ class FavouriteFragment : Fragment() {
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
-                val adapter = GroupAdapter<GroupieViewHolder>()
+             //   val adapter = GroupAdapter<GroupieViewHolder>()
+
                 snapshot.children.forEach {
                     val fav = it.getValue(Favourite::class.java)
                     if (fav != null) {
+
                         rc_idd = fav.recipeID
 
                         val ref2 = FirebaseDatabase.getInstance().getReference("/Recipe")
@@ -161,11 +168,14 @@ class FavouriteFragment : Fragment() {
                                 snapshot.children.forEach {
                                     val res = it.getValue(Recipe::class.java)
                                     if (res != null) {
+                                        spinnerCategory2.isEnabled = true
+                                        searchFavouriteView.isEnabled = true
                                         adapter.add(bindata(res))
                                         listz.add(res)
                                         filterz.add(res)
                                     }
                                 }
+
                                 adapter.setOnItemClickListener { item, view ->
                                     val recDetail = item as bindata
                                     val intent = Intent(view.context, RecipeDetailActivity::class.java)
@@ -176,18 +186,41 @@ class FavouriteFragment : Fragment() {
                                     searchFavouriteView.setText("")
                                     startActivity(intent)
                                 }
-                                ryr_favourite.adapter = adapter
+
                             }
 
                         })
 
                     }
 
+
                 }
+                if(snapshot.children.count() < 1){
+                    adapter.add(bindNoFav("No favourite yet"))
+                    adapter.setOnItemClickListener { item, view ->
+                        searchFavouriteView.isEnabled = false
+                        return@setOnItemClickListener
+                    }
+                }
+                ryr_favourite.adapter = adapter
+
 
             }
+
         })
 
+    }
+
+    class bindNoFav(val str: String): Item<GroupieViewHolder>() {
+
+        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+            viewHolder.itemView.txtNoFav.text = str
+
+        }
+
+        override fun getLayout(): Int {
+            return R.layout.recycle_no_favourite_yet
+        }
     }
 
     private class bindata(val recipe : Recipe): Item<GroupieViewHolder>() {
@@ -239,6 +272,8 @@ class FavouriteFragment : Fragment() {
         }
         ryr_favourite.adapter = adapterf
     }
+
+
 
 
 }

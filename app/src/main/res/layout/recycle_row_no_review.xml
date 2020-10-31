@@ -4,21 +4,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
 
     <TextView
         android:id="@+id/txtNoReview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No review yet"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textAlignment="center"
         android:paddingTop="5sp"
         android:paddingBottom="5sp"
+        android:text="No review yet"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imgView12"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imgView12"
+        android:layout_width="200dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="32dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/searchs"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ImageView>
 </androidx.constraintlayout.widget.ConstraintLayout>

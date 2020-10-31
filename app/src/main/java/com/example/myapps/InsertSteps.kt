@@ -24,8 +24,21 @@ class InsertSteps : AppCompatActivity() {
         steps.stepID = stepID
         steps.stepNo = stepNoAns.text.toString().toInt()
         steps.desc = desc.text.toString()
-        steps.recipeID = "0a3197b4-8fe0-4ce8-9590-37e63ec35d51"
+        steps.recipeID = "b166df6c-8e66-4753-aea8-0d507b0ff7ce"
         ref3.setValue(steps)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        clr111.setOnClickListener {
+            desc.setText("")
+            stepNoAns.requestFocus()
+        }
+
+        btnbtn.setOnClickListener{
+            stepNoAns.setText("")
+            stepNoAns.requestFocus()
+        }
     }
 }
 

@@ -20,8 +20,8 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
             android:src="@drawable/back_button_orange"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="24dp"
             android:layout_marginBottom="8dp"
             android:text="Manage Profile"
             android:textColor="@color/orange"
@@ -54,6 +54,7 @@
         android:layout_marginTop="60dp"
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/const11">
 
@@ -79,9 +80,9 @@
             android:id="@+id/ownerUsername"
             android:layout_width="0dp"
             android:layout_height="42dp"
-            android:paddingTop="5dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:paddingTop="5dp"
             android:paddingRight="10dp"
             android:text="Username"
             android:textColor="@color/black"
@@ -93,14 +94,14 @@
             android:id="@+id/usernameProfiletxt"
             android:layout_width="0dp"
             android:layout_height="42dp"
-            android:paddingTop="5dp"
             android:layout_marginTop="8dp"
+            android:gravity="right"
+            android:paddingTop="5dp"
             android:paddingRight="10dp"
             android:text=""
+            android:textAlignment="gravity"
             android:textColor="@color/black"
             android:textSize="17dp"
-            android:textAlignment="gravity"
-            android:gravity="right"
             app:layout_constraintEnd_toStartOf="@+id/arrowUsername"
             app:layout_constraintStart_toEndOf="@+id/ownerUsername"
             app:layout_constraintTop_toBottomOf="@+id/labelProfilePhoto" />
@@ -110,7 +111,7 @@
             android:layout_width="30dp"
             android:layout_height="50dp"
             android:layout_marginEnd="16dp"
-            android:src="@drawable/gray_arrow_right"
+            android:src="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/arrowProfilePic" />
 
@@ -125,8 +126,9 @@
             android:textColor="@color/black"
             android:textSize="17dp"
             app:layout_constraintEnd_toStartOf="@+id/arrowPassword"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ownerUsername" />
+            app:layout_constraintTop_toBottomOf="@+id/emailProfileUnedit" />
 
         <ImageView
             android:id="@+id/arrowPassword"
@@ -135,15 +137,15 @@
             android:layout_marginEnd="16dp"
             android:src="@drawable/gray_arrow_right"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/arrowUsername" />
+            app:layout_constraintTop_toBottomOf="@+id/emailAns" />
 
         <TextView
             android:id="@+id/labelProfilePhoto"
             android:layout_width="0dp"
-            android:paddingTop="5dp"
             android:layout_height="44dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:paddingTop="5dp"
             android:text="Profile Photo"
             android:textColor="@color/black"
             android:textSize="17dp"
@@ -155,7 +157,7 @@
         <TextView
             android:id="@+id/emailProfileUnedit"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="42dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:paddingTop="5dp"
@@ -164,26 +166,26 @@
             android:textColor="@color/black"
             android:textSize="17dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordLabels" />
+            app:layout_constraintTop_toBottomOf="@+id/ownerUsername" />
+
 
         <TextView
             android:id="@+id/emailAns"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="42dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:gravity="right"
+            android:paddingTop="5dp"
             android:paddingRight="40dp"
             android:text=""
-            android:paddingTop="5dp"
+            android:textAlignment="gravity"
             android:textColor="@color/black"
             android:textSize="17dp"
-            android:textAlignment="gravity"
-            android:gravity="right"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/emailProfileUnedit"
-            app:layout_constraintTop_toBottomOf="@+id/passwordLabels" />
-
+            app:layout_constraintTop_toBottomOf="@+id/usernameProfiletxt" />
 
         <TextView
             android:id="@+id/grayline5"

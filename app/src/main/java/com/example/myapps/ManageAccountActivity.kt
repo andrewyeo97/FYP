@@ -42,15 +42,7 @@ class ManageAccountActivity : AppCompatActivity() {
         arrowProfilePic.setOnClickListener {
             changeProfilePhoto()
         }
-        ownerUsername.setOnClickListener {
-            changeUsername()
-        }
-        usernameProfiletxt.setOnClickListener {
-            changeUsername()
-        }
-        arrowUsername.setOnClickListener {
-            changeUsername()
-        }
+
         passwordLabels.setOnClickListener {
             changePassword()
         }
@@ -66,10 +58,6 @@ class ManageAccountActivity : AppCompatActivity() {
 
     }
 
-    private fun changeUsername(){
-        val intent = Intent(this,EditUsernameActivity::class.java)
-        startActivity(intent)
-    }
 
     private fun changePassword(){
         val intent = Intent(this,EditPasswordActivity::class.java)

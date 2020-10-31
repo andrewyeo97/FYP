@@ -1,14 +1,16 @@
 package com.example.myapps
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapps.fragments.FavouriteFragment
-import com.example.myapps.fragments.HomeFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -19,7 +21,6 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_recipe_detail.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.recycle_row_ingredients.view.*
 import kotlinx.android.synthetic.main.recycle_row_preparation.view.*
 import java.util.*
@@ -33,6 +34,8 @@ class RecipeDetailActivity : AppCompatActivity() {
     var isFound : Boolean = false
     var exist  : Boolean = false
     var favDD : String = ""
+    var link: String = ""
+    var recName: String = ""
     private val handlers: Handler = Handler()
 
     @RequiresApi(Build.VERSION_CODES.P)
@@ -41,32 +44,35 @@ class RecipeDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_recipe_detail)
 
         favourite_button.setOnClickListener {
-            if(exist == true){
+            if (exist == true) {
                 removeFavourite()
-            }
-            else if(exist == false){
+            } else if (exist == false) {
                 addFavourite()
             }
         }
 
         ratingText.setOnClickListener {
-            val intent = Intent(this,RatingReviewActivity::class.java)
-            intent.putExtra(RCID2,rc_id)
+            val intent = Intent(this, RatingReviewActivity::class.java)
+            intent.putExtra(RCID2, rc_id)
             startActivity(intent)
         }
 
         chat_button.setOnClickListener {
-            val intent = Intent(this,ChatActivity::class.java)
-            intent.putExtra(RCID3,rc_id)
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra(RCID3, rc_id)
             startActivity(intent)
         }
+
+
+
+
 
     }
 
 
     override fun onStart() {
         super.onStart()
-        rc_id = intent.getStringExtra(HomeFragment.RECIPE_KEY)
+        rc_id = intent.getStringExtra(RecipeRecycleViewList.RECIPE_KEY)
         rc_id = intent.getStringExtra(FavouriteFragment.RECIPE_KEY)
         ToastRunnabler.run()
         init()
@@ -83,7 +89,18 @@ class RecipeDetailActivity : AppCompatActivity() {
             intent.putExtra(RCID,rc_id)
             startActivity(intent)
         }
-    }
+
+
+        share_button.setOnClickListener {
+            val msg: String = recName + "\n" + link
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_TEXT, msg)
+            intent.type = "text/plain"
+            startActivity(intent)
+        }
+
+        }
 
 
     override fun onPause() {
@@ -158,7 +175,7 @@ class RecipeDetailActivity : AppCompatActivity() {
 
                 }
                 avgRating = ttlRating/counter
-                ratingText.text = (avgRating.toString() + " ratings | " + counter + " review(s)")
+                ratingText.text = (String.format("%.2f",avgRating) + " ratings | " + counter + " review(s)")
                 if(isFound == false){
                 ratingText.text = ("No review yet")}
             }
@@ -180,8 +197,8 @@ class RecipeDetailActivity : AppCompatActivity() {
                     if (rc != null) {
                         Picasso.get().load(rc.recipeImage).into(recipeDetailImage)
                         recipeDetailTitle.text = rc.recipeTitle
-
-
+                        link = rc.urlRec
+                        recName = rc.recipeTitle
                         //recipe nutrition fact
                         caloriesNumberText.text = rc.calories.toString()
                         totalFatNumberText.text = rc.totalFat.toString()

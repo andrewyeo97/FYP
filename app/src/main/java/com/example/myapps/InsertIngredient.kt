@@ -27,9 +27,24 @@ class InsertIngredient : AppCompatActivity() {
         ingredient.ingredientName = insert_ing_name.text.toString()
         ingredient.quantity = insert_ing_qty.text.toString().toDouble()
         ingredient.unit = insert_ing_desc.text.toString()
-        ingredient.recipeID = "0a3197b4-8fe0-4ce8-9590-37e63ec35d51"
+        ingredient.recipeID = "b166df6c-8e66-4753-aea8-0d507b0ff7ce"
         ref.setValue(ingredient)
     }
 
+    override fun onStart() {
+        super.onStart()
+        clear1.setOnClickListener {
+            insert_ing_name.setText("")
+            insert_ing_name.requestFocus()
+        }
+        clear2.setOnClickListener {
+            insert_ing_qty.setText("")
+            insert_ing_qty.requestFocus()
+        }
+        clear3.setOnClickListener {
+            insert_ing_desc.setText("")
+            insert_ing_desc.requestFocus()
+        }
+    }
 
 }

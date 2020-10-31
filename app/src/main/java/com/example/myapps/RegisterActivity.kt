@@ -25,6 +25,7 @@ import java.util.regex.Pattern
 
 class RegisterActivity : AppCompatActivity() {
 
+    var click: Boolean = false
     var user = User()
     var selectedPhotoUri: Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +41,10 @@ class RegisterActivity : AppCompatActivity() {
             intent.type = "image/*"
             startActivityForResult(intent,0)
         }
+
+
     }
+
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

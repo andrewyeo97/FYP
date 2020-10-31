@@ -68,9 +68,11 @@ class InsertRecipe : AppCompatActivity() {
         recipe.protein = protein.text.toString().toDouble()
         recipe.cholesterol = cholesterol.text.toString().toDouble()
         recipe.category = category.text.toString()
-        recipe.staffID = ""
+        recipe.staffID = "2dIignQXe3dAfDoXp6zSdPeLQRR2"
+        recipe.cuisine = cuisine.text.toString()
         recipe.uploadDate = currentDate
         recipe.recipeImage = profileImageUrl
+        recipe.urlRec = "https://www.slenderkitchen.com/recipe/frozen-breakfast-quesadillas"
         ref.setValue(recipe)
     }
 }

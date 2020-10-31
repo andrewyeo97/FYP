@@ -18,8 +18,9 @@ import java.util.*
   var cholesterol: Double = 0.00
   var uploadDate: Date ?= null
   var category: String = ""
+  var cuisine: String = ""
   var staffID: String = ""
-
+  var urlRec: String = ""
  }
 
 

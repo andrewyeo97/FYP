@@ -11,12 +11,18 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.activity_edit_username.*
 import kotlinx.android.synthetic.main.user_login_page.*
 
 class UserLoginPage : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    val existUser = FirebaseAuth.getInstance().currentUser
+    val existUserID = FirebaseAuth.getInstance().currentUser?.uid
+    var isExist : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,17 +71,37 @@ class UserLoginPage : AppCompatActivity() {
 
         auth.signInWithEmailAndPassword(emailEdit.text.toString(), passwordEdit.text.toString()).addOnCompleteListener {
             if(!it.isSuccessful){
-                Toast.makeText(this,"Invalid Email or Password",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Invalid email or password",Toast.LENGTH_SHORT).show()
             }else{
                 if(FirebaseAuth.getInstance().currentUser != null){
-                    if (FirebaseAuth.getInstance().currentUser?.isEmailVerified!!){
-                        startActivity(Intent(this, DashboardActivity::class.java))
-                        finish()
-                    }
-                    else{
-                        Toast.makeText(baseContext, "Please verify your email address.",
-                            Toast.LENGTH_SHORT).show()
-                    }
+                //    if (FirebaseAuth.getInstance().currentUser?.isEmailVerified!!){
+                    val ref = FirebaseDatabase.getInstance().getReference("/Users").orderByChild("id").equalTo(FirebaseAuth.getInstance().currentUser?.uid)
+                    ref.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onCancelled(error: DatabaseError) {}
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            snapshot.children.forEach {
+                                val user = it.getValue(User::class.java)
+                                if (user != null) {
+                                    isExist = true
+                                    goUserPage()
+                                }
+                            }
+                            if (isExist == false){
+                                FirebaseAuth.getInstance().signOut()
+                                Toast.makeText(baseContext, "Invalid email address.",
+                                    Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                    })
+
+
+//                    }
+//                    else{
+//                        Toast.makeText(baseContext, "Please verify your email address.",
+//                            Toast.LENGTH_SHORT).show()
+//                    }
+
                 }
                 else{
                     Toast.makeText(baseContext, "Login failed.",
@@ -87,6 +113,11 @@ class UserLoginPage : AppCompatActivity() {
 
     }
 
+    private fun goUserPage(){
+        startActivity(Intent(this, DashboardActivity::class.java))
+        finish()
+    }
 
 
 }
+
