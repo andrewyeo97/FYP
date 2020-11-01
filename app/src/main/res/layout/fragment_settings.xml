@@ -39,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -96,6 +97,49 @@
             app:layout_constraintTop_toBottomOf="@+id/manageAccBtn" />
 
         <ImageView
+            android:id="@+id/imgViewHistory"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/history"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgViewManageAccount" />
+
+        <Button
+            android:id="@+id/historyBtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="8dp"
+            android:background="#fff"
+            android:gravity="left"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp"
+            android:shadowColor="@color/white"
+            android:text="My Recipe History"
+            android:textAlignment="gravity"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toStartOf="@+id/forwardbutton3"
+            app:layout_constraintStart_toEndOf="@+id/imgViewHistory"
+            app:layout_constraintTop_toBottomOf="@+id/manageAccBtn2" />
+
+
+        <ImageView
+            android:id="@+id/forwardbutton3"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/gray_arrow_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/forwardbutton1" />
+
+        <ImageView
             android:id="@+id/imgViewSignOut"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -103,7 +147,7 @@
             android:layout_marginTop="8dp"
             android:src="@drawable/ic_baseline_exit_to_app_24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgViewManageAccount" />
+            app:layout_constraintTop_toBottomOf="@+id/imgViewHistory" />
 
         <Button
             android:id="@+id/signOutBtn"
@@ -124,8 +168,9 @@
             android:textSize="15dp"
             android:textStyle="normal"
             app:layout_constraintEnd_toStartOf="@+id/forwardbutton2"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imgViewSignOut"
-            app:layout_constraintTop_toBottomOf="@+id/manageAccBtn2" />
+            app:layout_constraintTop_toBottomOf="@+id/historyBtn" />
 
         <ImageView
             android:id="@+id/forwardbutton1"
@@ -144,7 +189,7 @@
             android:layout_marginEnd="16dp"
             android:src="@drawable/gray_arrow_right"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/forwardbutton1" />
+            app:layout_constraintTop_toBottomOf="@+id/forwardbutton3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

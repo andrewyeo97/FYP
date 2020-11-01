@@ -67,6 +67,17 @@ class SettingsFragment : Fragment() {
             verifyExit()
         }
 
+        historyBtn.setOnClickListener{
+            goHistoryActivity()
+        }
+
+        imgViewHistory.setOnClickListener{
+            goHistoryActivity()
+        }
+
+        forwardbutton3.setOnClickListener{
+            goHistoryActivity()
+        }
     }
 
     private fun verifyExit(){
@@ -88,6 +99,11 @@ class SettingsFragment : Fragment() {
 
     private fun goManageActivity(){
         val intent = Intent(context, ManageAccountActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun goHistoryActivity(){
+        val intent = Intent(context, HistoryActivity::class.java)
         startActivity(intent)
     }
 

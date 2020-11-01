@@ -142,9 +142,6 @@ class ChatActivity : AppCompatActivity() {
         ryr_chat.adapter = adapters
     }
 
-
-
-
     private fun sendMessage(){
         val commentID = UUID.randomUUID().toString()
         var timestamp = System.currentTimeMillis()/1000

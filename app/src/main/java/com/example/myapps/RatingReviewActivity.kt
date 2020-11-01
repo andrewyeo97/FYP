@@ -64,7 +64,6 @@ class RatingReviewActivity : AppCompatActivity() {
                     if (rc != null) {
                         Picasso.get().load(rc.recipeImage).into(imageRecipeRate)
                         titleRecipeRate.text = rc.recipeTitle
-
                     }
                 }
             }

@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.myapps.fragments.FavouriteFragment
 import com.example.myapps.fragments.HomeFragment
@@ -23,12 +24,14 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_add_rating.*
+import kotlinx.android.synthetic.main.activity_recipe_detail.*
 import kotlinx.android.synthetic.main.activity_recipe_recycle_view_list.*
 import kotlinx.android.synthetic.main.fragment_favourite.*
 import kotlinx.android.synthetic.main.recycle_no_favourite_yet.view.*
 import kotlinx.android.synthetic.main.recycle_no_recipe_yet.view.*
 import kotlinx.android.synthetic.main.recycle_row_item.view.*
 import kotlinx.android.synthetic.main.recycle_row_no_review.view.*
+import java.util.*
 
 class RecipeRecycleViewList : AppCompatActivity() {
     val list = arrayListOf<Recipe>()
@@ -36,7 +39,13 @@ class RecipeRecycleViewList : AppCompatActivity() {
     var category_key : String = ""
     var cuisine_key : String = ""
     var found: Boolean = false
-
+    var historyExist: Boolean = false
+    var history = History()
+    val currentuserID = FirebaseAuth.getInstance().uid.toString()
+    var recipeStr : String = ""
+    var currentHistoryID : String = ""
+    var recipeImg: String = ""
+    var recipeTitles: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_recycle_view_list)
@@ -146,7 +155,11 @@ class RecipeRecycleViewList : AppCompatActivity() {
                     adapter.setOnItemClickListener { item, view ->
                         val recDetail = item as bindata
                         val intent = Intent(view.context, RecipeDetailActivity::class.java)
+                        recipeStr = recDetail.recipe.recipeID
+                        recipeImg = recDetail.recipe.recipeImage
+                        recipeTitles = recDetail.recipe.recipeTitle
                         intent.putExtra(RECIPE_KEY, recDetail.recipe.recipeID)
+                        checkHistory()
                         adapter.clear()
                         list.clear()
                         searchRecipeView.setText("")
@@ -179,6 +192,52 @@ class RecipeRecycleViewList : AppCompatActivity() {
         override fun getLayout(): Int {
             return R.layout.recycle_no_recipe_yet
         }
+    }
+
+    private fun addHistory(){
+        val historyID = UUID.randomUUID().toString()
+        var timestamp = System.currentTimeMillis()/1000
+        val ref = FirebaseDatabase.getInstance().getReference("/History/$historyID")
+        history.historyID = historyID
+        history.historyDate = timestamp
+        history.userID = currentuserID
+        history.recipeID = recipeStr
+        history.recipeTitle = recipeTitles
+        history.recipeURL = recipeImg
+        ref.setValue(history)
+    }
+
+    private fun checkHistory(){
+        historyExist = false
+        val ref = FirebaseDatabase.getInstance().getReference("/History").orderByChild("userID").equalTo(currentuserID)
+        ref.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach {
+                    val his = it.getValue(History::class.java)
+                    if (his != null){
+                        if (his.recipeID.equals(recipeStr)){
+                            historyExist = true
+                            currentHistoryID = his.historyID
+                        }
+                    }
+                }
+                if(historyExist == true){
+                    updateHistory()
+                }
+                if(historyExist == false){
+                    addHistory()
+                }
+            }
+        })
+    }
+
+    private fun updateHistory(){
+        val historyID = currentHistoryID
+        var timestamp = System.currentTimeMillis()/1000
+
+        val ref = FirebaseDatabase.getInstance().getReference("History/$historyID")
+        ref.child("historyDate").setValue(timestamp)
     }
 
 }

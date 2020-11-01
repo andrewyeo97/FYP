@@ -10,7 +10,8 @@
         android:roundIcon="@drawable/round_shape_gray"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DinnerActivity"></activity>
+        <activity android:name=".HistoryActivity"></activity>
+        <activity android:name=".DinnerActivity" />
         <activity android:name=".LunchActivity" />
         <activity android:name=".RecipeRecycleViewList" />
         <activity android:name=".LoadingScreenActivity">
@@ -66,12 +67,8 @@
             android:name=".RatingReviewActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity android:name=".InsertSteps">
-
-        </activity>
-        <activity android:name=".InsertIngredient">
-
-        </activity>
+        <activity android:name=".InsertSteps"></activity>
+        <activity android:name=".InsertIngredient"></activity>
         <activity
             android:name=".RecipeDetailActivity"
             android:label=""
@@ -81,9 +78,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".DashboardActivity" />
         </activity>
-        <activity android:name=".InsertRecipe">
-
-        </activity>
+        <activity android:name=".InsertRecipe"></activity>
         <activity
             android:name=".DashboardActivity"
             android:screenOrientation="portrait"
