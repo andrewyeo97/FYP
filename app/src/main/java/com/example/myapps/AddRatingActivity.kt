@@ -34,6 +34,7 @@ class AddRatingActivity : AppCompatActivity() {
     val currentuserID = FirebaseAuth.getInstance().uid.toString()
     var rating = Rating()
     var currentDate = Calendar.getInstance().time
+    var rateNumber: Float = 0.0F
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +75,7 @@ class AddRatingActivity : AppCompatActivity() {
         rid = intent.extras?.getString(RCID,"").toString()
         loadRecipe()
         loadRating()
+
     }
 
     private fun findUser(){
@@ -105,9 +107,15 @@ class AddRatingActivity : AppCompatActivity() {
         rating.username = username
         rating.profileImageUrl = url
         ref.setValue(rating)
-
+        loadRating()
         Toast.makeText(baseContext, "Rating completed", Toast.LENGTH_SHORT).show()
         onBackPressed()
+    }
+
+
+    private fun modifyRecipeAvgRating(float: Float){
+        val ref = FirebaseDatabase.getInstance().getReference("Recipe/$rid")
+        ref.child("averageRating").setValue(float)
     }
 
     private fun modifyRating(){
@@ -120,6 +128,7 @@ class AddRatingActivity : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("Rating/$ratingID")
         ref.child("ratingNumber").setValue(ratingvalue)
         ref.child("review").setValue(txt_review)
+        loadRating()
         Toast.makeText(baseContext, "Rating edited successfully", Toast.LENGTH_SHORT).show()
         onBackPressed()
     }
@@ -127,9 +136,9 @@ class AddRatingActivity : AppCompatActivity() {
     private fun deleteRating(){
         val ref = FirebaseDatabase.getInstance().getReference("/Rating/$currentRatingID")
         ref.removeValue()
+        loadRating()
         Toast.makeText(baseContext, "Rating removed", Toast.LENGTH_SHORT).show()
         onBackPressed()
-
     }
 
 
@@ -151,6 +160,10 @@ class AddRatingActivity : AppCompatActivity() {
 
     private fun loadRating(){
 
+        var avgRating: Float = 0.0F
+        var counter: Int = 0
+        var ttlRating: Float = 0.0F
+
         val reff = FirebaseDatabase.getInstance().getReference("/Rating").orderByChild("recipeID").equalTo(rid)
         reff.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {}
@@ -158,6 +171,8 @@ class AddRatingActivity : AppCompatActivity() {
                 snapshot.children.forEach {
                     val rating = it.getValue(Rating::class.java)
                     if(rating != null){
+                        ttlRating = ttlRating + rating.ratingNumber
+                        counter = counter + 1
 
                         if(rating.userID.equals(currentuserID)){
                             ratingBar.rating = rating.ratingNumber.toString().toFloat()
@@ -171,6 +186,9 @@ class AddRatingActivity : AppCompatActivity() {
                     }
 
                 }
+                avgRating = ttlRating/counter
+                rateNumber = avgRating
+                modifyRecipeAvgRating(avgRating)
             }
         })
     }

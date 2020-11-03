@@ -71,25 +71,25 @@ class RegisterActivity : AppCompatActivity() {
     private fun signUpUser(){
 
         if(regUsernameEdit.text.toString().isEmpty()){
-            regUsernameEdit.error = "Please enter your username"
+            Toast.makeText(this,"Please enter your username",Toast.LENGTH_SHORT).show()
             regUsernameEdit.requestFocus()
             return
         }
 
         if(regEmailEdit.text.toString().isEmpty()){
-            regEmailEdit.error = "Please enter your email address"
+            Toast.makeText(this,"Please enter your email address",Toast.LENGTH_SHORT).show()
             regEmailEdit.requestFocus()
             return
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(regEmailEdit.text.toString()).matches()){
-            regEmailEdit.error = "Please enter valid email address"
+            Toast.makeText(this,"Please enter valid email address",Toast.LENGTH_SHORT).show()
             regEmailEdit.requestFocus()
             return
         }
 
         if(regPasswordEdit.text.toString().isEmpty()){
-            regPasswordEdit.error = "Please enter your password"
+            Toast.makeText(this,"Please enter your password",Toast.LENGTH_SHORT).show()
             regPasswordEdit.requestFocus()
             return
         }
@@ -127,7 +127,7 @@ class RegisterActivity : AppCompatActivity() {
                 }
         }
         else{
-            regPasswordEdit.error = "Password does not fulfill the criteria"
+            Toast.makeText(baseContext, "Password does not fulfill the criteria", Toast.LENGTH_SHORT).show()
             regPasswordEdit.requestFocus()
             return
         }

@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_swm__add__ing_.*
 import kotlinx.android.synthetic.main.activity_swm__add__step_.*
 import kotlinx.android.synthetic.main.wm_recycle_row_ing.view.*
 import kotlinx.android.synthetic.main.wm_recycle_row_step.view.*
+import java.lang.Double
 import java.util.*
 
 class swm_Add_Step_Activity : AppCompatActivity() {
@@ -53,6 +54,7 @@ class swm_Add_Step_Activity : AppCompatActivity() {
     }
 
     private fun addStep(){
+        var numeric = true
         val stepID = UUID.randomUUID().toString()
         val ref = FirebaseDatabase.getInstance().getReference("/wmStep/$stepID")
         val recipeId = intent.getStringExtra("Ing_RecipeId")
@@ -64,6 +66,16 @@ class swm_Add_Step_Activity : AppCompatActivity() {
         }
         if(step_desc.text.toString().isEmpty()){
             step_desc.error = "Please enter description"
+            step_desc.requestFocus()
+            return
+        }
+        try{
+            val num = Double.parseDouble(step_desc.text.toString())
+        }catch (e: NumberFormatException){
+            numeric = false
+        }
+        if(numeric){
+            step_desc.error = "Description cannot be numeric"
             step_desc.requestFocus()
             return
         }

@@ -72,6 +72,7 @@ class InsertRecipe : AppCompatActivity() {
         recipe.cuisine = cuisine.text.toString()
         recipe.uploadDate = currentDate
         recipe.recipeImage = profileImageUrl
+        recipe.averageRating = 0.00F
         recipe.urlRec = "https://www.slenderkitchen.com/recipe/frozen-breakfast-quesadillas"
         ref.setValue(recipe)
     }

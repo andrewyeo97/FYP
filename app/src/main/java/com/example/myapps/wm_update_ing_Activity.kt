@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.recycle_row_item.view.*
 import kotlinx.android.synthetic.main.wm_recycle_row_ing.view.*
 import kotlinx.android.synthetic.main.wm_recycle_update_ing.view.*
+import java.lang.Double
 import java.util.*
 
 class wm_update_ing_Activity : AppCompatActivity() {
@@ -90,6 +91,9 @@ class wm_update_ing_Activity : AppCompatActivity() {
     }
 
     private fun addIng(){
+
+        var numeric1 = true
+        var numeric2 = true
         val ingID = UUID.randomUUID().toString()
         val ref = FirebaseDatabase.getInstance().getReference("/wmIngredient/$ingID")
         val rcpId = intent.getStringExtra("updateRecipeId")
@@ -99,6 +103,17 @@ class wm_update_ing_Activity : AppCompatActivity() {
             ingName.requestFocus()
             return
         }
+        try{
+            val num = Double.parseDouble(update_ingName.text.toString())
+        }catch (e: NumberFormatException){
+            numeric1 = false
+        }
+        if(numeric1){
+            update_ingName.error = "Ingredients name cannot be numeric"
+            update_ingName.requestFocus()
+            return
+        }
+
         if(update_ingQty.text.toString().isEmpty()){
             update_ingQty.error = "Please enter ingredients quantity"
             ingQty.requestFocus()
@@ -109,6 +124,17 @@ class wm_update_ing_Activity : AppCompatActivity() {
             ingUnit.requestFocus()
             return
         }
+        try{
+            val num = Double.parseDouble(update_ingUnit.text.toString())
+        }catch (e: NumberFormatException){
+            numeric2 = false
+        }
+        if(numeric2){
+            update_ingUnit.error = "Ingredients Unit cannot be numeric"
+            update_ingUnit.requestFocus()
+            return
+        }
+
         ingredient.ingredientID = ingID
         ingredient.ingredientName = update_ingName.text.toString()
         ingredient.quantity = update_ingQty.text.toString().toDouble()
@@ -125,11 +151,25 @@ class wm_update_ing_Activity : AppCompatActivity() {
     }
 
     private fun updateIng(){
+        var numeric3 = true
+        var numeric4 = true
+
         val ref = FirebaseDatabase.getInstance().getReference("wmIngredient/$ingId")
 
         if(update_ingName.text.isNotEmpty()){
-            val name = update_ingName.text.toString()
-            ref.child("ingredientName").setValue(name)
+            try{
+                val num = Double.parseDouble(update_ingName.text.toString())
+            }catch (e: NumberFormatException){
+                numeric3 = false
+            }
+            if(numeric3){
+                update_ingName.error = "Ingredients name cannot be numeric"
+                update_ingName.requestFocus()
+                return
+            }else{
+                val name = update_ingName.text.toString()
+                ref.child("ingredientName").setValue(name)
+            }
         }
         else{
             update_ingName.error = "Ingredient Name cannot be empty..."
@@ -148,8 +188,19 @@ class wm_update_ing_Activity : AppCompatActivity() {
         }
 
         if(update_ingUnit.text.isNotEmpty()){
-            val unit = update_ingUnit.text.toString()
-            ref.child("unit").setValue(unit)
+            try{
+                val num = Double.parseDouble(update_ingUnit.text.toString())
+            }catch (e: NumberFormatException){
+                numeric4 = false
+            }
+            if(numeric4){
+                update_ingUnit.error = "Ingredients Unit cannot be numeric"
+                update_ingUnit.requestFocus()
+                return
+            }else{
+                val unit = update_ingUnit.text.toString()
+                ref.child("unit").setValue(unit)
+            }
         }
         else{
             update_ingUnit.error = "Ingredient Unit cannot be empty..."

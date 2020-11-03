@@ -51,19 +51,19 @@ class UserLoginPage : AppCompatActivity() {
 
     private fun doLogin(){
         if(emailEdit.text.toString().isEmpty()){
-            emailEdit.error = "Please enter email address"
+            Toast.makeText(this,"Please enter email address",Toast.LENGTH_SHORT).show()
             emailEdit.requestFocus()
             return
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(emailEdit.text.toString()).matches()){
-            emailEdit.error = "Please enter valid email address"
+            Toast.makeText(this,"Please enter valid email address",Toast.LENGTH_SHORT).show()
             emailEdit.requestFocus()
             return
         }
 
         if(passwordEdit.text.toString().isEmpty()){
-            passwordEdit.error = "Please enter password"
+            Toast.makeText(this,"Please enter password",Toast.LENGTH_SHORT).show()
             passwordEdit.requestFocus()
             return
         }

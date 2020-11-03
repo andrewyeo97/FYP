@@ -6,8 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.myapps.MainActivity
-import com.example.myapps.R
+import com.example.myapps.*
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_wm_setting.*
@@ -36,6 +35,36 @@ class wmSettingFragment : Fragment() {
         imgViewStaffSignOut.setOnClickListener {
             logout()
         }
+
+        buttonAddNewStaff.setOnClickListener {
+            val intent = Intent(context, swm_Staff_Register::class.java)
+            startActivity(intent)
+        }
+        imageViewAddNewStaff.setOnClickListener{
+            val intent = Intent(context, swm_Staff_Register::class.java)
+            startActivity(intent)
+        }
+
+        StaffAccBtn.setOnClickListener {
+            val intent = Intent(context, View_user_Profile_Activity::class.java)
+            startActivity(intent)
+        }
+        imgViewStaffAccount.setOnClickListener {
+            val intent = Intent(context, View_user_Profile_Activity::class.java)
+            startActivity(intent)
+        }
+
+        imageViewReport.setOnClickListener {
+            val intent = Intent(context, wm_view_report_Activity::class.java)
+            startActivity(intent)
+        }
+
+        buttonViewReport.setOnClickListener {
+            val intent = Intent(context, wm_view_report_Activity::class.java)
+            startActivity(intent)
+        }
+
+
     }
     private fun logout(){
         FirebaseAuth.getInstance().signOut()

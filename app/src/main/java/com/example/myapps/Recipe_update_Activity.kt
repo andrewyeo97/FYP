@@ -7,6 +7,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Patterns
 import android.widget.Toast
 import com.example.myapps.R
 import com.example.myapps.Recipe
@@ -18,8 +19,11 @@ import com.google.firebase.internal.InternalTokenProvider
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_recipe_update_.*
+import kotlinx.android.synthetic.main.activity_wm_add_new__recipe_.*
 import kotlinx.android.synthetic.main.activity_wm_staff__recipe_detail_.*
 import kotlinx.android.synthetic.main.fragment_wm_add.*
+import java.lang.Double
+import java.lang.Double.parseDouble
 import java.util.*
 
 class Recipe_update_Activity : AppCompatActivity() {
@@ -98,6 +102,8 @@ class Recipe_update_Activity : AppCompatActivity() {
                         update_fibre.setText(rc.fibre.toString())
                         update_protein.setText(rc.protein.toString())
                         update_cholesterol.setText(rc.cholesterol.toString())
+                        update_food_cuisine.setText(rc.cuisine)
+                        update_food_link.setText(rc.urlRec)
 
                         imageString = rc.recipeImage
                     }
@@ -107,6 +113,11 @@ class Recipe_update_Activity : AppCompatActivity() {
     }
 
     private fun updateValue(){
+
+        var numeric1 = true
+        var numeric2 = true
+        var numeric3 = true
+
 
         val id = intent.getStringExtra("RecipeId")
         val ref = FirebaseDatabase.getInstance().getReference("wmRecipe/$id")
@@ -121,15 +132,46 @@ class Recipe_update_Activity : AppCompatActivity() {
             return
         }
 
+        try{
+            val num = Double.parseDouble(update_food_name.text.toString())
+        }catch (e: NumberFormatException){
+            numeric1 = false
+        }
+        if(numeric1){
+            update_food_name.error = "Food name cannot be numeric"
+            update_food_name.requestFocus()
+            return
+        }else{
+            val title = update_food_name.text.toString()
+            ref.child("recipeTitle").setValue(title)
+        }
+
+
         if( update_food_category.text.isNotEmpty()){
-            val rcpCtg = update_food_category.text.toString()
-            ref.child("category").setValue(rcpCtg)
+            try{
+                val num = Double.parseDouble(update_food_category.text.toString())
+            }catch (e: NumberFormatException){
+                numeric2 = false
+            }
+
+            if(numeric2){
+                update_food_category.error = "Food category cannot be numeric"
+                update_food_category.requestFocus()
+                return
+            }else{
+                val rcpCtg = update_food_category.text.toString()
+                ref.child("category").setValue(rcpCtg)
+            }
+//            val rcpCtg = update_food_category.text.toString()
+//            ref.child("category").setValue(rcpCtg)
         }
         else{
             update_food_category.error = "Recipe category cannot be empty..."
             update_food_category.requestFocus()
             return
         }
+
+
         if (update_food_calories.text.isNotEmpty()){
             val rcpCalories = update_food_calories.text.toString().toDouble()
             ref.child("calories").setValue(rcpCalories)
@@ -184,6 +226,59 @@ class Recipe_update_Activity : AppCompatActivity() {
             return
         }
 
+        if(update_food_cuisine.text.isNotEmpty()){
+            try{
+                val num = parseDouble(update_food_cuisine.text.toString())
+            }catch (e: NumberFormatException){
+                numeric3 = false
+            }
+
+            if(numeric3){
+                update_food_cuisine.error = "Cuisine cannot be numeric"
+                update_food_cuisine.requestFocus()
+                return
+            }else{
+                val cuisine = update_food_cuisine.text.toString()
+                ref.child("cuisine").setValue(cuisine)
+            }
+        }else{
+            update_food_cuisine.error = "Cuisine cannot be empty..."
+            update_food_cuisine.requestFocus()
+            return
+        }
+
+        if(update_food_link.text.isEmpty()){
+            update_food_link.error = "Recipe Link cannot be empty..."
+            update_food_link.requestFocus()
+            return
+        }else{
+            val link = update_food_link.text.toString()
+            ref.child("urlRec").setValue(link)
+        }
+        if(!Patterns.WEB_URL.matcher(update_food_link.text.toString()).matches()) {
+            update_food_link.error = "Invalid format"
+            update_food_link.requestFocus()
+            return
+        }
+
+
+//        if(update_food_link.text.isNotEmpty()){
+//            if(!Patterns.WEB_URL.matcher(food_link.text.toString()).matches())
+//            {
+//                food_link.error = "Invalid format"
+//                food_link.requestFocus()
+//                return
+//            }else{
+////                val link = update_food_link.text.toString()
+////                ref.child("urlRec").setValue(link)
+//            }
+////            val link = update_food_link.text.toString()
+////            ref.child("urlRec").setValue(link)
+//        }else{
+//            update_food_link.error = "Recipe Link cannot be empty..."
+//            update_food_link.requestFocus()
+//            return
+//        }
         uploadFoodImageToFirebaseStorage()
         Toast.makeText(baseContext, "Update Successful", Toast.LENGTH_SHORT).show()
     }

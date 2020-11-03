@@ -10,20 +10,22 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:background="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/finish_step"
+            android:id="@+id/textView53"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="Finish"
-            android:textColor="#000000"
-            android:textSize="24sp"
+            android:text="Add Steps"
+            android:textColor="#EDE1E1"
+            android:textSize="36sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -42,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="48dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="70dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="25dp"
             android:text="Recipe Title: "
@@ -131,6 +133,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/step_desc"
             app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/finish_step"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Finish"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -156,9 +171,10 @@
             android:id="@+id/re_step_btn"
             android:layout_width="45dp"
             android:layout_height="35dp"
-            android:layout_marginStart="161dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="212dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/wm_ic_refresh"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView23"
             app:layout_constraintTop_toTopOf="parent" />

@@ -44,19 +44,19 @@ class EditPasswordActivity : AppCompatActivity() {
     private fun changePassword(){
 
         if(oldPasswordEdit.text.toString().isEmpty()){
-            oldPasswordEdit.error = "Please enter the field"
+            Toast.makeText(baseContext, "Please enter the field", Toast.LENGTH_SHORT).show()
             oldPasswordEdit.requestFocus()
             return
         }
 
         if(newPasswordEdit.text.toString().isEmpty()){
-            newPasswordEdit.error = "Please enter the field"
+            Toast.makeText(baseContext, "Please enter the field", Toast.LENGTH_SHORT).show()
             newPasswordEdit.requestFocus()
             return
         }
 
         if(confirmPasswordEdit.text.toString().isEmpty()){
-            confirmPasswordEdit.error = "Please enter the field"
+            Toast.makeText(baseContext, "Please enter the field", Toast.LENGTH_SHORT).show()
             confirmPasswordEdit.requestFocus()
             return
         }
@@ -88,20 +88,25 @@ class EditPasswordActivity : AppCompatActivity() {
                                         }
                                     }
                             } else {
-                                oldPasswordEdit.error = "Current password is incorrect"
+                                Toast.makeText(
+                                    baseContext,
+                                    "Current password is incorrect",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 oldPasswordEdit.requestFocus()
-                                }
+                            }
                         }
+
                     } else {
                         startActivity(Intent(this, UserLoginPage::class.java))
                         finish()}
                 }
                 else{
-                    newPasswordEdit.error = "Password does not fulfill the criteria"
+                    Toast.makeText(baseContext, "Password does not fulfill the criteria", Toast.LENGTH_SHORT).show()
                     newPasswordEdit.requestFocus()
                     return}
             } else {
-                confirmPasswordEdit.error = "Password mismatch"
+                Toast.makeText(baseContext, "Password mismatch", Toast.LENGTH_SHORT).show()
                 confirmPasswordEdit.requestFocus()
                 return}
 

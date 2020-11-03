@@ -9,6 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/wm_food_image_staff"
         android:orientation="vertical"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,6 +28,7 @@
                 android:id="@+id/titleReg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:fontFamily="cursive"
                 android:paddingVertical="60dp"
                 android:text="Staff Registration"
@@ -56,7 +58,7 @@
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="24dp"
                 android:text="Staff name"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/black"
                 android:textSize="50px"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +82,7 @@
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="24dp"
                 android:text="Contact Number"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/black"
                 android:textSize="50px"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +106,7 @@
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="16dp"
                 android:text="Email"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/black"
                 android:textSize="50px"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -129,7 +131,7 @@
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="16dp"
                 android:text="Password"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/black"
                 android:textSize="50px"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -163,6 +165,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/StaffRegPasswordEdit" />
+
+            <TextView
+                android:id="@+id/back_to_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Back To Home"
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="@+id/StaffRegButton"
+                app:layout_constraintStart_toStartOf="@+id/StaffRegButton"
+                app:layout_constraintTop_toBottomOf="@+id/StaffRegButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

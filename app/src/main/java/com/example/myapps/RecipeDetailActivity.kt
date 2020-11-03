@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
+import kotlinx.android.synthetic.main.activity_add_rating.*
 import kotlinx.android.synthetic.main.activity_recipe_detail.*
 import kotlinx.android.synthetic.main.recycle_row_ingredients.view.*
 import kotlinx.android.synthetic.main.recycle_row_preparation.view.*
@@ -36,6 +37,7 @@ class RecipeDetailActivity : AppCompatActivity() {
     var favDD : String = ""
     var link: String = ""
     var recName: String = ""
+
     private val handlers: Handler = Handler()
 
     @RequiresApi(Build.VERSION_CODES.P)
@@ -74,6 +76,7 @@ class RecipeDetailActivity : AppCompatActivity() {
         super.onStart()
         rc_id = intent.getStringExtra(RecipeRecycleViewList.RECIPE_KEY)
         rc_id = intent.getStringExtra(FavouriteFragment.RECIPE_KEY)
+        rc_id = intent.getStringExtra(HistoryActivity.RECIPE_KEY)
         ToastRunnabler.run()
         init()
         bindIngredient()
@@ -183,6 +186,8 @@ class RecipeDetailActivity : AppCompatActivity() {
             handlers.postDelayed(this, 100)
         }
  }
+
+
     
 
     private fun init() {
@@ -246,7 +251,6 @@ class RecipeDetailActivity : AppCompatActivity() {
 
     private fun bindSteps() {
         val list = arrayListOf<Steps>()
-
         val ref = FirebaseDatabase.getInstance().getReference("/Steps").orderByChild("recipeID").equalTo(rc_id)
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}

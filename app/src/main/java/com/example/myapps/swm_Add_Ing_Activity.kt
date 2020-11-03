@@ -16,8 +16,10 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_swm__add__ing_.*
+import kotlinx.android.synthetic.main.activity_wm_add_new__recipe_.*
 import kotlinx.android.synthetic.main.recycle_row_item2.view.*
 import kotlinx.android.synthetic.main.wm_recycle_row_ing.view.*
+import java.lang.Double
 import java.util.*
 
 class swm_Add_Ing_Activity : AppCompatActivity() {
@@ -63,6 +65,9 @@ class swm_Add_Ing_Activity : AppCompatActivity() {
     }
 
     private fun addIng(){
+
+        var numeric1 = true
+        var numeric2 = true
         val ingID = UUID.randomUUID().toString()
         val ref = FirebaseDatabase.getInstance().getReference("/wmIngredient/$ingID")
         val recipeId = intent.getStringExtra("RecipeId")
@@ -72,6 +77,17 @@ class swm_Add_Ing_Activity : AppCompatActivity() {
             ingName.requestFocus()
             return
         }
+        try{
+            val num = Double.parseDouble(ingName.text.toString())
+        }catch (e: NumberFormatException){
+            numeric1 = false
+        }
+        if(numeric1){
+            ingName.error = "Ingredients name cannot be numeric"
+            ingName.requestFocus()
+            return
+        }
+
         if(ingQty.text.toString().isEmpty()){
             ingQty.error = "Please enter ingredients quantity"
             ingQty.requestFocus()
@@ -82,6 +98,17 @@ class swm_Add_Ing_Activity : AppCompatActivity() {
             ingUnit.requestFocus()
             return
         }
+        try{
+            val num = Double.parseDouble(ingUnit.text.toString())
+        }catch (e: NumberFormatException){
+            numeric2 = false
+        }
+        if(numeric2){
+            ingUnit.error = "Ingredients Unit cannot be numeric"
+            ingUnit.requestFocus()
+            return
+        }
+
         ingredient.ingredientID = ingID
         ingredient.ingredientName = ingName.text.toString()
         ingredient.quantity = ingQty.text.toString().toDouble()

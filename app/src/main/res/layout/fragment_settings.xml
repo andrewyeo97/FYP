@@ -118,7 +118,7 @@
             android:paddingLeft="10dp"
             android:paddingTop="15dp"
             android:shadowColor="@color/white"
-            android:text="My Recipe History"
+            android:text="Recipe History"
             android:textAlignment="gravity"
             android:textAllCaps="false"
             android:textColor="@color/black"

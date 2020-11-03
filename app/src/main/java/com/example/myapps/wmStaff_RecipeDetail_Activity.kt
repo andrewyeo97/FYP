@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.LocusId
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.myapps.*
@@ -45,6 +46,8 @@ import kotlinx.android.synthetic.main.activity_wm_staff__recipe_detail_.view.*
 class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
 
     var rc_id : String = ""
+    var found: Boolean = false
+    private val handlers: Handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,11 +94,42 @@ class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
         init()
         bindIngredient()
         bindSteps()
+        ToastRunnabler.run()
 //
 //        displayFavourite()
 //        back_button.setOnClickListener {
 //            onBackPressed()
 //        }
+    }
+
+    private val ToastRunnabler: Runnable = object : Runnable {
+        override fun run() {
+            found = false
+            var avgRating: Float = 0.0F
+            var counter: Int = 0
+            var ttlRating: Float = 0.0F
+            val ref = FirebaseDatabase.getInstance().getReference("/Rating").orderByChild("recipeID").equalTo(rc_id)
+            ref.addListenerForSingleValueEvent(object : ValueEventListener{
+
+                override fun onCancelled(error: DatabaseError) {}
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.children.forEach {
+                        val rate = it.getValue(Rating::class.java)
+                        if (rate != null){
+                            found = true
+                            ttlRating = ttlRating + rate.ratingNumber
+                            counter = counter + 1
+                        }
+
+                    }
+                    avgRating = ttlRating/counter
+                    recipeRating.text = (avgRating.toString() + " ratings | " + counter + " review(s)")
+                    if(found == false){
+                        recipeRating.text = ("No review yet")}
+                }
+            })
+            handlers.postDelayed(this, 100)
+        }
     }
 
 
@@ -159,7 +193,7 @@ class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
                 builder.setTitle("Delete ingredient")
                 builder.setMessage("Do you want to delete ingredient?")
                 builder.setPositiveButton("Yes"){ dialog, which ->
-                    val ref = FirebaseDatabase.getInstance().getReference("/wmIngredient/${ingredients.ingredientID}")
+                    val ref = FirebaseDatabase.getInstance().getReference("/Ingredient/${ingredients.ingredientID}")
                     ref.removeValue()
                 }
                 builder.setNegativeButton("No",null)

@@ -14,8 +14,10 @@ import com.google.firebase.database.ValueEventListener
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
+import kotlinx.android.synthetic.main.activity_swm__add__step_.*
 import kotlinx.android.synthetic.main.activity_wm_update_step_.*
 import kotlinx.android.synthetic.main.wm_recycle_update_step.view.*
+import java.lang.Double
 import java.util.*
 
 class wm_update_step_Activity : AppCompatActivity() {
@@ -80,6 +82,7 @@ class wm_update_step_Activity : AppCompatActivity() {
     }
 
     private fun addStep(){
+        var numeric = true
         val stepID = UUID.randomUUID().toString()
         val ref = FirebaseDatabase.getInstance().getReference("/wmStep/$stepID")
         rcpId = intent.getStringExtra("updateRcpId")
@@ -94,6 +97,18 @@ class wm_update_step_Activity : AppCompatActivity() {
             update_step_desc.requestFocus()
             return
         }
+        try{
+            val num = Double.parseDouble(update_step_desc.text.toString())
+        }catch (e: NumberFormatException){
+            numeric = false
+        }
+        if(numeric){
+            update_step_desc.error = "Description cannot be numeric"
+            update_step_desc.requestFocus()
+            return
+        }
+
+
 
         step.stepID = stepID
         step.stepNo = update_step_no.text.toString().toInt()
@@ -104,6 +119,8 @@ class wm_update_step_Activity : AppCompatActivity() {
     }
 
     private fun updateStep(){
+        var numeric2  = true
+
         val ref = FirebaseDatabase.getInstance().getReference("wmStep/$stepId")
 
         if(update_step_no.text.isNotEmpty()){
@@ -115,8 +132,19 @@ class wm_update_step_Activity : AppCompatActivity() {
             return
         }
         if(update_step_desc.text.isNotEmpty()){
-            val desc = update_step_desc.text.toString()
-            ref.child("desc").setValue(desc)
+            try{
+                val num = Double.parseDouble(update_step_desc.text.toString())
+            }catch (e: NumberFormatException){
+                numeric2 = false
+            }
+            if(numeric2){
+                update_step_desc.error = "Description cannot be numeric"
+                update_step_desc.requestFocus()
+                return
+            }else{
+                val desc = update_step_desc.text.toString()
+                ref.child("desc").setValue(desc)
+            }
         }else{
             update_step_desc.error = "Description cannot be empty..."
             update_step_desc.requestFocus()

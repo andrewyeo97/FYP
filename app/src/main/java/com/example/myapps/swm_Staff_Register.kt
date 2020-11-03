@@ -14,6 +14,7 @@ import com.example.myapps.MainActivity
 import com.example.myapps.R
 import com.example.myapps.Staff
 import com.example.myapps.UserLoginPage
+import com.example.myapps.fragments.wmSettingFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -34,6 +35,11 @@ class swm_Staff_Register : AppCompatActivity() {
             signUpStaff()
         }
 
+        back_to_setting.setOnClickListener {
+            val intent = Intent(this, swmDashboardActivity::class.java)
+            startActivity(intent)
+        }
+
         photo_staff_reg.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
@@ -49,17 +55,6 @@ class swm_Staff_Register : AppCompatActivity() {
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,selectPhotoUri)
             photo_staff_reg.setImageBitmap(bitmap)
         }
-    }
-
-    fun exit(context: Context) {
-        val intent = Intent(context, MainActivity::class.java)
-        context.startActivity(intent)
-        FirebaseAuth.getInstance().signOut()
-        this.finish()
-    }
-
-    override fun onBackPressed() {
-        exit(this)
     }
 
     private fun signUpStaff() {
