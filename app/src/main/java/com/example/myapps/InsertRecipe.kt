@@ -73,7 +73,7 @@ class InsertRecipe : AppCompatActivity() {
         recipe.uploadDate = currentDate
         recipe.recipeImage = profileImageUrl
         recipe.averageRating = 0.00F
-        recipe.urlRec = "https://www.slenderkitchen.com/recipe/frozen-breakfast-quesadillas"
+        recipe.urlRec = "https://www.slenderkitchen.com/recipe/grilled-hawaiian-chicken-sandwiches"
         ref.setValue(recipe)
     }
 }

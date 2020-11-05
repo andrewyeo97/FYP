@@ -113,7 +113,7 @@ class BreakfastActivity : AppCompatActivity() {
             }
             else if(position == 1){
                 viewHolder.itemView.txtCat.text = "Chinese"
-                viewHolder.itemView.imgCat.setImageResource(R.drawable.pancake)
+                viewHolder.itemView.imgCat.setImageResource(R.drawable.wantan1)
 
                 viewHolder.itemView.cons_break.setOnClickListener {
                     val intent = Intent(it.context,RecipeRecycleViewList::class.java)

@@ -72,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
                 android:hint="Username"
+                android:inputType="text"
                 android:paddingHorizontal="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

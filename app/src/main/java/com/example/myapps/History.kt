@@ -6,7 +6,8 @@ class History {
     var historyID: String = ""
     var recipeID: String = ""
     var userID: String = ""
-    var historyDate: Long = -1
+    var timestamp: Long = -1
+    var historyDate: Date? = null
     var recipeURL: String = ""
     var recipeTitle: String = ""
 }

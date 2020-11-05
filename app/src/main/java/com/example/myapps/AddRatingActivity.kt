@@ -35,6 +35,7 @@ class AddRatingActivity : AppCompatActivity() {
     var rating = Rating()
     var currentDate = Calendar.getInstance().time
     var rateNumber: Float = 0.0F
+    var found: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,9 @@ class AddRatingActivity : AppCompatActivity() {
         deleteBtn.visibility = View.GONE
         deleteBtn.isClickable = false
         findUser()
-
+        rid = intent.extras?.getString(RCID,"").toString()
+        loadRecipe()
+        loadRating()
         postButton.setOnClickListener {
             if (isExist == false) {
                 if (ratingBar.rating.toDouble() > 0.00) {
@@ -70,13 +73,6 @@ class AddRatingActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        rid = intent.extras?.getString(RCID,"").toString()
-        loadRecipe()
-        loadRating()
-
-    }
 
     private fun findUser(){
         val ref = FirebaseDatabase.getInstance().getReference("/Users").orderByChild("id").equalTo(currentuserID)
@@ -159,7 +155,7 @@ class AddRatingActivity : AppCompatActivity() {
     }
 
     private fun loadRating(){
-
+        found = false
         var avgRating: Float = 0.0F
         var counter: Int = 0
         var ttlRating: Float = 0.0F
@@ -173,7 +169,7 @@ class AddRatingActivity : AppCompatActivity() {
                     if(rating != null){
                         ttlRating = ttlRating + rating.ratingNumber
                         counter = counter + 1
-
+                        found = true
                         if(rating.userID.equals(currentuserID)){
                             ratingBar.rating = rating.ratingNumber.toString().toFloat()
                             comment.setText(rating.review)
@@ -186,9 +182,11 @@ class AddRatingActivity : AppCompatActivity() {
                     }
 
                 }
-                avgRating = ttlRating/counter
-                rateNumber = avgRating
-                modifyRecipeAvgRating(avgRating)
+                if(found == true) {
+                    avgRating = ttlRating / counter
+                    rateNumber = avgRating
+                    modifyRecipeAvgRating(avgRating)
+                }
             }
         })
     }

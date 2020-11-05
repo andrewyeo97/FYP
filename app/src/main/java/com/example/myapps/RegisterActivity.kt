@@ -25,7 +25,7 @@ import java.util.regex.Pattern
 
 class RegisterActivity : AppCompatActivity() {
 
-    var click: Boolean = false
+    var currentDate = Calendar.getInstance().time
     var user = User()
     var selectedPhotoUri: Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -151,6 +151,7 @@ class RegisterActivity : AppCompatActivity() {
         user.email = regEmailEdit.text.toString()
         user.username = regUsernameEdit.text.toString()
         user.profileImageUrl = profileImageUrl
+        user.registerDate = currentDate
         ref.setValue(user)
     }
 

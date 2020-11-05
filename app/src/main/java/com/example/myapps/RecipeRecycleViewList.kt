@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -31,6 +32,7 @@ import kotlinx.android.synthetic.main.recycle_no_favourite_yet.view.*
 import kotlinx.android.synthetic.main.recycle_no_recipe_yet.view.*
 import kotlinx.android.synthetic.main.recycle_row_item.view.*
 import kotlinx.android.synthetic.main.recycle_row_no_review.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class RecipeRecycleViewList : AppCompatActivity() {
@@ -46,6 +48,12 @@ class RecipeRecycleViewList : AppCompatActivity() {
     var currentHistoryID : String = ""
     var recipeImg: String = ""
     var recipeTitles: String = ""
+    var currentDate = Calendar.getInstance().time
+    var formate = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+    var prev: String = ""
+    var current: String = ""
+    val listHistory = arrayListOf<History>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_recycle_view_list)
@@ -60,7 +68,6 @@ class RecipeRecycleViewList : AppCompatActivity() {
         category_key = intent.getStringExtra(DinnerActivity.rc_category)
         cuisine_key = intent.getStringExtra(DinnerActivity.rc_cuisine)
         searchRecipeView.isEnabled = false
-
         init()
 
 
@@ -108,14 +115,6 @@ class RecipeRecycleViewList : AppCompatActivity() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
-//    private fun Activity.hideKeyboard() {
-//        hideKeyboard(currentFocus ?: View(this))
-//    }
-//
-//    private fun Context.hideKeyboard(view: View) {
-//        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-//        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-//    }
 
     private fun search(title : String){
         adapter.clear()
@@ -128,6 +127,8 @@ class RecipeRecycleViewList : AppCompatActivity() {
     }
 
     private fun init(){
+        prev = ""
+        current = ""
         list.clear()
         adapter.clear()
         found = false
@@ -199,7 +200,8 @@ class RecipeRecycleViewList : AppCompatActivity() {
         var timestamp = System.currentTimeMillis()/1000
         val ref = FirebaseDatabase.getInstance().getReference("/History/$historyID")
         history.historyID = historyID
-        history.historyDate = timestamp
+        history.timestamp = timestamp
+        history.historyDate = currentDate
         history.userID = currentuserID
         history.recipeID = recipeStr
         history.recipeTitle = recipeTitles
@@ -209,6 +211,9 @@ class RecipeRecycleViewList : AppCompatActivity() {
 
     private fun checkHistory(){
         historyExist = false
+        listHistory.clear()
+        current = formate.format(currentDate)
+        var counter: Int = 0
         val ref = FirebaseDatabase.getInstance().getReference("/History").orderByChild("userID").equalTo(currentuserID)
         ref.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {}
@@ -218,13 +223,27 @@ class RecipeRecycleViewList : AppCompatActivity() {
                     if (his != null){
                         if (his.recipeID.equals(recipeStr)){
                             historyExist = true
-                            currentHistoryID = his.historyID
+                            var his2 = it.getValue(History::class.java)
+                            his2 = his
+                            counter = counter + 1
+//                            currentHistoryID = his.historyID
+//                            prev = formate.format(his.historyDate)
+                            listHistory.add(his2)
                         }
                     }
                 }
-                if(historyExist == true){
-                    updateHistory()
+                if (listHistory.count() == counter) {
+                    bindadapter()
                 }
+//                if (listHistory.count() == snapshot.children.count()) {
+//                    if(prev == current){
+//                        updateHistory()
+//                    }
+//                    else if(prev != current){
+//                        addHistory()
+//                    }
+//
+//                }
                 if(historyExist == false){
                     addHistory()
                 }
@@ -232,12 +251,29 @@ class RecipeRecycleViewList : AppCompatActivity() {
         })
     }
 
-    private fun updateHistory(){
+    private fun bindadapter(){
+        listHistory.sortByDescending{ it.timestamp }
+        listHistory.forEach {
+                val prev: String = formate.format(it.historyDate)
+                val current: String = formate.format(currentDate)
+
+                if(prev != current){
+                    addHistory()
+                }
+                if(prev == current){
+                    updateHistory(it.historyID)
+                }
+            return
+        }
+    }
+
+    private fun updateHistory( str:String){
         val historyID = currentHistoryID
         var timestamp = System.currentTimeMillis()/1000
 
-        val ref = FirebaseDatabase.getInstance().getReference("History/$historyID")
-        ref.child("historyDate").setValue(timestamp)
+        val ref = FirebaseDatabase.getInstance().getReference("History/$str")
+        ref.child("timestamp").setValue(timestamp)
+        ref.child("historyDate").setValue(currentDate)
     }
 
 }

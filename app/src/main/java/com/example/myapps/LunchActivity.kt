@@ -87,7 +87,7 @@ class LunchActivity : AppCompatActivity() {
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
             if(position == 0){
                 viewHolder.itemView.txtCat.text = "Western"
-                viewHolder.itemView.imgCat.setImageResource(R.drawable.banana)
+                viewHolder.itemView.imgCat.setImageResource(R.drawable.tilapia)
 
                 viewHolder.itemView.cons_break.setOnClickListener {
                     val intent = Intent(it.context,RecipeRecycleViewList::class.java)
@@ -98,7 +98,7 @@ class LunchActivity : AppCompatActivity() {
             }
             else if(position == 1){
                 viewHolder.itemView.txtCat.text = "Chinese"
-                viewHolder.itemView.imgCat.setImageResource(R.drawable.pancake)
+                viewHolder.itemView.imgCat.setImageResource(R.drawable.moo)
 
                 viewHolder.itemView.cons_break.setOnClickListener {
                     val intent = Intent(it.context,RecipeRecycleViewList::class.java)
