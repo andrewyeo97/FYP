@@ -42,7 +42,7 @@ import java.util.*
  */
 class FavouriteFragment : Fragment() {
     var rc_idd = ""
-    val currentuser = FirebaseAuth.getInstance().uid.toString()
+    val currentuser = FirebaseAuth.getInstance().currentUser!!.uid
     val listz = arrayListOf<Recipe>()
     val filterz = arrayListOf<Recipe>()
     val adapter = GroupAdapter<GroupieViewHolder>()

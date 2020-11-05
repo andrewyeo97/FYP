@@ -14,13 +14,14 @@ import kotlinx.android.synthetic.main.activity_loading_screen.*
 
 private lateinit var auth: FirebaseAuth
 
+
 class LoadingScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading_screen)
-        Handler().postDelayed({
-        auth = FirebaseAuth.getInstance()
 
+        auth = FirebaseAuth.getInstance()
+       Handler().postDelayed({
         if (auth.currentUser != null ) {
             if (auth.currentUser!!.isEmailVerified) {
                 val ref = FirebaseDatabase.getInstance().getReference("/Users").orderByChild("id").equalTo(
@@ -55,7 +56,8 @@ class LoadingScreenActivity : AppCompatActivity() {
         }
         else{
             goMainPage()
-        }},1000)
+        }
+    },1000)
     }
 
     private fun goUserPage(){
