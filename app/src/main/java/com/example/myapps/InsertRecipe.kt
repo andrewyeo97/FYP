@@ -1,11 +1,18 @@
 package com.example.myapps
 
 import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_insert_recipe.*
@@ -19,6 +26,8 @@ class InsertRecipe : AppCompatActivity() {
     var selectedPhotoUri: Uri? = null
     val sdf = SimpleDateFormat("dd/M/yyyy")
     var currentDate = Calendar.getInstance().time
+    private val chanelID = "1234"
+    private val notifiID = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +65,7 @@ class InsertRecipe : AppCompatActivity() {
         }
     }
 
-    private fun saveUserToDatabase(profileImageUrl: String){
+    private fun saveUserToDatabase(ImageUrl: String){
         val rec = UUID.randomUUID().toString()
         val ref = FirebaseDatabase.getInstance().getReference("/Recipe/$rec")
         recipe.recipeID = rec
@@ -71,9 +80,42 @@ class InsertRecipe : AppCompatActivity() {
         recipe.staffID = "2dIignQXe3dAfDoXp6zSdPeLQRR2"
         recipe.cuisine = cuisine.text.toString()
         recipe.uploadDate = currentDate
-        recipe.recipeImage = profileImageUrl
+        recipe.recipeImage = ImageUrl
         recipe.averageRating = 0.00F
-        recipe.urlRec = "https://www.slenderkitchen.com/recipe/grilled-hawaiian-chicken-sandwiches"
+        recipe.urlRec = "https://www.slenderkitchen.com/recipe/asian-noodle-salad-with-creamy-almond-dressing"
         ref.setValue(recipe)
+        createnotify()
+        sendNotify()
+    }
+
+    private fun createnotify(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val name = "New Recipe Added"
+            val desc = recipeTitle.text.toString()
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(chanelID,name,importance).apply{
+                description = desc
+            }
+            val notificationManager : NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun sendNotify(){
+        val intent = Intent(this,MainActivity::class.java).apply{
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pending : PendingIntent = PendingIntent.getActivity(this,0,intent,0)
+        val time= SimpleDateFormat("HH:mm").format(Date())
+        val builder =   NotificationCompat.Builder(this,chanelID)
+            .setSmallIcon(R.drawable.new_recipe)
+            .setContentTitle("New Release")
+            .setContentText(recipeTitle.text.toString())
+            .setContentIntent(pending)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(this)){
+            notify(notifiID,builder.build())
+        }
     }
 }

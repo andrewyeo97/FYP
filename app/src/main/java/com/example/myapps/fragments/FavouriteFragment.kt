@@ -34,16 +34,26 @@ import kotlinx.android.synthetic.main.recycle_no_recipe_yet.view.*
 import kotlinx.android.synthetic.main.recycle_row_item.view.*
 import kotlinx.android.synthetic.main.recycle_row_item2.view.*
 import kotlinx.android.synthetic.main.recycle_row_no_review.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class FavouriteFragment : Fragment() {
     var rc_idd = ""
-    val currentuser = FirebaseAuth.getInstance().currentUser!!.uid
+    val currentuser = FirebaseAuth.getInstance().uid.toString()
     val listz = arrayListOf<Recipe>()
     val filterz = arrayListOf<Recipe>()
     val adapter = GroupAdapter<GroupieViewHolder>()
+    val listHistory = arrayListOf<History>()
+    var historyExist: Boolean = false
+    var currentDate = Calendar.getInstance().time
+    var formate = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+    var current: String = ""
+    var recipeStr : String = ""
+    var recipeImg: String = ""
+    var recipeTitles: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -107,7 +117,14 @@ class FavouriteFragment : Fragment() {
             }
         }
         adapter.setOnItemClickListener { item, view ->
+            recipeStr = ""
+            recipeImg = ""
+            recipeTitles = ""
             val recDetail = item as bindata
+            recipeStr = recDetail.recipe.recipeID
+            recipeImg = recDetail.recipe.recipeImage
+            recipeTitles = recDetail.recipe.recipeTitle
+            checkHistory(recipeStr)
             val intent = Intent(view.context, RecipeDetailActivity::class.java)
             intent.putExtra(RECIPE_KEY, recDetail.recipe.recipeID)
             adapter.clear()
@@ -177,7 +194,14 @@ class FavouriteFragment : Fragment() {
                                 }
 
                                 adapter.setOnItemClickListener { item, view ->
+                                    recipeStr = ""
+                                    recipeImg = ""
+                                    recipeTitles = ""
                                     val recDetail = item as bindata
+                                    recipeStr = recDetail.recipe.recipeID
+                                    recipeImg = recDetail.recipe.recipeImage
+                                    recipeTitles = recDetail.recipe.recipeTitle
+                                    checkHistory(recipeStr)
                                     val intent = Intent(view.context, RecipeDetailActivity::class.java)
                                     intent.putExtra(RECIPE_KEY, recDetail.recipe.recipeID)
                                     adapter.clear()
@@ -261,8 +285,15 @@ class FavouriteFragment : Fragment() {
 
         }
         adapterf.setOnItemClickListener { item, view ->
+            recipeStr = ""
+            recipeImg = ""
+            recipeTitles = ""
             val recDetail = item as bindata
             val intent = Intent(view.context,RecipeDetailActivity::class.java)
+            recipeStr = recDetail.recipe.recipeID
+            recipeImg = recDetail.recipe.recipeImage
+            recipeTitles = recDetail.recipe.recipeTitle
+            checkHistory(recipeStr)
             intent.putExtra(RECIPE_KEY,recDetail.recipe.recipeID)
             adapter.clear()
             listz.clear()
@@ -273,7 +304,86 @@ class FavouriteFragment : Fragment() {
         ryr_favourite.adapter = adapterf
     }
 
+    private fun checkHistory(str: String){
+        historyExist = false
+        listHistory.clear()
+        current = formate.format(currentDate)
+        var counter: Int = 0
+        val ref = FirebaseDatabase.getInstance().getReference("/History").orderByChild("userID").equalTo(currentuser)
+        ref.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach {
+                    val his = it.getValue(History::class.java)
+                    if (his != null){
+                        if (his.recipeID.equals(str)){
+                            historyExist = true
+                            var his2 = it.getValue(History::class.java)
+                            his2 = his
+                            counter = counter + 1
+//                            currentHistoryID = his.historyID
+//                            prev = formate.format(his.historyDate)
+                            listHistory.add(his2)
+                        }
+                    }
+                }
+                if (listHistory.count() == counter) {
+                    bindadapter()
+                }
+//                if (listHistory.count() == snapshot.children.count()) {
+//                    if(prev == current){
+//                        updateHistory()
+//                    }
+//                    else if(prev != current){
+//                        addHistory()
+//                    }
+//
+//                }
+                if(historyExist == false){
+                    addHistory()
+                }
+            }
+        })
+    }
 
+    private fun bindadapter(){
+        listHistory.sortByDescending{ it.timestamp }
+        listHistory.forEach {
+            val prev: String = formate.format(it.historyDate)
+            val current: String = formate.format(currentDate)
+
+            if(prev != current){
+                addHistory()
+            }
+            if(prev == current){
+                updateHistory(it.historyID)
+            }
+            return
+        }
+    }
+
+    private fun updateHistory( str:String){
+        var timestamp = System.currentTimeMillis()/1000
+
+        val ref = FirebaseDatabase.getInstance().getReference("History/$str")
+        ref.child("timestamp").setValue(timestamp)
+        ref.child("historyDate").setValue(currentDate)
+    }
+
+    private fun addHistory(){
+        var history = History()
+        val historyID = UUID.randomUUID().toString()
+        var timestamp = System.currentTimeMillis()/1000
+        val ref = FirebaseDatabase.getInstance().getReference("/History/$historyID")
+        history.historyID = historyID
+        history.timestamp = timestamp
+        history.historyDate = currentDate
+        history.userID = currentuser
+        history.recipeID = recipeStr
+        history.recipeTitle = recipeTitles
+        history.recipeURL = recipeImg
+        ref.setValue(history)
+    }
 
 
 }

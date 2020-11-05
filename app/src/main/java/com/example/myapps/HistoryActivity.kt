@@ -47,8 +47,6 @@ class HistoryActivity : AppCompatActivity() {
         back_btn_history.setOnClickListener {
             onBackPressed()
         }
-
-
     }
 
     companion object{
