@@ -74,7 +74,7 @@ class UserLoginPage : AppCompatActivity() {
                 Toast.makeText(this,"Invalid email or password",Toast.LENGTH_SHORT).show()
             }else{
                 if(FirebaseAuth.getInstance().currentUser != null){
-                //    if (FirebaseAuth.getInstance().currentUser?.isEmailVerified!!){
+                    if (FirebaseAuth.getInstance().currentUser?.isEmailVerified!!){
                     val ref = FirebaseDatabase.getInstance().getReference("/Users").orderByChild("id").equalTo(FirebaseAuth.getInstance().currentUser?.uid)
                     ref.addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onCancelled(error: DatabaseError) {}
@@ -96,11 +96,11 @@ class UserLoginPage : AppCompatActivity() {
                     })
 
 
-//                    }
-//                    else{
-//                        Toast.makeText(baseContext, "Please verify your email address.",
-//                            Toast.LENGTH_SHORT).show()
-//                    }
+                    }
+                    else{
+                        Toast.makeText(baseContext, "Please verify your email address.",
+                            Toast.LENGTH_SHORT).show()
+                    }
 
                 }
                 else{
