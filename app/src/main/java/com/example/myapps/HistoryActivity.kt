@@ -77,17 +77,23 @@ class HistoryActivity : AppCompatActivity() {
                     if (his != null) {
                         it.ref.removeValue()
                         found = false
-                        adapters.add(bindNoHistory("No history yet"))
-                        adapters.setOnItemClickListener { item, view ->
-                            clearSearch.isEnabled = false
-                            return@setOnItemClickListener
-                        }
+
+                    }
+                }
+                if(found == false){
+                    adapters.clear()
+                    listHistory.clear()
+                    adapters.add(bindNoHistory("No history yet"))
+                    adapters.setOnItemClickListener { item, view ->
+                        clearSearch.isEnabled = false
+                        return@setOnItemClickListener
                     }
                 }
                 ryr_history.adapter = adapters
             }
         })
     }
+
 
 
     private fun loadHistory(){
