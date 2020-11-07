@@ -32,7 +32,6 @@ class LoadingScreenActivity : AppCompatActivity() {
                         snapshot.children.forEach {
                             val user = it.getValue(User::class.java)
                             if (user != null) {
-
                                 goUserPage()
                             }
                         }

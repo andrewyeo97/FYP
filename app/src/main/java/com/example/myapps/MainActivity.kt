@@ -21,38 +21,38 @@ class MainActivity : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
-        auth = FirebaseAuth.getInstance()
-        if (auth.currentUser != null ) {
-            if (auth.currentUser!!.isEmailVerified) {
-                val ref = FirebaseDatabase.getInstance().getReference("/Users").orderByChild("id").equalTo(FirebaseAuth.getInstance().currentUser?.uid)
-                ref.addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onCancelled(error: DatabaseError) {}
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        snapshot.children.forEach {
-                            val user = it.getValue(User::class.java)
-                            if (user != null) {
-                                goUserPage()
-                            }
-                        }
-                    }
-                })
-            }
-
-            val ref2 = FirebaseDatabase.getInstance().getReference("/Staffs").orderByChild("staff_id").equalTo(FirebaseAuth.getInstance().currentUser?.uid)
-            ref2.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(error: DatabaseError) {}
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    snapshot.children.forEach {
-                        val staff = it.getValue(Staff::class.java)
-                        if (staff != null) {
-                            goStaffPage()
-                        }
-                    }
-                }
-            })
-
-
-        }
+//        auth = FirebaseAuth.getInstance()
+//        if (auth.currentUser != null ) {
+//            if (auth.currentUser!!.isEmailVerified) {
+//                val ref = FirebaseDatabase.getInstance().getReference("/Users").orderByChild("id").equalTo(FirebaseAuth.getInstance().currentUser?.uid)
+//                ref.addListenerForSingleValueEvent(object : ValueEventListener {
+//                    override fun onCancelled(error: DatabaseError) {}
+//                    override fun onDataChange(snapshot: DataSnapshot) {
+//                        snapshot.children.forEach {
+//                            val user = it.getValue(User::class.java)
+//                            if (user != null) {
+//                                goUserPage()
+//                            }
+//                        }
+//                    }
+//                })
+//            }
+//
+//            val ref2 = FirebaseDatabase.getInstance().getReference("/Staffs").orderByChild("staff_id").equalTo(FirebaseAuth.getInstance().currentUser?.uid)
+//            ref2.addListenerForSingleValueEvent(object : ValueEventListener {
+//                override fun onCancelled(error: DatabaseError) {}
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    snapshot.children.forEach {
+//                        val staff = it.getValue(Staff::class.java)
+//                        if (staff != null) {
+//                            goStaffPage()
+//                        }
+//                    }
+//                }
+//            })
+//
+//
+//        }
 
     }
 
@@ -110,14 +110,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun goUserPage(){
-        startActivity(Intent(this, DashboardActivity::class.java))
-        finish()
-    }
-
-    private fun goStaffPage(){
-        startActivity(Intent(this, swmDashboardActivity::class.java))
-        finish()
-    }
     }
 

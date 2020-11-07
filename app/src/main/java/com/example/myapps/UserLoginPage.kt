@@ -72,7 +72,6 @@ class UserLoginPage : AppCompatActivity() {
             return
         }
 
-
         auth.signInWithEmailAndPassword(emailEdit.text.toString(), passwordEdit.text.toString()).addOnCompleteListener {
             if(!it.isSuccessful){
                 Toast.makeText(this,"Invalid email or password",Toast.LENGTH_SHORT).show()
@@ -100,7 +99,7 @@ class UserLoginPage : AppCompatActivity() {
                     })
 
 
-                    }
+                  }
                     else{
                         Toast.makeText(baseContext, "Please verify your email address.",
                             Toast.LENGTH_SHORT).show()

@@ -82,7 +82,7 @@ class InsertRecipe : AppCompatActivity() {
         recipe.uploadDate = currentDate
         recipe.recipeImage = ImageUrl
         recipe.averageRating = 0.00F
-        recipe.urlRec = "https://www.slenderkitchen.com/recipe/asian-noodle-salad-with-creamy-almond-dressing"
+        recipe.urlRec = "https://www.slenderkitchen.com/recipe/thai-basil-shrimp-stir-fry"
         ref.setValue(recipe)
         createnotify()
         sendNotify()

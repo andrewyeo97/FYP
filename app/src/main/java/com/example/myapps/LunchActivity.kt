@@ -109,7 +109,7 @@ class LunchActivity : AppCompatActivity() {
             }
             else if(position == 2){
                 viewHolder.itemView.txtCat.text = "Indian"
-                viewHolder.itemView.imgCat.setImageResource(R.drawable.currysalad)
+                viewHolder.itemView.imgCat.setImageResource(R.drawable.indian_lunch)
 
                 viewHolder.itemView.cons_break.setOnClickListener {
                     val intent = Intent(it.context,RecipeRecycleViewList::class.java)
@@ -120,7 +120,7 @@ class LunchActivity : AppCompatActivity() {
             }
             else if(position == 3){
                 viewHolder.itemView.txtCat.text = "Mexican"
-                viewHolder.itemView.imgCat.setImageResource(R.drawable.taco)
+                viewHolder.itemView.imgCat.setImageResource(R.drawable.mexican_lunch)
 
                 viewHolder.itemView.cons_break.setOnClickListener {
                     val intent = Intent(it.context,RecipeRecycleViewList::class.java)
@@ -131,7 +131,7 @@ class LunchActivity : AppCompatActivity() {
             }
             else if(position == 4){
                 viewHolder.itemView.txtCat.text = "Italian"
-                viewHolder.itemView.imgCat.setImageResource(R.drawable.parmesan)
+                viewHolder.itemView.imgCat.setImageResource(R.drawable.italian_lunch)
 
                 viewHolder.itemView.cons_break.setOnClickListener {
                     val intent = Intent(it.context,RecipeRecycleViewList::class.java)
@@ -142,7 +142,7 @@ class LunchActivity : AppCompatActivity() {
             }
             else if(position == 5){
                 viewHolder.itemView.txtCat.text = "Thai"
-                viewHolder.itemView.imgCat.setImageResource(R.drawable.sweetchili)
+                viewHolder.itemView.imgCat.setImageResource(R.drawable.thai_lunch)
 
                 viewHolder.itemView.cons_break.setOnClickListener {
                     val intent = Intent(it.context,RecipeRecycleViewList::class.java)

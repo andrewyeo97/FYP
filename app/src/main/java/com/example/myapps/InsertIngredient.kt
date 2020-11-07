@@ -27,7 +27,7 @@ class InsertIngredient : AppCompatActivity() {
         ingredient.ingredientName = insert_ing_name.text.toString()
         ingredient.quantity = insert_ing_qty.text.toString().toDouble()
         ingredient.unit = insert_ing_desc.text.toString()
-        ingredient.recipeID = "b2ecf99b-626e-4d9e-8d05-8b6858578ae3"
+        ingredient.recipeID = "080c1475-aabe-43d2-a315-6fcbcae8b4c4"
         ref.setValue(ingredient)
     }
 
