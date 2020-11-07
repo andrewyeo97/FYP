@@ -36,6 +36,10 @@ class UserLoginPage : AppCompatActivity() {
         forgotPasswordText.setOnClickListener {
             startActivity(Intent(this, ForgotPasswordActivity::class.java))
         }
+
+        back_btn_log.setOnClickListener {
+            onBackPressed()
+        }
     }
 
 

@@ -42,6 +42,9 @@ class RegisterActivity : AppCompatActivity() {
             startActivityForResult(intent,0)
         }
 
+        back_btn_reg.setOnClickListener {
+            onBackPressed()
+        }
 
     }
 
@@ -94,6 +97,12 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
+        if(confirm_regPasswordEdit.text.toString().isEmpty()){
+            Toast.makeText(this,"Please enter confirm password",Toast.LENGTH_SHORT).show()
+            confirm_regPasswordEdit.requestFocus()
+            return
+        }
+
         if(selectedPhotoUri == null){
             Toast.makeText(this,"Please select your profile pic",Toast.LENGTH_SHORT).show()
             return
@@ -101,34 +110,54 @@ class RegisterActivity : AppCompatActivity() {
 
         val email = regEmailEdit.text.toString()
         val pass = regPasswordEdit.text.toString()
+        val conPass = confirm_regPasswordEdit.text.toString()
+        if(conPass == pass) {
+            if (isValidPassword(pass)) {
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pass)
+                    .addOnCompleteListener {
+                        if (!it.isSuccessful) {
+                            Toast.makeText(baseContext, "Register failed.", Toast.LENGTH_SHORT)
+                                .show()
+                        } else {
+                            user.id = FirebaseAuth.getInstance().uid.toString()
+                            uploadImageToFirebaseStorage()
 
-        if(isValidPassword(pass)) {
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pass)
-                .addOnCompleteListener {
-                    if (!it.isSuccessful) {
-                        Toast.makeText(baseContext, "Register failed.", Toast.LENGTH_SHORT).show()
-                    } else {
-                        user.id = FirebaseAuth.getInstance().uid.toString()
-                        uploadImageToFirebaseStorage()
+                            FirebaseAuth.getInstance().currentUser?.sendEmailVerification()
+                                ?.addOnCompleteListener {
+                                    if (it.isSuccessful) {
+                                        Toast.makeText(
+                                            baseContext, "Email verification sent.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        startActivity(Intent(this, UserLoginPage::class.java))
+                                        finish()
+                                    } else {
+                                        Toast.makeText(
+                                            baseContext,
+                                            "Register failed.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
 
-                        FirebaseAuth.getInstance().currentUser?.sendEmailVerification()?.addOnCompleteListener {
-                            if(it.isSuccessful){
-                                Toast.makeText(baseContext, "Email verification sent.",
-                                    Toast.LENGTH_SHORT).show()
-                                startActivity(Intent(this, UserLoginPage::class.java))
-                                finish()
-                            }
-                            else{
-                                Toast.makeText(baseContext, "Register failed.", Toast.LENGTH_SHORT).show()
-                            }
                         }
-
                     }
-                }
-        }
-        else{
-            Toast.makeText(baseContext, "Password does not fulfill the criteria", Toast.LENGTH_SHORT).show()
-            regPasswordEdit.requestFocus()
+            } else {
+                Toast.makeText(
+                    baseContext,
+                    "Password does not fulfill the criteria",
+                    Toast.LENGTH_SHORT
+                ).show()
+                regPasswordEdit.requestFocus()
+                return
+            }
+        }else{
+            Toast.makeText(
+                baseContext,
+                "Password mismatch",
+                Toast.LENGTH_SHORT
+            ).show()
+            confirm_regPasswordEdit.requestFocus()
             return
         }
     }

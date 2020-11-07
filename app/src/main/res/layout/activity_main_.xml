@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/mainpage"
+    android:background="#ff5500"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -16,7 +16,7 @@
         android:paddingVertical="60dp"
         android:text="Healthy Food Receipe"
         android:textAlignment="center"
-        android:textColor="#000"
+        android:textColor="@color/white"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,16 +27,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="80dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/buttoncurve"
+        android:drawableLeft="@drawable/baseline_perm_identity_black_18dp"
         android:padding="10dp"
         android:text="Log in as User"
         android:textAllCaps="false"
         android:textColor="#696969"
-        android:drawableLeft="@drawable/baseline_perm_identity_black_18dp"
         android:textSize="40px"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:layout_editor_absoluteX="44dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
         android:id="@+id/btnLoginAsStaff"
@@ -45,12 +46,14 @@
         android:layout_marginHorizontal="80dp"
         android:layout_marginVertical="20dp"
         android:background="@drawable/buttoncurve"
-        android:padding="10dp"
         android:drawableLeft="@drawable/baseline_work_black_18dp"
+        android:padding="10dp"
         android:text="Log in as Staff"
         android:textAllCaps="false"
         android:textColor="#696969"
         android:textSize="40px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLoginAsUser" />
 
     <Button
@@ -63,7 +66,7 @@
         android:padding="10dp"
         android:text="Sign up now"
         android:textAllCaps="false"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="50px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,5 +74,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLoginAsStaff"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:background="@drawable/orange_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

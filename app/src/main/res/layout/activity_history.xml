@@ -46,37 +46,46 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
+    <Button
         android:id="@+id/textV"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
         android:text="Recently viewed"
+        android:textAlignment="textStart"
+        android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="17dp"
+        android:textStyle="normal"
         app:layout_constraintEnd_toStartOf="@+id/clearSearch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constHistory">
 
-    </TextView>
+    </Button>
 
-    <TextView
+    <Button
         android:id="@+id/clearSearch"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/round_delete_red"
         android:paddingHorizontal="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="10dp"
         android:text="Clear my history"
-        android:textColor="@color/red"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
         android:textSize="15dp"
+        android:textStyle="normal"
         app:layout_constraintBottom_toTopOf="@+id/historyScroll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constHistory">
 
-    </TextView>
+    </Button>
 
     <ScrollView
         android:id="@+id/historyScroll"
