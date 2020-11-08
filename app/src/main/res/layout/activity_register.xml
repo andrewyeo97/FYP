@@ -260,7 +260,7 @@
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
             android:paddingRight="10dp"
-            android:text="Password must have at least 8 characters and contain both numbers and letters without spacing."
+            android:text="Password must have at least 8 characters and contain at least an upper-case letter, a lower-case letter and numbers without spacing."
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

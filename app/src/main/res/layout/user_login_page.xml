@@ -148,19 +148,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/passwordLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:text="Password must have at least 8 characters and contain both numbers and letters without spacing."
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/c3_3" />
 
             <TextView
                 android:id="@+id/forgotPasswordText"
@@ -170,7 +157,7 @@
                 android:layout_marginEnd="24dp"
                 android:text="Forgot password?"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passwordLabel" />
+                app:layout_constraintTop_toBottomOf="@+id/c3_3" />
 
             <Button
                 android:id="@+id/loginButton"
