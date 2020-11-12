@@ -7,11 +7,16 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_staff_login.*
 
 class StaffLoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    var isExist : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,13 +73,38 @@ class StaffLoginActivity : AppCompatActivity() {
             return
         }
 
+        fun goStaffPage(){
+            startActivity(Intent(this, swmDashboardActivity::class.java))
+            finish()
+        }
+
 
         auth.signInWithEmailAndPassword(StaffLoginEmailEdit.text.toString(), StaffLoginPasswordEdit.text.toString()).addOnCompleteListener {
             if(!it.isSuccessful){
                 Toast.makeText(this,"Invalid Email or Password", Toast.LENGTH_SHORT).show()
             }else{
-                startActivity(Intent(this, swmDashboardActivity::class.java))
-                finish()
+                if(FirebaseAuth.getInstance().currentUser != null){
+                    val ref = FirebaseDatabase.getInstance().getReference("/Staffs").orderByChild("staff_id").equalTo(FirebaseAuth.getInstance().currentUser?.uid)
+                    ref.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onCancelled(error: DatabaseError) {}
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            snapshot.children.forEach {
+                                val staff = it.getValue(Staff::class.java)
+                                if (staff != null) {
+                                    isExist = true
+                                    goStaffPage()
+                                }
+                            }
+                            if (isExist == false){
+                                FirebaseAuth.getInstance().signOut()
+                                Toast.makeText(baseContext, "Invalid email address.",
+                                    Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                    })
+
+                }
             }
         }
 
