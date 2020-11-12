@@ -15,6 +15,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_view_user__profile_.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class View_user_Profile_Activity : AppCompatActivity() {
@@ -37,8 +38,6 @@ class View_user_Profile_Activity : AppCompatActivity() {
 
         staff_profile_update.setOnClickListener {
             updateProfile()
-            val intent = Intent(this, View_user_Profile_Activity::class.java)
-            startActivity(intent)
         }
 
         staff_profile_update_pass.setOnClickListener {
@@ -70,10 +69,15 @@ class View_user_Profile_Activity : AppCompatActivity() {
                 snapshot.children.forEach {
                     val staff = it.getValue(Staff::class.java)
                     if (staff != null) {
-                        profile_staff_name.setText(staff.staff_name)
+                        var formate = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+                        var date  = formate.format(staff.register_date)
+                        profile_staff_name.setText(staff.staff_name.toUpperCase())
                         Picasso.get().load(staff.staff_profileImageUrl).into(profile_staff_image)
                         profile_staff_contactNo.setText(staff.staff_contactNo)
                         profile_staff_email.setText(staff.staff_email)
+                        profile_staff_address.setText(staff.staff_address)
+                        profile_staff_joinDate.setText(date.toString())
+                        profile_staff_position.setText(staff.staff_position.toUpperCase())
 
                         imageString = staff.staff_profileImageUrl
                     }
@@ -86,14 +90,6 @@ class View_user_Profile_Activity : AppCompatActivity() {
     private fun updateProfile(){
         val ref = FirebaseDatabase.getInstance().getReference("/Staffs/${currentuserID}")
 
-        if(profile_staff_name.text.isNotEmpty()){
-            val name = profile_staff_name.text.toString()
-            ref.child("staff_name").setValue(name)
-        }else{
-            profile_staff_name.error = "Name cannot be empty..."
-            profile_staff_name.requestFocus()
-            return
-        }
         if(profile_staff_contactNo.text.isNotEmpty()){
             val cNo = profile_staff_contactNo.text.toString()
             ref.child("staff_contactNo").setValue(cNo)
@@ -102,14 +98,14 @@ class View_user_Profile_Activity : AppCompatActivity() {
             profile_staff_contactNo.requestFocus()
             return
         }
-//        if(profile_staff_email.text.isNotEmpty()){
-//            val email = profile_staff_email.text.toString()
-//            ref.child("staff_email").setValue(email)
-//        }else{
-//            profile_staff_email.error = "Email cannot be empty..."
-//            profile_staff_email.requestFocus()
-//            return
-//        }
+        if(profile_staff_address.text.isNotEmpty()){
+            val address = profile_staff_address.text.toString()
+            ref.child("staff_address").setValue(address)
+        }else{
+            profile_staff_address.error = "Address cannot be empty..."
+            profile_staff_address.requestFocus()
+            return
+        }
         uploadStaffImageToFirebaseStorage()
     }
 

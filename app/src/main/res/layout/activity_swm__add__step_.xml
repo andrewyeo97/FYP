@@ -32,7 +32,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,28 +43,15 @@
             android:id="@+id/textView17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="70dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="25dp"
             android:text="Recipe Title: "
             android:textColor="#000000"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/textView19"
-            app:layout_constraintEnd_toStartOf="@+id/recipe_title_step"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/recipe_title_step"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="TextView"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            app:layout_constraintStart_toEndOf="@+id/textView17"
-            app:layout_constraintTop_toTopOf="@+id/textView17" />
 
         <TextView
             android:id="@+id/textView19"
@@ -74,35 +61,31 @@
             android:text="No: "
             android:textColor="#000000"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView17"
             app:layout_constraintStart_toStartOf="@+id/textView17"
-            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+            app:layout_constraintTop_toBottomOf="@+id/recipe_title_step" />
 
         <EditText
             android:id="@+id/step_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="53dp"
             android:layout_marginBottom="8dp"
             android:ems="10"
             android:hint="No"
             android:inputType="numberSigned"
             app:layout_constraintBottom_toTopOf="@+id/step_desc"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView19"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_title_step" />
+            app:layout_constraintTop_toTopOf="@+id/textView19" />
 
         <TextView
             android:id="@+id/textView22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="40dp"
             android:text="Description:"
             android:textColor="#000000"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView19"
+            app:layout_constraintStart_toStartOf="@+id/textView19"
             app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
         <EditText
@@ -127,7 +110,10 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="162dp"
             android:layout_marginBottom="3dp"
-            android:text="ADD"
+            android:background="@drawable/rounded_button_add_ing"
+            android:text="Add"
+            android:textAllCaps="false"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -146,6 +132,20 @@
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/recipe_title_step"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="TextView"
+            android:textColor="#070707"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView17"
+            app:layout_constraintTop_toTopOf="@+id/textView17" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -28,7 +28,7 @@ class swm_Add_Step_Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         val recipeTitle = intent.getStringExtra("Ing_RecipeTitle")
-        val recipeId = intent.getStringExtra("Ing_RecipeId")
+//        val recipeId = intent.getStringExtra("Ing_RecipeId")
 //
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_swm__add__step_)
@@ -56,7 +56,7 @@ class swm_Add_Step_Activity : AppCompatActivity() {
     private fun addStep(){
         var numeric = true
         val stepID = UUID.randomUUID().toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/wmStep/$stepID")
+        val ref = FirebaseDatabase.getInstance().getReference("/Steps/$stepID")
         val recipeId = intent.getStringExtra("Ing_RecipeId")
 
         if(step_no.text.toString().isEmpty()){
@@ -85,28 +85,37 @@ class swm_Add_Step_Activity : AppCompatActivity() {
         step.desc = step_desc.text.toString()
         step.recipeID = recipeId
         ref.setValue(step)
-        Toast.makeText(this, "Add successful!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Add new step successful!", Toast.LENGTH_SHORT).show()
+
+//        step_no.setText("")
+//        step_desc.setText("")
     }
 
     private fun initStep(){
         val recipeId = intent.getStringExtra("Ing_RecipeId")
-        val ref =  FirebaseDatabase.getInstance().getReference("/wmStep").orderByChild("recipeID").equalTo(recipeId)
+        val ref =  FirebaseDatabase.getInstance().getReference("/Steps").orderByChild("recipeID").equalTo(recipeId)
 
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            val list = arrayListOf<Steps>()
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
                 val adapter = GroupAdapter<GroupieViewHolder>()
-                snapshot.children.forEach{
+                snapshot.children.forEach {
                     val stp = it.getValue(Steps::class.java)
-                    if(stp !=null){
-                        adapter.add(bindataStep(stp))
+                    if (stp != null) {
+                        if (list.count() == snapshot.children.count()) {
+                            list.sortBy { it.stepNo }
+                            list.forEach {
+                                adapter.add(bindataStep(stp))
+                            }
+                        }
                     }
+                    recycle_step_dis.adapter = adapter
                 }
-                recycle_step_dis.adapter = adapter
             }
         })
-    }
 
+    }
 }
 class bindataStep(val step : Steps): Item<GroupieViewHolder>() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {

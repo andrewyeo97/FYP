@@ -80,10 +80,9 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:src="@drawable/wm_ic_baseline_settings_24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewReport" />
+            app:layout_constraintTop_toTopOf="@+id/StaffSignOutBtn" />
 
         <Button
             android:id="@+id/StaffSignOutBtn"
@@ -103,7 +102,7 @@
             android:textSize="15dp"
             android:textStyle="normal"
             app:layout_constraintStart_toEndOf="@+id/imgViewStaffSignOut"
-            app:layout_constraintTop_toBottomOf="@+id/buttonViewReport" />
+            app:layout_constraintTop_toBottomOf="@+id/update_his" />
 
         <ImageView
             android:id="@+id/imageViewAddNewStaff"
@@ -166,6 +165,36 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageViewReport"
             app:layout_constraintTop_toBottomOf="@+id/buttonAddNewStaff" />
+
+        <ImageView
+            android:id="@+id/imageViewHistory"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_history_time_24"
+            app:layout_constraintEnd_toStartOf="@+id/update_his"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewReport" />
+
+        <Button
+            android:id="@+id/update_his"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:background="#fff"
+            android:gravity="left"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp"
+            android:shadowColor="@color/white"
+            android:text="Added/Updated Recipe History"
+            android:textAlignment="gravity"
+            android:textAllCaps="false"
+            android:textColor="@color/red"
+            android:textSize="15dp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="@+id/buttonViewReport"
+            app:layout_constraintTop_toBottomOf="@+id/buttonViewReport" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

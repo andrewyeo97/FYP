@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.myapps.R
 import com.example.myapps.Steps
+import com.example.myapps.fragments.wmHomeFragment
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -26,6 +27,7 @@ class wm_update_step_Activity : AppCompatActivity() {
     var rcpTitle : String = ""
     var rcpId : String = ""
     var stepId : String  = ""
+    var currentDate = Calendar.getInstance().time
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,22 +39,33 @@ class wm_update_step_Activity : AppCompatActivity() {
         update_title_step.setText(rcpTitle)
 
         button_updatepage_update_step.setOnClickListener {
+            val rcpId = intent.getStringExtra("updateRcpId")
+            val ref = FirebaseDatabase.getInstance().getReference("Recipe/$rcpId")
             updateStep()
+            ref.child("updateDate").setValue(currentDate)
         }
 
         updatepage_re_step_btn.setOnClickListener {
             init()
         }
         button_updatepage_add_step.setOnClickListener {
+            val rcpId = intent.getStringExtra("updateRcpId")
+            val ref = FirebaseDatabase.getInstance().getReference("Recipe/$rcpId")
             addStep()
+            ref.child("updateDate").setValue(currentDate)
         }
         button_updatepage_delete_step.setOnClickListener {
+            val rcpId = intent.getStringExtra("updateRcpId")
+            val ref = FirebaseDatabase.getInstance().getReference("Recipe/$rcpId")
             val builder = AlertDialog.Builder(this@wm_update_step_Activity)
             builder.setTitle("Delete Step Message")
             builder.setMessage("Are you want to delete this Ingredients?")
             builder.setPositiveButton("Yes"){ dialog, which ->
                 Toast.makeText(applicationContext, "Ok, we will delete this step.", Toast.LENGTH_SHORT).show()
                 deleteStp()
+                update_step_no.setText("")
+                update_step_desc.setText("")
+                ref.child("updateDate").setValue(currentDate)
             }
             builder.setNegativeButton("No"){ dialog, which ->
                 Toast.makeText(
@@ -60,13 +73,17 @@ class wm_update_step_Activity : AppCompatActivity() {
                     "Ok, we will not delete this step.",
                     Toast.LENGTH_SHORT
                 ).show()
+                update_step_no.setText("")
+                update_step_desc.setText("")
             }
             val dialog: AlertDialog = builder.create()
             dialog.show()
         }
 
         update_finish_step.setOnClickListener {
+//            rcpId = intent.getStringExtra("updateRcpId")
             val intent = Intent(this, swmDashboardActivity::class.java)
+//            intent.putExtra(RECIPE_KEY, rcpId)
             startActivity(intent)
         }
     }
@@ -76,15 +93,19 @@ class wm_update_step_Activity : AppCompatActivity() {
         init()
     }
 
+    companion object{
+        val RECIPE_KEY = "RECIPE_KEY"
+    }
+
     private fun deleteStp(){
-        val ref = FirebaseDatabase.getInstance().getReference("/wmStep").child(stepId)
+        val ref = FirebaseDatabase.getInstance().getReference("/Steps").child(stepId)
         ref.removeValue()
     }
 
     private fun addStep(){
         var numeric = true
         val stepID = UUID.randomUUID().toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/wmStep/$stepID")
+        val ref = FirebaseDatabase.getInstance().getReference("/Steps/$stepID")
         rcpId = intent.getStringExtra("updateRcpId")
 
         if(update_step_no.text.toString().isEmpty()){
@@ -116,12 +137,14 @@ class wm_update_step_Activity : AppCompatActivity() {
         step.recipeID = rcpId
         ref.setValue(step)
         Toast.makeText(this, "Add successful!", Toast.LENGTH_SHORT).show()
+        update_step_no.setText("")
+        update_step_desc.setText("")
     }
 
     private fun updateStep(){
         var numeric2  = true
 
-        val ref = FirebaseDatabase.getInstance().getReference("wmStep/$stepId")
+        val ref = FirebaseDatabase.getInstance().getReference("Steps/$stepId")
 
         if(update_step_no.text.isNotEmpty()){
             val no = update_step_no.text.toString().toInt()
@@ -151,12 +174,15 @@ class wm_update_step_Activity : AppCompatActivity() {
             return
         }
         Toast.makeText(baseContext, "Step Update Successful", Toast.LENGTH_SHORT).show()
+        update_step_no.setText("")
+        update_step_desc.setText("")
+
     }
 
 
     private fun init(){
         val rcpId = intent.getStringExtra("updateRcpId")
-        val ref =  FirebaseDatabase.getInstance().getReference("/wmStep").orderByChild("recipeID").equalTo(rcpId)
+        val ref =  FirebaseDatabase.getInstance().getReference("/Steps").orderByChild("recipeID").equalTo(rcpId)
 
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             val list = arrayListOf<Steps>()

@@ -21,6 +21,9 @@ class wm_staff_forgetPassword_Activity : AppCompatActivity() {
             val intent = Intent(this, StaffLoginActivity::class.java)
             startActivity(intent)
         }
+        forget_back.setOnClickListener {
+            onBackPressed()
+        }
 
     }
 

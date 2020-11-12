@@ -16,7 +16,7 @@
         android:layout_marginBottom="8dp"
         android:paddingLeft="10sp"
         android:text=""
-        android:textColor="#F44336"
+        android:textColor="@color/red"
         android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

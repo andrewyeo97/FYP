@@ -1,29 +1,27 @@
 package com.example.myapps
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
-import kotlinx.android.synthetic.main.activity_recipe_detail.*
-import kotlinx.android.synthetic.main.activity_wm_staff__recipe_detail_.*
 import kotlinx.android.synthetic.main.activity_wm_view_report_.*
-import kotlinx.android.synthetic.main.recycle_row_ratings.view.*
-import kotlinx.android.synthetic.main.recycle_row_ratings.view.ratingImage
 import kotlinx.android.synthetic.main.recycle_row_report.view.*
-import kotlinx.android.synthetic.main.wm_recycle_row_step2.view.*
-import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
+
 class wm_view_report_Activity : AppCompatActivity() {
+    var found: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wm_view_report_)
@@ -33,114 +31,76 @@ class wm_view_report_Activity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         getDate()
+
     }
-
-
-
     private fun getDate() {
-//        val dateList = arrayListOf<Rating>()
-        val list = arrayListOf<Rating>()
-        val month = SimpleDateFormat("MM").format(Date())
+        var counter: Int = 0
+        var counter1 : Int = 0
+        var total : Int = 0
+        var format  = SimpleDateFormat("dd/MMM/yyyy", Locale.US)
+        var today = format.format(Date())
+        var formatMonth = SimpleDateFormat("MM", Locale.US)
+        var formatYear = SimpleDateFormat("yyyy", Locale.US)
+        var month = Calendar.getInstance().get(Calendar.MONTH) + 1
+        var year = Calendar.getInstance().get(Calendar.YEAR)
+        var lastMonth  = Calendar.getInstance().get(Calendar.MONTH)
 
-        val ref1 = FirebaseDatabase.getInstance().getReference("/Rating").child("ratingDate").child("month").equalTo(month)
+        report_today.setText(today.toString())
 
-        ref1.addListenerForSingleValueEvent(object : ValueEventListener {
+        val ref = FirebaseDatabase.getInstance().getReference("Users")
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+
+            val list = arrayListOf<User>()
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
                 val adapter = GroupAdapter<GroupieViewHolder>()
                 snapshot.children.forEach {
-                    val rat = it.getValue(Rating::class.java)
-                    if(rat != null){
-                        textView46.setText(rat.ratingID)
-                    }else{
-                        textView46.setText("hai")
+                    val us = it.getValue(User::class.java)
+                    val userMonth = formatMonth.format(us?.registerDate)
+                    val userYear = formatYear.format(us?.registerDate)
+                    if (us != null) {
+                        total  = total + 1
+                        if (userYear.toString().equals(year.toString())) {
+                            if (userMonth.toString().equals(month.toString())) {
+                                counter = counter + 1
+                                list.add(us)
+                                if(list.count() == snapshot.children.count()){
+                                    list.sortBy {it.registerDate}
+                                    list.forEach {
+                                        adapter.add(bindataRe(it))
+                                    }
+                                }
+//                                adapter.add(bindataRe(us))
+                            }else if(userMonth.toString().equals(lastMonth.toString())){
+                                counter1 = counter1 + 1
+                            }
+                        }
                     }
-
-
-//                    if (stp != null) {
-//                        list.add(stp)
-//                        if (list.count() == snapshot.children.count()) {
-//                            list.forEach {
-//                                adapter.add(wm_view_report_Activity.bindataRating(it))
-//                            }
-//                        }
-//
-//                    }
                 }
-//                recycle_report_dis.adapter = adapter
-
+                recycle_report_dis.adapter = adapter
+                report_total_user.setText(total.toString())
+                report_total.setText(counter.toString())
+                report_lastMonth_total.setText(counter1.toString())
             }
         })
     }
-    private class bindataRating(val rating: Rating): Item<GroupieViewHolder>() {
-        override fun bind(viewHolder2: GroupieViewHolder, position: Int) {
-            Picasso.get().load(rating.profileImageUrl).into(viewHolder2.itemView.report_foodImage)
-            viewHolder2.itemView.report_ratingBar.rating = rating.ratingNumber
+
+
+    class bindataRe(val user: User) : Item<GroupieViewHolder>() {
+        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+            val formate = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+            val date = formate.format(user.registerDate)
+            viewHolder.itemView.ryc_report_date.text = date.toString()
+            viewHolder.itemView.ryr_report_name.text = user.username
+            viewHolder.itemView.ryr_report_email.text = user.email
         }
 
         override fun getLayout(): Int {
             return R.layout.recycle_row_report
         }
+
     }
-
-
-
-//        val ref1 = FirebaseDatabase.getInstance().getReference("/Rating").child("ratingDate")
-//                            isFound = true
-//                            ttlRating = ttlRating + rate.ratingNumber
-//                            counter = counter + 1
-//                        }
-//
-//                    }
-//                    avgRating = ttlRating/counter
-//                    ratingText.text = (avgRating.toString() + " ratings | " + counter + " review(s)")
-//                    if(isFound == false){
-//                        ratingText.text = ("No review yet")}
-//                }
-//            })
-//            handlers.postDelayed(this, 100)
-//        }
-//    }
-
-//    private fun bindSteps() {
-
-
-//        val list = arrayListOf<Rating>()
-//
-//        val ref = FirebaseDatabase.getInstance().getReference("/wmStep").orderByChild("recipeID").equalTo(rc_id)
-//        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onCancelled(error: DatabaseError) {}
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                val adapter = GroupAdapter<GroupieViewHolder>()
-//                snapshot.children.forEach {
-//                    val stp = it.getValue(Steps::class.java)
-//                    if (stp != null) {
-//                        list.add(stp)
-//                        if (list.count() == snapshot.children.count()) {
-//                            list.sortBy { it.stepNo }
-//                            list.forEach {
-//                                adapter.add(wmStaff_RecipeDetail_Activity.bindataStep(it))
-//                            }
-//                        }
-//
-//                    }
-//                }
-//                recycle_step_dis2.adapter = adapter
-//
-//            }
-//        })
-//    }
-
-//    private class bindataStep(val steps: Steps): Item<GroupieViewHolder>() {
-//        override fun bind(viewHolder2: GroupieViewHolder, position: Int) {
-//            viewHolder2.itemView.step_number2.text = steps.stepNo.toString()
-//            viewHolder2.itemView.step_description2.text = steps.desc
-//        }
-//
-//        override fun getLayout(): Int {
-//            return R.layout.wm_recycle_row_step2
-//        }
-//    }
 }
 
 

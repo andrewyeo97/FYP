@@ -3,6 +3,7 @@ package com.example.myapps
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.example.myapps.Ingredients
 import com.example.myapps.R
 import com.example.myapps.Recipe
@@ -69,7 +70,7 @@ class swm_Add_Ing_Activity : AppCompatActivity() {
         var numeric1 = true
         var numeric2 = true
         val ingID = UUID.randomUUID().toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/wmIngredient/$ingID")
+        val ref = FirebaseDatabase.getInstance().getReference("/Ingredient/$ingID")
         val recipeId = intent.getStringExtra("RecipeId")
 
         if(ingName.text.toString().isEmpty()){
@@ -115,12 +116,17 @@ class swm_Add_Ing_Activity : AppCompatActivity() {
         ingredient.unit = ingUnit.text.toString()
         ingredient.recipeID = recipeId
         ref.setValue(ingredient)
+        Toast.makeText(baseContext, "Added New Ingredient Successful", Toast.LENGTH_SHORT).show()
+
+        ingName.setText("")
+        ingQty.setText("")
+        ingUnit.setText("")
 
     }
 
     private fun init(){
         val recipeId = intent.getStringExtra("RecipeId")
-        val ref =  FirebaseDatabase.getInstance().getReference("/wmIngredient").orderByChild("recipeID").equalTo(recipeId)
+        val ref =  FirebaseDatabase.getInstance().getReference("/Ingredient").orderByChild("recipeID").equalTo(recipeId)
 
         ref.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {}

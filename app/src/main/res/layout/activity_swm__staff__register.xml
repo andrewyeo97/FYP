@@ -6,148 +6,62 @@
     android:layout_height="match_parent"
     tools:context=".swm_Staff_Register">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/register_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_red_back_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/titleReg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:fontFamily="sans-serif"
+            android:text="Staff Login"
+            android:textAlignment="center"
+            android:textColor="#EA0B13"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/register_back"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/wm_food_image_staff"
+        android:layout_marginTop="32dp"
         android:orientation="vertical"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout13">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="50dp">
 
-            <TextView
-                android:id="@+id/titleReg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="cursive"
-                android:paddingVertical="60dp"
-                android:text="Staff Registration"
-                android:textAlignment="center"
-                android:textColor="#000"
-                android:textSize="40sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/photo_staff_reg"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:src="@drawable/staff_account_circle_24"
+                android:src="@drawable/staff_profile"
                 app:civ_border_color="@android:color/transparent"
                 app:civ_border_width="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/titleReg" />
-
-            <TextView
-                android:id="@+id/staffNameText"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="24dp"
-                android:text="Staff name"
-                android:textColor="@color/black"
-                android:textSize="50px"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/photo_staff_reg" />
-
-            <EditText
-                android:id="@+id/regStaffnameEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:hint="Staff name"
-                android:paddingHorizontal="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/staffNameText" />
-
-            <TextView
-                android:id="@+id/staffContactNoText"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="24dp"
-                android:text="Contact Number"
-                android:textColor="@color/black"
-                android:textSize="50px"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/regStaffnameEdit" />
-
-            <EditText
-                android:id="@+id/staffContactNoEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:hint="Contact Number"
-                android:paddingHorizontal="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/staffContactNoText" />
-
-            <TextView
-                android:id="@+id/StaffemailText"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="16dp"
-                android:text="Email"
-                android:textColor="@color/black"
-                android:textSize="50px"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/staffContactNoEdit" />
-
-            <EditText
-                android:id="@+id/StaffRegEmailEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:paddingHorizontal="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/StaffemailText" />
-
-            <TextView
-                android:id="@+id/StaffPassText"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="16dp"
-                android:text="Password"
-                android:textColor="@color/black"
-                android:textSize="50px"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/StaffRegEmailEdit" />
-
-            <EditText
-                android:id="@+id/StaffRegPasswordEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:paddingHorizontal="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/StaffPassText" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/StaffRegButton"
@@ -155,26 +69,185 @@
                 android:layout_height="0dp"
                 android:layout_marginHorizontal="30dp"
 
-                android:layout_marginTop="24dp"
-                android:background="@drawable/buttoncurve"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/round_add_recipe_button"
                 android:padding="10dp"
                 android:text="Register"
                 android:textAllCaps="false"
-                android:textColor="#696969"
-                android:textSize="40px"
+                android:textColor="#EFE5E5"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/StaffRegPasswordEdit" />
+                app:layout_constraintTop_toBottomOf="@+id/staffConformPassEdit" />
 
             <TextView
                 android:id="@+id/back_to_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Back To Home"
-                android:textColor="#FFFFFF"
+                android:textColor="#000000"
                 app:layout_constraintEnd_toEndOf="@+id/StaffRegButton"
                 app:layout_constraintStart_toStartOf="@+id/StaffRegButton"
                 app:layout_constraintTop_toBottomOf="@+id/StaffRegButton" />
+
+            <TextView
+                android:id="@+id/textView56"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="Name : "
+                android:textColor="#121111"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/photo_staff_reg" />
+
+            <EditText
+                android:id="@+id/regStaffnameEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="Name"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toEndOf="@+id/textView56"
+                app:layout_constraintTop_toBottomOf="@+id/photo_staff_reg" />
+
+            <TextView
+                android:id="@+id/textView58"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="Contact number : "
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView56" />
+
+            <EditText
+                android:id="@+id/staffContactNoEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="Phone Number"
+                android:inputType="phone"
+                app:layout_constraintStart_toEndOf="@+id/textView58"
+                app:layout_constraintTop_toBottomOf="@+id/regStaffnameEdit" />
+
+            <TextView
+                android:id="@+id/textView59"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Address : "
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView58"
+                app:layout_constraintTop_toBottomOf="@+id/textView58" />
+
+            <EditText
+                android:id="@+id/staffAddressEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Address"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toEndOf="@+id/textView59"
+                app:layout_constraintTop_toBottomOf="@+id/staffContactNoEdit" />
+
+            <TextView
+                android:id="@+id/textView60"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Email : "
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView63"
+                app:layout_constraintTop_toBottomOf="@+id/textView63" />
+
+            <EditText
+                android:id="@+id/StaffRegEmailEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                app:layout_constraintStart_toEndOf="@+id/textView60"
+                app:layout_constraintTop_toBottomOf="@+id/staffPositionEdit" />
+
+            <TextView
+                android:id="@+id/textView61"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Password : "
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView60"
+                app:layout_constraintTop_toBottomOf="@+id/textView60" />
+
+            <EditText
+                android:id="@+id/StaffRegPasswordEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPassword"
+                app:layout_constraintStart_toEndOf="@+id/textView61"
+                app:layout_constraintTop_toBottomOf="@+id/StaffRegEmailEdit" />
+
+            <TextView
+                android:id="@+id/textView62"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Conform Password : "
+                android:textColor="#090909"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView61"
+                app:layout_constraintTop_toBottomOf="@+id/textView61" />
+
+            <EditText
+                android:id="@+id/staffConformPassEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                app:layout_constraintStart_toEndOf="@+id/textView62"
+                app:layout_constraintTop_toBottomOf="@+id/StaffRegPasswordEdit" />
+
+            <TextView
+                android:id="@+id/textView63"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Position : "
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView59"
+                app:layout_constraintTop_toBottomOf="@+id/textView59" />
+
+            <EditText
+                android:id="@+id/staffPositionEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="Position"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toEndOf="@+id/textView63"
+                app:layout_constraintTop_toBottomOf="@+id/staffAddressEdit" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

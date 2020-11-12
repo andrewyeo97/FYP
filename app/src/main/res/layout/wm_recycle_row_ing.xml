@@ -3,14 +3,14 @@
     android:id="@+id/recycle_ing"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/recycle_container"
-        android:layout_width="90dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,7 +24,7 @@
             android:layout_marginBottom="8dp"
             android:paddingRight="7sp"
             android:text=""
-            android:textColor="@color/orange"
+            android:textColor="@color/red"
             android:textSize="18dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -42,13 +42,13 @@
             android:gravity="center"
             android:text=""
             android:textAlignment="center"
-            android:textColor="@color/orange"
+            android:textColor="@color/red"
             android:textSize="18dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/ing_qty"
+            app:layout_constraintStart_toEndOf="@+id/added_ing_qty"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
 

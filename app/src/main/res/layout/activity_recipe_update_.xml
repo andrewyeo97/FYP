@@ -62,10 +62,14 @@
 
             <ImageView
                 android:id="@+id/update_food_image"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="150dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="65dp"
+                android:scaleType="fitXY"
                 android:src="@drawable/ic_baseline_add_photo_alternate_24"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView98"
                 app:layout_constraintTop_toTopOf="@+id/textView98"></ImageView>
 
@@ -105,17 +109,37 @@
                 app:layout_constraintEnd_toEndOf="@+id/textView97"
                 app:layout_constraintTop_toBottomOf="@+id/textView97"></TextView>
 
-            <EditText
-                android:id="@+id/update_food_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <!--            <EditText-->
+            <!--            android:id="@+id/update_food_category"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginStart="8dp"-->
+            <!--            android:ems="10"-->
+            <!--            android:inputType="textPersonName"-->
+            <!--            app:layout_constraintEnd_toEndOf="@+id/food_name"-->
+            <!--            app:layout_constraintHorizontal_bias="0.298"-->
+            <!--            app:layout_constraintStart_toEndOf="@+id/textView96"-->
+            <!--            app:layout_constraintTop_toBottomOf="@+id/update_food_name"></EditText>-->
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/category_dropdown_list"
+                android:layout_width="210dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="8dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="@+id/food_name"
-                app:layout_constraintHorizontal_bias="0.298"
+                android:background="@drawable/wm_drop_down"
+                android:spinnerMode="dropdown"
                 app:layout_constraintStart_toEndOf="@+id/textView96"
-                app:layout_constraintTop_toBottomOf="@+id/update_food_name"></EditText>
+                app:layout_constraintTop_toBottomOf="@+id/update_food_name" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/cuisine_dropdown_list"
+                android:layout_width="210dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/wm_drop_down"
+                android:spinnerMode="dropdown"
+                app:layout_constraintStart_toStartOf="@+id/category_dropdown_list"
+                app:layout_constraintTop_toBottomOf="@+id/category_dropdown_list" />
 
             <TextView
                 android:id="@+id/textView95"
@@ -251,8 +275,11 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
+                android:background="@drawable/rounded_button_add_ing"
                 android:text="Update Recipe"
+                android:textAllCaps="false"
                 android:textColor="#040404"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/button_update_cancel"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -263,7 +290,10 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:background="@drawable/rounded_button_add_ing"
+                android:textAllCaps="false"
                 android:text="Cancel"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/button_update_page_recipe" />
 
@@ -291,14 +321,16 @@
                 app:layout_constraintEnd_toEndOf="@+id/textView96"
                 app:layout_constraintTop_toBottomOf="@+id/textView96" />
 
-            <EditText
-                android:id="@+id/update_food_cuisine"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                app:layout_constraintStart_toStartOf="@+id/update_food_category"
-                app:layout_constraintTop_toBottomOf="@+id/update_food_category" />
+            <!--            <EditText-->
+            <!--                android:id="@+id/update_food_cuisine"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="8dp"-->
+            <!--                android:layout_marginTop="45dp"-->
+            <!--                android:ems="10"-->
+            <!--                android:inputType="textPersonName"-->
+            <!--                app:layout_constraintStart_toEndOf="@+id/textView48"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/update_food_name" />-->
 
             <TextView
                 android:id="@+id/textView49"
@@ -316,10 +348,11 @@
                 android:id="@+id/update_food_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="@+id/update_food_cuisine"
-                app:layout_constraintTop_toBottomOf="@+id/update_food_cuisine" />
+                app:layout_constraintStart_toStartOf="@+id/category_dropdown_list"
+                app:layout_constraintTop_toBottomOf="@+id/cuisine_dropdown_list" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

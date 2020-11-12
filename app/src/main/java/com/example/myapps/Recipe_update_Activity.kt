@@ -8,7 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Patterns
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import com.example.myapps.R
 import com.example.myapps.Recipe
 import com.google.firebase.database.DataSnapshot
@@ -24,12 +25,26 @@ import kotlinx.android.synthetic.main.activity_wm_staff__recipe_detail_.*
 import kotlinx.android.synthetic.main.fragment_wm_add.*
 import java.lang.Double
 import java.lang.Double.parseDouble
+import java.lang.reflect.Field
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class Recipe_update_Activity : AppCompatActivity() {
 
+
     var selectUpdatePhotoUri: Uri? = null
     var imageString: String =""
+
+    var categoryList : MutableList<String> = ArrayList()
+    var cuisineList : MutableList<String> = ArrayList()
+    var ctgSelected : String = ""
+    var currentCtg : String = ""
+    var cuiSelected : String = ""
+    var currentCui : String = ""
+
+    val sdf = SimpleDateFormat("dd/M/yyyy")
+    var currentDate = Calendar.getInstance().time
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +60,6 @@ class Recipe_update_Activity : AppCompatActivity() {
 
         button_update_page_recipe.setOnClickListener {
             updateValue()
-//            val intent = Intent(this, swmDashboardActivity::class.java)
-//            startActivity(intent)
         }
 
         button_update_cancel.setOnClickListener {
@@ -62,12 +75,8 @@ class Recipe_update_Activity : AppCompatActivity() {
             intent.putExtra("updateRecipeId", id)
             startActivity(intent)
         }
+//        ctgList()
     }
-
-//    override fun onStart() {
-//        super.onStart()
-//        init()
-//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -82,7 +91,7 @@ class Recipe_update_Activity : AppCompatActivity() {
     private fun init() {
         val id = intent.getStringExtra("RecipeId")
 
-        val ref2 = FirebaseDatabase.getInstance().getReference("/wmRecipe").orderByChild("recipeID").equalTo(
+        val ref2 = FirebaseDatabase.getInstance().getReference("/Recipe").orderByChild("recipeID").equalTo(
             id
         )
         ref2.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -94,33 +103,173 @@ class Recipe_update_Activity : AppCompatActivity() {
 
                         Picasso.get().load(rc.recipeImage).into(update_food_image).toString()
                         update_food_name.setText(rc.recipeTitle)
-                        update_food_category.setText(rc.category)
+//                        update_food_category.setText(rc.category)
                         //recipe nutrition fact
+                        currentCtg = rc.category
+                        currentCui = rc.cuisine
                         update_food_calories.setText(rc.calories.toString())
                         update_total_fat.setText(rc.totalFat.toString())
                         update_saturated_fat.setText(rc.saturatedFat.toString())
                         update_fibre.setText(rc.fibre.toString())
                         update_protein.setText(rc.protein.toString())
                         update_cholesterol.setText(rc.cholesterol.toString())
-                        update_food_cuisine.setText(rc.cuisine)
                         update_food_link.setText(rc.urlRec)
 
                         imageString = rc.recipeImage
+
+                        ctgList()
+                        curList()
                     }
                 }
             }
         })
     }
 
+    private fun ctgList(){
+        val b: String = "Breakfast"
+        val l: String  = "Lunch"
+        val d: String = "Dinner"
+
+
+        if(currentCtg.equals("Breakfast")) {
+            categoryList.add(currentCtg)
+            categoryList.add(l)
+            categoryList.add(d)
+        }
+
+        else if(currentCtg.equals("Lunch")){
+            categoryList.add(currentCtg)
+            categoryList.add(b)
+            categoryList.add(d)
+        }
+        else if(currentCtg.equals("Dinner")){
+            categoryList.add(currentCtg)
+            categoryList.add(b)
+            categoryList.add(l)
+        }
+
+        val adapter: ArrayAdapter<String> = ArrayAdapter(this,
+
+            R.layout.support_simple_spinner_dropdown_item,categoryList)
+        category_dropdown_list.adapter = adapter
+
+        category_dropdown_list.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val slctedItem: String = categoryList[position]
+                ctgSelected = slctedItem.toString()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+        }
+
+        ctgHight(category_dropdown_list)
+    }
+
+    private fun ctgHight(category_dropdown_list: Spinner){
+        val popup: Field = Spinner::class.java.getDeclaredField("mPopup")
+        popup.isAccessible = true
+
+        val popupWindow: ListPopupWindow = popup.get(category_dropdown_list) as ListPopupWindow
+        popupWindow.height = (200 * resources.displayMetrics.density).toInt()
+    }
+
+    private fun curList(){
+        val wes : String = "Western"
+        val chi : String = "Chinese"
+        val ind : String = "Indian"
+        val mex : String = "Mexican"
+        val ita : String = "Italian"
+        val tha : String = "Thai"
+
+        if(currentCui.equals("Western")){
+            cuisineList.add(currentCui)
+            cuisineList.add(chi)
+            cuisineList.add(ind)
+            cuisineList.add(mex)
+            cuisineList.add(ita)
+            cuisineList.add(tha)
+        }
+        if(currentCui.equals("Chinese")){
+            cuisineList.add(currentCui)
+            cuisineList.add(wes)
+            cuisineList.add(ind)
+            cuisineList.add(mex)
+            cuisineList.add(ita)
+            cuisineList.add(tha)
+        }
+        if(currentCui.equals("Indian")){
+            cuisineList.add(currentCui)
+            cuisineList.add(chi)
+            cuisineList.add(wes)
+            cuisineList.add(mex)
+            cuisineList.add(ita)
+            cuisineList.add(tha)
+        }
+        if(currentCui.equals("Mexican")){
+            cuisineList.add(currentCui)
+            cuisineList.add(chi)
+            cuisineList.add(wes)
+            cuisineList.add(ind)
+            cuisineList.add(ita)
+            cuisineList.add(tha)
+        }
+        if(currentCui.equals("Italian")){
+            cuisineList.add(currentCui)
+            cuisineList.add(chi)
+            cuisineList.add(wes)
+            cuisineList.add(ind)
+            cuisineList.add(mex)
+            cuisineList.add(tha)
+        }
+        if(currentCui.equals("Thai")){
+            cuisineList.add(currentCui)
+            cuisineList.add(chi)
+            cuisineList.add(wes)
+            cuisineList.add(ind)
+            cuisineList.add(mex)
+            cuisineList.add(ita)
+        }
+
+        val adapter: ArrayAdapter<String> = ArrayAdapter(this,
+            R.layout.support_simple_spinner_dropdown_item,cuisineList)
+
+        cuisine_dropdown_list.adapter = adapter
+        cuisine_dropdown_list.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val slctedItem: String = cuisineList[position]
+                cuiSelected = slctedItem.toString()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+        cuiHight(cuisine_dropdown_list)
+    }
+
+    private fun cuiHight(cuisine_dropdown_list: Spinner){
+        val popup: Field = Spinner::class.java.getDeclaredField("mPopup")
+        popup.isAccessible = true
+
+        val popupWindow: ListPopupWindow = popup.get(cuisine_dropdown_list) as ListPopupWindow
+        popupWindow.height = (5 * resources.displayMetrics.density).toInt()
+    }
+
+
     private fun updateValue(){
 
         var numeric1 = true
-        var numeric2 = true
-        var numeric3 = true
-
 
         val id = intent.getStringExtra("RecipeId")
-        val ref = FirebaseDatabase.getInstance().getReference("wmRecipe/$id")
+        val ref = FirebaseDatabase.getInstance().getReference("Recipe/$id")
 
         if(update_food_name.text.isNotEmpty()){
             val title = update_food_name.text.toString()
@@ -146,31 +295,18 @@ class Recipe_update_Activity : AppCompatActivity() {
             ref.child("recipeTitle").setValue(title)
         }
 
-
-        if( update_food_category.text.isNotEmpty()){
-            try{
-                val num = Double.parseDouble(update_food_category.text.toString())
-            }catch (e: NumberFormatException){
-                numeric2 = false
-            }
-
-            if(numeric2){
-                update_food_category.error = "Food category cannot be numeric"
-                update_food_category.requestFocus()
-                return
-            }else{
-                val rcpCtg = update_food_category.text.toString()
-                ref.child("category").setValue(rcpCtg)
-            }
-//            val rcpCtg = update_food_category.text.toString()
-//            ref.child("category").setValue(rcpCtg)
+        if(ctgSelected == null || ctgSelected == ""){
+            val category  = currentCtg.toString()
+            ref.child("category").setValue(currentCui.toString())
+        }else{
+            ref.child("category").setValue(ctgSelected.toString())
         }
-        else{
-            update_food_category.error = "Recipe category cannot be empty..."
-            update_food_category.requestFocus()
-            return
+        if(cuiSelected == null || cuiSelected == ""){
+            val cuisine  = currentCui.toString()
+            ref.child("category").setValue(currentCui.toString())
+        }else{
+            ref.child("cuisine").setValue(ctgSelected.toString())
         }
-
 
         if (update_food_calories.text.isNotEmpty()){
             val rcpCalories = update_food_calories.text.toString().toDouble()
@@ -226,27 +362,6 @@ class Recipe_update_Activity : AppCompatActivity() {
             return
         }
 
-        if(update_food_cuisine.text.isNotEmpty()){
-            try{
-                val num = parseDouble(update_food_cuisine.text.toString())
-            }catch (e: NumberFormatException){
-                numeric3 = false
-            }
-
-            if(numeric3){
-                update_food_cuisine.error = "Cuisine cannot be numeric"
-                update_food_cuisine.requestFocus()
-                return
-            }else{
-                val cuisine = update_food_cuisine.text.toString()
-                ref.child("cuisine").setValue(cuisine)
-            }
-        }else{
-            update_food_cuisine.error = "Cuisine cannot be empty..."
-            update_food_cuisine.requestFocus()
-            return
-        }
-
         if(update_food_link.text.isEmpty()){
             update_food_link.error = "Recipe Link cannot be empty..."
             update_food_link.requestFocus()
@@ -261,31 +376,19 @@ class Recipe_update_Activity : AppCompatActivity() {
             return
         }
 
+        ref.child("updateDate").setValue(currentDate)
 
-//        if(update_food_link.text.isNotEmpty()){
-//            if(!Patterns.WEB_URL.matcher(food_link.text.toString()).matches())
-//            {
-//                food_link.error = "Invalid format"
-//                food_link.requestFocus()
-//                return
-//            }else{
-////                val link = update_food_link.text.toString()
-////                ref.child("urlRec").setValue(link)
-//            }
-////            val link = update_food_link.text.toString()
-////            ref.child("urlRec").setValue(link)
-//        }else{
-//            update_food_link.error = "Recipe Link cannot be empty..."
-//            update_food_link.requestFocus()
-//            return
-//        }
+        ref.child("category").setValue(ctgSelected)
+        ref.child("cuisine").setValue(cuiSelected)
+
+
         uploadFoodImageToFirebaseStorage()
         Toast.makeText(baseContext, "Update Successful", Toast.LENGTH_SHORT).show()
     }
 
     private fun uploadFoodImageToFirebaseStorage(){
         val id = intent.getStringExtra("RecipeId")
-        val ref1 = FirebaseDatabase.getInstance().getReference("wmRecipe/$id")
+        val ref1 = FirebaseDatabase.getInstance().getReference("Recipe/$id")
         val filename = UUID.randomUUID().toString()
         val ref = FirebaseStorage.getInstance().getReference("/RecipeImage/$filename")
 

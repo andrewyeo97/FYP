@@ -33,27 +33,32 @@ class wm_update_ing_Activity : AppCompatActivity() {
     var ingredient = Ingredients()
     var rcpTitle: String = ""
     var ingId: String = ""
+    var currentDate = Calendar.getInstance().time
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wm_update_ing_)
 
-        rcpTitle = intent.getStringExtra("UpdateRecipeTitle")
-        update_recipeName.text = rcpTitle
-
         button_updatepage_add_ing.setOnClickListener {
+            val rcpId = intent.getStringExtra("updateRecipeId")
+            val ref = FirebaseDatabase.getInstance().getReference("Recipe/$rcpId")
             addIng()
-        }
-        update_btn_re.setOnClickListener {
-            init()
+            ref.child("updateDate").setValue(currentDate)
         }
         button_updatepage_delete_ing.setOnClickListener {
+            val rcpId = intent.getStringExtra("updateRecipeId")
+            val ref = FirebaseDatabase.getInstance().getReference("Recipe/$rcpId")
+
             val builder = AlertDialog.Builder(this@wm_update_ing_Activity)
             builder.setTitle("Delete Ingredient Message")
             builder.setMessage("Are you want to delete this Ingredients?")
             builder.setPositiveButton("Yes"){ dialog, which ->
                 Toast.makeText(applicationContext, "Ok, we will delete this ingredients.", Toast.LENGTH_SHORT).show()
                 deleteIng()
+                update_ingName.setText("")
+                update_ingQty.setText("")
+                update_ingUnit.setText("")
+                ref.child("updateDate").setValue(currentDate)
             }
             builder.setNegativeButton("No"){ dialog, which ->
                 Toast.makeText(
@@ -61,6 +66,10 @@ class wm_update_ing_Activity : AppCompatActivity() {
                     "Ok, we will not delete this ingredients.",
                     Toast.LENGTH_SHORT
                 ).show()
+                update_ingName.setText("")
+                update_ingQty.setText("")
+                update_ingUnit.setText("")
+
             }
             val dialog: AlertDialog = builder.create()
             dialog.show()
@@ -71,8 +80,10 @@ class wm_update_ing_Activity : AppCompatActivity() {
         }
 
         button_updatepage_update_ing.setOnClickListener {
+            val rcpId = intent.getStringExtra("updateRecipeId")
+            val ref = FirebaseDatabase.getInstance().getReference("Recipe/$rcpId")
             updateIng()
-
+            ref.child("updateDate").setValue(currentDate)
         }
 
         update_next_button.setOnClickListener {
@@ -87,6 +98,8 @@ class wm_update_ing_Activity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        rcpTitle = intent.getStringExtra("UpdateRecipeTitle")
+        update_recipeName.setText(rcpTitle)
         init()
     }
 
@@ -95,12 +108,12 @@ class wm_update_ing_Activity : AppCompatActivity() {
         var numeric1 = true
         var numeric2 = true
         val ingID = UUID.randomUUID().toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/wmIngredient/$ingID")
-        val rcpId = intent.getStringExtra("updateRecipeId")
+        val ref = FirebaseDatabase.getInstance().getReference("/Ingredient/$ingID")
+        val recipeId = intent.getStringExtra("updateRecipeId")
 
         if(update_ingName.text.toString().isEmpty()){
             update_ingName.error = "Please enter ingredients name"
-            ingName.requestFocus()
+            update_ingName.requestFocus()
             return
         }
         try{
@@ -116,12 +129,17 @@ class wm_update_ing_Activity : AppCompatActivity() {
 
         if(update_ingQty.text.toString().isEmpty()){
             update_ingQty.error = "Please enter ingredients quantity"
-            ingQty.requestFocus()
+            update_ingQty.requestFocus()
+            return
+        }
+        if(update_ingQty.text.toString().isEmpty()){
+            update_ingQty.error = "Please enter an unit"
+            update_ingQty.requestFocus()
             return
         }
         if(update_ingUnit.text.toString().isEmpty()){
             update_ingUnit.error = "Please enter an unit"
-            ingUnit.requestFocus()
+            update_ingUnit.requestFocus()
             return
         }
         try{
@@ -139,14 +157,18 @@ class wm_update_ing_Activity : AppCompatActivity() {
         ingredient.ingredientName = update_ingName.text.toString()
         ingredient.quantity = update_ingQty.text.toString().toDouble()
         ingredient.unit = update_ingUnit.text.toString()
-        ingredient.recipeID = rcpId
+        ingredient.recipeID = recipeId
+
         ref.setValue(ingredient)
         Toast.makeText(baseContext, "Added New Ingredient Successful", Toast.LENGTH_SHORT).show()
+        update_ingName.setText("")
+        update_ingQty.setText("")
+        update_ingUnit.setText("")
     }
 
 
     private fun deleteIng(){
-        val ref = FirebaseDatabase.getInstance().getReference("/wmIngredient").child(ingId)
+        val ref = FirebaseDatabase.getInstance().getReference("/Ingredient").child(ingId)
         ref.removeValue()
     }
 
@@ -154,7 +176,7 @@ class wm_update_ing_Activity : AppCompatActivity() {
         var numeric3 = true
         var numeric4 = true
 
-        val ref = FirebaseDatabase.getInstance().getReference("wmIngredient/$ingId")
+        val ref = FirebaseDatabase.getInstance().getReference("Ingredient/$ingId")
 
         if(update_ingName.text.isNotEmpty()){
             try{
@@ -208,11 +230,14 @@ class wm_update_ing_Activity : AppCompatActivity() {
             return
         }
         Toast.makeText(baseContext, "Ingredient Update Successful", Toast.LENGTH_SHORT).show()
+        update_ingName.setText("")
+        update_ingQty.setText("")
+        update_ingUnit.setText("")
     }
 
     private fun init(){
         val rcpId = intent.getStringExtra("updateRecipeId")
-        val ref =  FirebaseDatabase.getInstance().getReference("/wmIngredient").orderByChild("recipeID").equalTo(rcpId)
+        val ref =  FirebaseDatabase.getInstance().getReference("/Ingredient").orderByChild("recipeID").equalTo(rcpId)
 
         ref.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {}

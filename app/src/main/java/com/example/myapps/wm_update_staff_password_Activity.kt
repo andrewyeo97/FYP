@@ -24,6 +24,10 @@ class wm_update_staff_password_Activity : AppCompatActivity() {
         button_change_password.setOnClickListener {
             changePass()
         }
+
+        change_back.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun isValidPassword(password: String?): Boolean {

@@ -21,6 +21,7 @@ import java.util.*
   var cuisine: String = ""
   var staffID: String = ""
   var urlRec: String = ""
+  var updateDate: Date ?= null
   var averageRating: Float = 0.0F
  }
 

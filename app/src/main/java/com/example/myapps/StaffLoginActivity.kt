@@ -22,6 +22,15 @@ class StaffLoginActivity : AppCompatActivity() {
         StaffLoginButton.setOnClickListener {
             doStaffLogin()
         }
+
+        staff_forgetPass.setOnClickListener {
+            val intent = Intent(this, wm_staff_forgetPassword_Activity::class.java)
+            startActivity(intent)
+        }
+
+        login_back.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     override fun onStart() {
@@ -38,10 +47,6 @@ class StaffLoginActivity : AppCompatActivity() {
         context.startActivity(intent)
         FirebaseAuth.getInstance().signOut()
         this.finish()
-    }
-
-    override fun onBackPressed() {
-        exit(this)
     }
 
     private fun doStaffLogin(){

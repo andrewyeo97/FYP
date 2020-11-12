@@ -17,10 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/red"
-        app:itemIconTint="#fff"
-        app:itemTextColor="#fff"
+        android:background="@color/white"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@color/wm_nav_color"
+        app:itemTextColor="@color/wm_nav_color"
         app:menu="@menu/swm_nav_menu"/>
-
 </RelativeLayout>

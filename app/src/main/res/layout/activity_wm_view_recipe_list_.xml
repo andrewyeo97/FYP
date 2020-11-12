@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/recipeListCs1"
+    android:background="@color/white"
+    tools:context=".wm_view_recipe_list_Activity">
+
+    <ImageView
+        android:id="@+id/wm_return_btn"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/back_button_orange"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/chat_button"
+        app:layout_constraintHorizontal_bias="0.01"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+    </ImageView>
+
+    <EditText
+        android:id="@+id/wm_search"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/round_shape_gray"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:hint="Search Recipe"
+        android:iconifiedByDefault="false"
+        android:imeOptions="actionSearch"
+        android:queryBackground="@android:color/transparent"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:theme="@style/SearchViewStyle"
+        app:layout_constraintBottom_toTopOf="@+id/wm_recycle_recipeList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/wm_return_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+    </EditText>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/wm_recycle_recipeList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipeListCs1"
+        tools:listitem="@layout/recycle_row_item">
+    </androidx.recyclerview.widget.RecyclerView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

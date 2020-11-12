@@ -47,6 +47,10 @@ class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
 
     var rc_id : String = ""
     var found: Boolean = false
+
+    var cuisine_key : String  = ""
+    var category_key : String = ""
+
     private val handlers: Handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,6 +87,10 @@ class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
 
         buttonBack.setOnClickListener {
             onBackPressed()
+//            val intent  = Intent(this, wm_view_recipe_list_Activity::class.java)
+//            intent.putExtra(rc_cuisine, cuisine_key)
+//            intent.putExtra(rc_category, category_key)
+//            startActivity(intent)
         }
 
 
@@ -90,7 +98,11 @@ class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        rc_id = intent.getStringExtra(wmHomeFragment.RECIPE_KEY)
+
+        rc_id = intent.getStringExtra(wm_view_recipe_list_Activity.RECIPE_KEY)
+        rc_id = intent.getStringExtra(wm_update_historyt_Activity.RECIPE_KEY)
+//        rc_id = intent.getStringExtra(wm_update_step_Activity.RECIPE_KEY)
+//        rc_id = intent.getStringExtra(wmHomeFragment.RECIPE_KEY)
         init()
         bindIngredient()
         bindSteps()
@@ -101,6 +113,19 @@ class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
 //            onBackPressed()
 //        }
     }
+    companion object{
+        val rc_category = "rc_category"
+        val rc_cuisine = "rc_cuisine"
+    }
+
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+//        val intent  = Intent(this, wm_view_recipe_list_Activity::class.java)
+//        intent.putExtra(rc_cuisine, cuisine_key)
+//        intent.putExtra(rc_category, category_key)
+//        startActivity(intent)
+    }
 
     private val ToastRunnabler: Runnable = object : Runnable {
         override fun run() {
@@ -108,6 +133,7 @@ class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
             var avgRating: Float = 0.0F
             var counter: Int = 0
             var ttlRating: Float = 0.0F
+
             val ref = FirebaseDatabase.getInstance().getReference("/Rating").orderByChild("recipeID").equalTo(rc_id)
             ref.addListenerForSingleValueEvent(object : ValueEventListener{
 
@@ -136,7 +162,7 @@ class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
     private fun init() {
 
         //recipe title & image
-        val ref2 = FirebaseDatabase.getInstance().getReference("/wmRecipe").orderByChild("recipeID").equalTo(
+        val ref2 = FirebaseDatabase.getInstance().getReference("/Recipe").orderByChild("recipeID").equalTo(
             rc_id
         )
         ref2.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -145,6 +171,9 @@ class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
                 snapshot.children.forEach {
                     val rc = it.getValue(Recipe::class.java)
                     if (rc != null) {
+
+                        cuisine_key = rc.cuisine
+                        category_key = rc.category
                         Picasso.get().load(rc.recipeImage).into(imageViewRecipe)
                         recipeTitle.text = rc.recipeTitle
 
@@ -164,7 +193,7 @@ class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
 
     private fun bindIngredient() {
 
-        val ref = FirebaseDatabase.getInstance().getReference("/wmIngredient").orderByChild("recipeID").equalTo(
+        val ref = FirebaseDatabase.getInstance().getReference("/Ingredient").orderByChild("recipeID").equalTo(
             rc_id
         )
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -216,7 +245,7 @@ class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
 
         val list = arrayListOf<Steps>()
 
-        val ref = FirebaseDatabase.getInstance().getReference("/wmStep").orderByChild("recipeID").equalTo(rc_id)
+        val ref = FirebaseDatabase.getInstance().getReference("/Steps").orderByChild("recipeID").equalTo(rc_id)
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -252,10 +281,10 @@ class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
 
     private fun deleteRecipe(id: String){
 
-        val refRecipe = FirebaseDatabase.getInstance().getReference("wmRecipe").child(id)
+        val refRecipe = FirebaseDatabase.getInstance().getReference("Recipe").child(id)
         refRecipe.removeValue()
 
-        val refImage = FirebaseDatabase.getInstance().getReference("/wmRecipe").orderByChild("recipeID").equalTo(id)
+        val refImage = FirebaseDatabase.getInstance().getReference("/Recipe").orderByChild("recipeID").equalTo(id)
         refImage.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -270,7 +299,7 @@ class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
             }
         })
 
-        val refIngs = FirebaseDatabase.getInstance().getReference("/wmIngredient").orderByChild("recipeID").equalTo(id)
+        val refIngs = FirebaseDatabase.getInstance().getReference("/Ingredient").orderByChild("recipeID").equalTo(id)
         refIngs.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -281,7 +310,7 @@ class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
         })
 
 
-        val refStep = FirebaseDatabase.getInstance().getReference("wmStep").orderByChild("recipeID").equalTo(id)
+        val refStep = FirebaseDatabase.getInstance().getReference("Steps").orderByChild("recipeID").equalTo(id)
         refStep.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {

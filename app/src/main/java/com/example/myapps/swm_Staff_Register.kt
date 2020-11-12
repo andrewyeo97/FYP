@@ -20,7 +20,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_swm__staff__register.*
+import kotlinx.android.synthetic.main.activity_view_user__profile_.*
+import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 class swm_Staff_Register : AppCompatActivity() {
 
@@ -45,6 +49,10 @@ class swm_Staff_Register : AppCompatActivity() {
             intent.type = "image/*"
             startActivityForResult(intent, 0)
         }
+
+        register_back.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -59,6 +67,11 @@ class swm_Staff_Register : AppCompatActivity() {
 
     private fun signUpStaff() {
 
+        if (selectPhotoUri == null) {
+            Toast.makeText(this, "Please select your profile pic", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         if (regStaffnameEdit.text.toString().isEmpty()) {
             regStaffnameEdit.error = "Please enter your username"
             regStaffnameEdit.requestFocus()
@@ -71,6 +84,18 @@ class swm_Staff_Register : AppCompatActivity() {
 
         if (!Patterns.PHONE.matcher(staffContactNoEdit.text.toString()).matches()) {
             staffContactNoEdit.error = "Please enter correct contact number"
+        }
+
+        if (staffAddressEdit.text.toString().isEmpty()){
+            staffAddressEdit.error = "Please enter Address"
+            staffAddressEdit.requestFocus()
+            return
+        }
+
+        if(staffPositionEdit.text.toString().isEmpty()){
+            staffPositionEdit.error = "Please  enter staff position"
+            staffPositionEdit.requestFocus()
+            return
         }
 
         if (StaffRegEmailEdit.text.toString().isEmpty()) {
@@ -91,24 +116,37 @@ class swm_Staff_Register : AppCompatActivity() {
             return
         }
 
-        if (selectPhotoUri == null) {
-            Toast.makeText(this, "Please select your profile pic", Toast.LENGTH_SHORT).show()
+        if(staffConformPassEdit.text.toString().isEmpty()){
+            staffConformPassEdit.error = "Please enter the password again"
+            staffConformPassEdit.requestFocus()
+            return
+        }
+        if (!staffConformPassEdit.text.toString().equals(StaffRegPasswordEdit.text.toString())){
+            staffConformPassEdit.error = "Password is not match"
+            staffConformPassEdit.requestFocus()
             return
         }
 
         val email = StaffRegEmailEdit.text.toString()
         val pass = StaffRegPasswordEdit.text.toString()
-
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pass)
-            .addOnCompleteListener {
-                if (!it.isSuccessful) {
-                    Toast.makeText(baseContext, "Register failed.", Toast.LENGTH_SHORT).show()
-                } else {
-                    staff.staff_id = FirebaseAuth.getInstance().uid.toString()
-                    uploadImageToFirebaseStorage()
-                    Toast.makeText(baseContext, "Register Successful.", Toast.LENGTH_SHORT).show()
+        if(isValidPassword(pass)) {
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pass)
+                .addOnCompleteListener {
+                    if (!it.isSuccessful) {
+                        Toast.makeText(baseContext, "Register failed.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        staff.staff_id = FirebaseAuth.getInstance().uid.toString()
+                        uploadImageToFirebaseStorage()
+                        Toast.makeText(baseContext, "Register Successful.", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
-            }
+        }else{
+            Toast.makeText(baseContext, "Password does not fulfill the criteria", Toast.LENGTH_SHORT).show()
+            StaffRegPasswordEdit.requestFocus()
+            return
+
+        }
     }
     private fun uploadImageToFirebaseStorage(){
 
@@ -123,11 +161,26 @@ class swm_Staff_Register : AppCompatActivity() {
     }
 
     private fun saveStaffToDatabase(profileImageUrl: String){
+        var currentDate = Calendar.getInstance().time
         val ref = FirebaseDatabase.getInstance().getReference("/Staffs/${staff.staff_id}")
         staff.staff_name = regStaffnameEdit.text.toString()
         staff.staff_email = StaffRegEmailEdit.text.toString()
         staff.staff_contactNo = staffContactNoEdit.text.toString()
         staff.staff_profileImageUrl = profileImageUrl
+        staff.staff_address = staffAddressEdit.text.toString()
+        staff.staff_position = staffPositionEdit.text.toString()
+        staff.register_date = currentDate
+
         ref.setValue(staff)
+    }
+
+    private fun isValidPassword(password: String?): Boolean {
+        val pattern: Pattern
+        val matcher: Matcher
+        val PASSWORD_PATTERN =
+            "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{8,}$"
+        pattern = Pattern.compile(PASSWORD_PATTERN)
+        matcher = pattern.matcher(password)
+        return matcher.matches()
     }
 }
