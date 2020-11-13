@@ -82,16 +82,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/staffConformPassEdit" />
 
             <TextView
-                android:id="@+id/back_to_setting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Back To Home"
-                android:textColor="#000000"
-                app:layout_constraintEnd_toEndOf="@+id/StaffRegButton"
-                app:layout_constraintStart_toStartOf="@+id/StaffRegButton"
-                app:layout_constraintTop_toBottomOf="@+id/StaffRegButton" />
-
-            <TextView
                 android:id="@+id/textView56"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

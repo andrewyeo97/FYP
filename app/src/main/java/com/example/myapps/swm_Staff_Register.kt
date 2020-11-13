@@ -30,18 +30,17 @@ class swm_Staff_Register : AppCompatActivity() {
 
     var staff = Staff()
     var selectPhotoUri: Uri? = null
+//    val currentStaff = FirebaseAuth.getInstance().uid.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_swm__staff__register)
 
+//        val currentuser = FirebaseAuth.getInstance().uid.toString()
+
         StaffRegButton.setOnClickListener {
             signUpStaff()
-        }
-
-        back_to_setting.setOnClickListener {
-            val intent = Intent(this, swmDashboardActivity::class.java)
-            startActivity(intent)
+            FirebaseAuth.getInstance().signOut()
         }
 
         photo_staff_reg.setOnClickListener {
@@ -63,6 +62,11 @@ class swm_Staff_Register : AppCompatActivity() {
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,selectPhotoUri)
             photo_staff_reg.setImageBitmap(bitmap)
         }
+    }
+
+    private fun backLogin(){
+        val intent  = Intent(this, StaffLoginActivity::class.java)
+        startActivity(intent)
     }
 
     private fun signUpStaff() {
@@ -137,8 +141,8 @@ class swm_Staff_Register : AppCompatActivity() {
                     } else {
                         staff.staff_id = FirebaseAuth.getInstance().uid.toString()
                         uploadImageToFirebaseStorage()
-                        Toast.makeText(baseContext, "Register Successful.", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(baseContext, "Register Successful.", Toast.LENGTH_SHORT).show()
+                        backLogin()
                     }
                 }
         }else{
@@ -148,6 +152,7 @@ class swm_Staff_Register : AppCompatActivity() {
 
         }
     }
+
     private fun uploadImageToFirebaseStorage(){
 
         val filename = UUID.randomUUID().toString()

@@ -50,12 +50,12 @@ class wmSettingFragment : Fragment() {
             logout()
         }
 
-        buttonAddNewStaff.setOnClickListener {
-            checkPosition()
-        }
-        imageViewAddNewStaff.setOnClickListener{
-            checkPosition()
-        }
+//        buttonAddNewStaff.setOnClickListener {
+//            checkPosition()
+//        }
+//        imageViewAddNewStaff.setOnClickListener{
+//            checkPosition()
+//        }
 
         StaffAccBtn.setOnClickListener {
             val intent = Intent(context, View_user_Profile_Activity::class.java)
@@ -95,38 +95,38 @@ class wmSettingFragment : Fragment() {
         startActivity(intent)
     }
 
-    private fun checkPosition(){
-        val currentuserID = FirebaseAuth.getInstance().currentUser!!.uid
-        val ref = FirebaseDatabase.getInstance().getReference("/Staffs").orderByChild("staff_id").equalTo(
-            currentuserID
-        )
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {}
-            override fun onDataChange(snapshot: DataSnapshot) {
-                snapshot.children.forEach {
-                    val staff = it.getValue(Staff::class.java)
-                    if (staff != null) {
-                        if(!staff.staff_position.toUpperCase().equals("MANAGER")){
-                            val dialogBuilder = AlertDialog.Builder(activity!!)
-                            dialogBuilder.setMessage(it.toString())
-                                .setCancelable(false)
-                                .setPositiveButton("Ok", DialogInterface.OnClickListener {
-                                        dialog, id ->
-                                    dialog.dismiss()
-                                })
-                            val alert = dialogBuilder.create()
-                            alert.setTitle("Cannot Access Message")
-                            alert.setMessage("You are not manager so you cannot access to the staff register page.")
-                            alert.show()
-                        }else{
-                            val intent = Intent(context, swm_Staff_Register::class.java)
-                            startActivity(intent)
-                        }
-                    }
-                }
-            }
-        })
-
-    }
+//    private fun checkPosition(){
+//        val currentuserID = FirebaseAuth.getInstance().currentUser!!.uid
+//        val ref = FirebaseDatabase.getInstance().getReference("/Staffs").orderByChild("staff_id").equalTo(
+//            currentuserID
+//        )
+//        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onCancelled(error: DatabaseError) {}
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                snapshot.children.forEach {
+//                    val staff = it.getValue(Staff::class.java)
+//                    if (staff != null) {
+//                        if(!staff.staff_position.toUpperCase().equals("MANAGER")){
+//                            val dialogBuilder = AlertDialog.Builder(activity!!)
+//                            dialogBuilder.setMessage(it.toString())
+//                                .setCancelable(false)
+//                                .setPositiveButton("Ok", DialogInterface.OnClickListener {
+//                                        dialog, id ->
+//                                    dialog.dismiss()
+//                                })
+//                            val alert = dialogBuilder.create()
+//                            alert.setTitle("Cannot Access Message")
+//                            alert.setMessage("You are not manager so you cannot access to the staff register page.")
+//                            alert.show()
+//                        }else{
+//                            val intent = Intent(context, swm_Staff_Register::class.java)
+//                            startActivity(intent)
+//                        }
+//                    }
+//                }
+//            }
+//        })
+//
+//    }
 
 }

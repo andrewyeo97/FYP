@@ -187,14 +187,7 @@
             app:layout_constraintStart_toEndOf="@+id/emailProfileUnedit"
             app:layout_constraintTop_toBottomOf="@+id/usernameProfiletxt" />
 
-        <TextView
-            android:id="@+id/grayline5"
-            android:layout_width="match_parent"
-            android:layout_height="1.2dp"
-            android:background="@drawable/back"
-            app:layout_constraintBottom_toTopOf="@+id/profile_pic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

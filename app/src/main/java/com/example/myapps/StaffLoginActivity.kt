@@ -36,6 +36,11 @@ class StaffLoginActivity : AppCompatActivity() {
         login_back.setOnClickListener {
             onBackPressed()
         }
+
+        go_register_page.setOnClickListener {
+            val intent = Intent(this, swm_verify_staff_position_Activity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onStart() {

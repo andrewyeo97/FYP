@@ -135,6 +135,15 @@
             app:layout_constraintBottom_toTopOf="@+id/StaffLoginButton"
             app:layout_constraintEnd_toEndOf="@+id/textInputLayout3"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+
+        <TextView
+            android:id="@+id/go_register_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No account? Click here for Staff Register"
+            app:layout_constraintEnd_toEndOf="@+id/StaffLoginButton"
+            app:layout_constraintStart_toStartOf="@+id/StaffLoginButton"
+            app:layout_constraintTop_toBottomOf="@+id/StaffLoginButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

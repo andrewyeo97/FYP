@@ -10,8 +10,9 @@
         android:roundIcon="@drawable/round_shape_gray"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".wm_report_Activity"></activity>
-        <activity android:name=".wm_total_recipe_summary_Activity"></activity>
+        <activity android:name=".swm_verify_staff_position_Activity"></activity>
+        <activity android:name=".wm_report_Activity" />
+        <activity android:name=".wm_total_recipe_summary_Activity" />
         <activity android:name=".wm_update_historyt_Activity" />
         <activity android:name=".swm_Lunch_Activity" />
         <activity android:name=".wm_view_recipe_list_Activity" />
