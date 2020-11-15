@@ -92,6 +92,7 @@ class AddRatingActivity : AppCompatActivity() {
 
 
     private fun addNewRating(){
+        var timestamp = System.currentTimeMillis()/1000
         val ratingID = UUID.randomUUID().toString()
         val ref = FirebaseDatabase.getInstance().getReference("/Rating/$ratingID")
         rating.ratingID = ratingID
@@ -132,6 +133,7 @@ class AddRatingActivity : AppCompatActivity() {
     private fun deleteRating(){
         val ref = FirebaseDatabase.getInstance().getReference("/Rating/$currentRatingID")
         ref.removeValue()
+        modifyRecipeAvgRating(0.0F)
         loadRating()
         Toast.makeText(baseContext, "Rating removed", Toast.LENGTH_SHORT).show()
         onBackPressed()

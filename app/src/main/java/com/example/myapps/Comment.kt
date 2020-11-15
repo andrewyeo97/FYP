@@ -10,5 +10,6 @@ class Comment {
     var userID: String = ""
     var userimageUrl: String = ""
     var username: String = ""
+    var dateSent: Date? = null
 }
 

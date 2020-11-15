@@ -12,9 +12,12 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.android.synthetic.main.recycle_chat_time.view.*
 import kotlinx.android.synthetic.main.recycle_row_chat_other.view.*
 import kotlinx.android.synthetic.main.recycle_row_chat_owner.view.*
+import kotlinx.android.synthetic.main.recycle_row_his_date.view.*
 import kotlinx.android.synthetic.main.recycle_row_no_review.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -22,7 +25,8 @@ const val RCID3 = ""
 
 class ChatActivity : AppCompatActivity() {
 
-
+    val adapters = GroupAdapter<GroupieViewHolder>()
+    var previousDate: Date? = null
     var found: Boolean = false
     var comment = Comment()
     val currentuserID = FirebaseAuth.getInstance().uid.toString()
@@ -30,8 +34,7 @@ class ChatActivity : AppCompatActivity() {
     var url: String = ""
     var username: String = ""
     val msg = arrayListOf<Comment>()
-
-
+    var formate = SimpleDateFormat("dd/MM/yyyy", Locale.US)
     override fun onStart() {
         super.onStart()
         rid = intent.extras?.getString(RCID3,"").toString()
@@ -52,7 +55,7 @@ class ChatActivity : AppCompatActivity() {
         btnSend.setOnClickListener {
             if(chatboxTxt.text.isNotEmpty()) {
                 sendMessage()
-
+                loadmsg()
             }
         }
 
@@ -77,6 +80,8 @@ class ChatActivity : AppCompatActivity() {
 
     private fun loadmsg(){
         msg.clear()
+        adapters.clear()
+        previousDate = null
         val ref = FirebaseDatabase.getInstance().getReference("/RecipeComments").orderByChild("recID").equalTo(rid)
         ref.addValueEventListener(object :ValueEventListener{
             override fun onCancelled(error: DatabaseError) {}
@@ -92,6 +97,7 @@ class ChatActivity : AppCompatActivity() {
                         }
                     }
                 }
+                ryr_chat.adapter = adapters
             }
         })
     }
@@ -108,13 +114,13 @@ class ChatActivity : AppCompatActivity() {
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                    loadmsg()
+                loadmsg()
             }
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                    loadmsg()
+                loadmsg()
                 }
             override fun onChildRemoved(snapshot: DataSnapshot) {
-                    loadmsg()
+                loadmsg()
                 if(found == false) {
                     bindNull()
                 }
@@ -123,9 +129,21 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun bindadapter(){
-        val adapters = GroupAdapter<GroupieViewHolder>()
+
         msg.sortBy { it.timestamp }
         msg.forEach {
+            if(previousDate == null ){
+                previousDate = it.dateSent
+                adapters.add(bindDates(it))
+            }
+            else{
+                val prev: String = formate.format(previousDate)
+                val current: String = formate.format(it.dateSent)
+                if(prev != current){
+                    adapters.add(bindDates(it))
+                }
+                previousDate = it.dateSent
+            }
 
             if(it.userID.equals(currentuserID)){
                 adapters.add(ChatToItem(it))
@@ -133,16 +151,30 @@ class ChatActivity : AppCompatActivity() {
                 adapters.add(ChatFromItem(it))
             }
         }
-        ryr_chat.adapter = adapters
+
     }
 
+
     private fun bindNull(){
-        val adapters = GroupAdapter<GroupieViewHolder>()
         adapters.clear()
         ryr_chat.adapter = adapters
     }
 
+
+    private class bindDates(val com: Comment): Item<GroupieViewHolder>() {
+        override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+            var formateD = SimpleDateFormat("dd MMM yyyy", Locale.US)
+            viewHolder.itemView.chatDateTxt.text = formateD.format(com.dateSent).toString()
+        }
+
+        override fun getLayout(): Int {
+            return R.layout.recycle_chat_time
+        }
+
+    }
+
     private fun sendMessage(){
+        var currentDate = Calendar.getInstance().time
         val commentID = UUID.randomUUID().toString()
         var timestamp = System.currentTimeMillis()/1000
         val ref = FirebaseDatabase.getInstance().getReference("/RecipeComments/$commentID")
@@ -153,8 +185,8 @@ class ChatActivity : AppCompatActivity() {
         comment.timestamp = timestamp
         comment.userimageUrl = url
         comment.username = username
+        comment.dateSent = currentDate
         ref.setValue(comment)
-
         chatboxTxt.setText("")
     }
 
@@ -177,10 +209,12 @@ class ChatActivity : AppCompatActivity() {
 
     private class ChatFromItem(val comments: Comment): Item<GroupieViewHolder>() {
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+            var formateD = SimpleDateFormat("hh:mm a", Locale.US)
+            viewHolder.itemView.senderNameTxt.text = comments.username
             viewHolder.itemView.chat_message_other.text = comments.commentText
+            viewHolder.itemView.timeTxt.text = formateD.format(comments.dateSent).toString()
             Picasso.get().load(comments.userimageUrl).into(viewHolder.itemView.chat_image_other)
         }
-
         override fun getLayout(): Int {
             return R.layout.recycle_row_chat_other
         }
@@ -189,7 +223,9 @@ class ChatActivity : AppCompatActivity() {
 
     private class ChatToItem(val comments: Comment): Item<GroupieViewHolder>() {
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
+            var formateD = SimpleDateFormat("hh:mm a", Locale.US)
             viewHolder.itemView.chat_message_owner.text = comments.commentText
+            viewHolder.itemView.timeText.text = formateD.format(comments.dateSent).toString()
             Picasso.get().load(comments.userimageUrl).into(viewHolder.itemView.chat_image_owner)
 
             viewHolder.itemView.chat_owner_root.setOnLongClickListener {
@@ -216,6 +252,8 @@ class ChatActivity : AppCompatActivity() {
             return R.layout.recycle_row_chat_owner
         }
     }
+
+
 
 }
 
