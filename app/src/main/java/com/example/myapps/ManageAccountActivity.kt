@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import com.example.myapps.fragments.HomeFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -14,11 +15,13 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_add_rating.*
 import kotlinx.android.synthetic.main.activity_manage_account.*
 import kotlinx.android.synthetic.main.activity_recipe_detail.*
 import kotlinx.android.synthetic.main.activity_register.*
+import okhttp3.Dispatcher
 import java.util.*
 
 class ManageAccountActivity : AppCompatActivity() {
@@ -100,7 +103,6 @@ class ManageAccountActivity : AppCompatActivity() {
     }
 
     private fun uploadImageToFirebaseStorage(){
-
         val filename = UUID.randomUUID().toString()
         val ref = FirebaseStorage.getInstance().getReference("/ProfileImages/$filename")
 
@@ -108,7 +110,6 @@ class ManageAccountActivity : AppCompatActivity() {
             ref.downloadUrl.addOnSuccessListener {
                 saveUserToDatabase(it.toString())
             }
-
         }
     }
 
@@ -120,8 +121,6 @@ class ManageAccountActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
-
-
 
 
 }

@@ -320,6 +320,25 @@ class wmStaff_RecipeDetail_Activity : AppCompatActivity() {
             }
         })
 
+        val refFav = FirebaseDatabase.getInstance().getReference("Favourite").orderByChild("recipeID").equalTo(id)
+        refFav.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach{
+                    it.ref.removeValue()
+                }
+            }
+        })
+
+        val refHis = FirebaseDatabase.getInstance().getReference("History").orderByChild("recipeID").equalTo(id)
+        refHis.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach{
+                    it.ref.removeValue()
+                }
+            }
+        })
 
     }
 
