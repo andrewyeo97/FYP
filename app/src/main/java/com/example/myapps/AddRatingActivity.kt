@@ -92,7 +92,6 @@ class AddRatingActivity : AppCompatActivity() {
 
 
     private fun addNewRating(){
-        var timestamp = System.currentTimeMillis()/1000
         val ratingID = UUID.randomUUID().toString()
         val ref = FirebaseDatabase.getInstance().getReference("/Rating/$ratingID")
         rating.ratingID = ratingID

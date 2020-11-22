@@ -168,14 +168,10 @@ class FavouriteFragment : Fragment() {
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
-             //   val adapter = GroupAdapter<GroupieViewHolder>()
-
                 snapshot.children.forEach {
                     val fav = it.getValue(Favourite::class.java)
                     if (fav != null) {
-
                         rc_idd = fav.recipeID
-
                         val ref2 = FirebaseDatabase.getInstance().getReference("/Recipe")
                             .orderByChild("recipeID").equalTo(rc_idd)
                         ref2.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -192,7 +188,6 @@ class FavouriteFragment : Fragment() {
                                         filterz.add(res)
                                     }
                                 }
-
                                 adapter.setOnItemClickListener { item, view ->
                                     recipeStr = ""
                                     recipeImg = ""

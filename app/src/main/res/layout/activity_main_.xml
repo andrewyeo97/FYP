@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="cursive"
         android:paddingVertical="60dp"
-        android:text="Healthy Food Receipe"
+        android:text="Healthy Food Receipes"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="40sp"
