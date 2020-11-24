@@ -1,6 +1,11 @@
 package com.example.myapps
 
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListPopupWindow
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,8 +16,10 @@ import com.google.firebase.database.ValueEventListener
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
+import kotlinx.android.synthetic.main.activity_swm__add__ing_.*
 import kotlinx.android.synthetic.main.activity_wm_view_report_.*
 import kotlinx.android.synthetic.main.recycle_row_report.view.*
+import java.lang.reflect.Field
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -21,11 +28,14 @@ import java.util.*
 
 class wm_view_report_Activity : AppCompatActivity() {
     var found: Boolean = false
+    var dateList : MutableList<String> = ArrayList()
+    var month = Calendar.getInstance().get(Calendar.MONTH) + 1
+    var dateSelected : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wm_view_report_)
-
+        AdddateList()
     }
 
     override fun onStart() {
@@ -33,6 +43,52 @@ class wm_view_report_Activity : AppCompatActivity() {
         getDate()
 
     }
+    private fun AdddateList(){
+//        dateSelected = month.toString()
+        dateList.add("")
+        dateList.add("1")
+        dateList.add("2")
+        dateList.add("3")
+        dateList.add("4")
+        dateList.add("5")
+        dateList.add("6")
+        dateList.add("7")
+        dateList.add("8")
+        dateList.add("9")
+        dateList.add("10")
+        dateList.add("11")
+        dateList.add("12")
+
+        val adapter: ArrayAdapter<String> = ArrayAdapter(this,
+            R.layout.support_simple_spinner_dropdown_item, dateList)
+        date_dropdown.adapter = adapter
+
+        date_dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val slcItem : String = dateList[position]
+                dateSelected = slcItem.toString()
+
+                getDate()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+        DateHight(date_dropdown)
+    }
+
+    private fun DateHight(date_dropdown : Spinner){
+        val popup: Field = Spinner::class.java.getDeclaredField("mPopup")
+        popup.isAccessible = true
+
+        val popupWindow: ListPopupWindow = popup.get(date_dropdown) as ListPopupWindow
+        popupWindow.height = (8 * resources.displayMetrics.density).toInt()
+    }
+
     private fun getDate() {
         var counter: Int = 0
         var counter1 : Int = 0
@@ -41,9 +97,8 @@ class wm_view_report_Activity : AppCompatActivity() {
         var today = format.format(Date())
         var formatMonth = SimpleDateFormat("MM", Locale.US)
         var formatYear = SimpleDateFormat("yyyy", Locale.US)
-        var month = Calendar.getInstance().get(Calendar.MONTH) + 1
         var year = Calendar.getInstance().get(Calendar.YEAR)
-        var lastMonth  = Calendar.getInstance().get(Calendar.MONTH)
+        var month = Calendar.getInstance().get(Calendar.MONTH) + 1
 
         report_today.setText(today.toString())
 
@@ -62,18 +117,29 @@ class wm_view_report_Activity : AppCompatActivity() {
                     if (us != null) {
                         total  = total + 1
                         if (userYear.toString().equals(year.toString())) {
-                            if (userMonth.toString().equals(month.toString())) {
-                                counter = counter + 1
-                                list.add(us)
-                                if(list.count() == snapshot.children.count()){
-                                    list.sortBy {it.registerDate}
-                                    list.forEach {
-                                        adapter.add(bindataRe(it))
+                            if(dateSelected.equals("")){
+                                if(userMonth.toString().equals(month.toString())){
+                                    counter = counter + 1
+                                    list.add(us)
+                                    if(list.count() == snapshot.children.count()){
+                                        list.sortBy {it.registerDate}
+                                        list.forEach {
+                                            adapter.add(bindataRe(it))
+                                        }
                                     }
                                 }
-//                                adapter.add(bindataRe(us))
-                            }else if(userMonth.toString().equals(lastMonth.toString())){
-                                counter1 = counter1 + 1
+                            }else{
+                                if (userMonth.toString().equals(dateSelected)) {
+                                    counter = counter + 1
+                                    list.add(us)
+                                    if(list.count() == snapshot.children.count()){
+                                        list.sortBy {it.registerDate}
+                                        list.forEach {
+                                            adapter.add(bindataRe(it))
+                                        }
+                                    }
+                                }
+
                             }
                         }
                     }
@@ -81,7 +147,6 @@ class wm_view_report_Activity : AppCompatActivity() {
                 recycle_report_dis.adapter = adapter
                 report_total_user.setText(total.toString())
                 report_total.setText(counter.toString())
-                report_lastMonth_total.setText(counter1.toString())
             }
         })
     }

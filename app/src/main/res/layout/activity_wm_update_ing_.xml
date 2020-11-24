@@ -83,6 +83,16 @@
             app:layout_constraintStart_toStartOf="@+id/textView15"
             app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/update_unit_dropdown"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@drawable/wm_drop_down"
+            android:spinnerMode="dropdown"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/textView16"
+            app:layout_constraintTop_toBottomOf="@+id/update_ingQty" />
+
         <EditText
             android:id="@+id/update_ingName"
             android:layout_width="wrap_content"
@@ -94,29 +104,18 @@
             app:layout_constraintStart_toEndOf="@+id/textView14"
             app:layout_constraintTop_toTopOf="@+id/textView14" />
 
-        <EditText
-            android:id="@+id/update_ingUnit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:ems="10"
-            android:hint="Unit"
-            android:inputType="textPersonName"
-            app:layout_constraintStart_toEndOf="@+id/textView16"
-            app:layout_constraintTop_toTopOf="@+id/textView16" />
-
         <Button
             android:id="@+id/button_updatepage_update_ing"
             android:layout_width="120dp"
             android:layout_height="50dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/rounded_button_add_ing"
             android:text="Update"
             android:textAllCaps="false"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/update_ingUnit" />
+            app:layout_constraintTop_toBottomOf="@+id/update_unit_dropdown" />
 
         <Button
             android:id="@+id/button_updatepage_add_ing"
@@ -149,7 +148,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="Next"
-            android:textColor="#000000"
+            android:textColor="#E91E63"
             android:textSize="24sp"
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"

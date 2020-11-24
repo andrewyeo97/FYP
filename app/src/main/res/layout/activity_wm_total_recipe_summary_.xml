@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Total Recipe Summary Repot"
+            android:text="Total Recipe Summary Report"
             android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold|italic"
@@ -135,7 +135,7 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="130dp"
+            android:layout_marginTop="150dp"
             android:layout_marginEnd="8dp"
             android:text="Breakfast       :"
             android:textColor="#000000"
@@ -149,22 +149,22 @@
             android:id="@+id/textView75"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:text="Date : "
             android:textColor="#000000"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/sum_today"
             app:layout_constraintTop_toBottomOf="@+id/textView65" />
 
         <TextView
             android:id="@+id/sum_today"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:text="TextView"
             android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/textView75"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView75" />
 
         <TextView
@@ -187,6 +187,27 @@
             android:textColor="@color/red"
             app:layout_constraintStart_toEndOf="@+id/textView77"
             app:layout_constraintTop_toTopOf="@+id/textView77" />
+
+        <TextView
+            android:id="@+id/textView82"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="Month: "
+            android:textColor="#0B0B0B"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView65" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sum_date_dropdown"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:background="@drawable/wm_drop_down"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/textView82"
+            app:layout_constraintTop_toTopOf="@+id/textView82" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
